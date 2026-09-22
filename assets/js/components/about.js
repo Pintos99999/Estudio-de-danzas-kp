@@ -20,10 +20,10 @@ window.AboutSection = function () {
         '<div class="reveal">' +
           /* FOTO: se activa poniendo sobre.imagen en siteData.js */
           '<div class="retrato parallax" data-speed="0.05">' +
-            U.imgOpcional(s.imagen, 'Sala del Estudio de Danzas Karen Pintos') +
+            U.imgOpcional(s.imagen, s.imagenAlt || 'Estudio de Danzas Karen Pintos') +
             (s.imagen ? '' : '<span class="retrato__vacio">' + window.icon('image', 24) +
               '<small>Espacio para una foto del estudio</small></span>') +
-            '<span class="retrato__marca">Paysandú · Uruguay</span>' +
+            '<span class="retrato__marca">Paysandú · Young</span>' +
           '</div>' +
         '</div>' +
 

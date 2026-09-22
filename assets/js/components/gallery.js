@@ -19,9 +19,11 @@ window.Gallery = function () {
       '<div class="reveal">' +
         '<p class="eyebrow">Imágenes</p>' +
         '<h2 class="titulo-seccion" id="galeria-titulo">Galería</h2>' +
-        '<p class="lead">Sala, ensayos y escenario.</p>' +
+        '<p class="lead">La campaña visual de Giselle.</p>' +
       '</div>' +
       '<div class="galeria__masonry">' + piezas + '</div>' +
+      (D.galeriaNota ? '<p class="nota reveal">' + window.icon('image', 18) +
+        '<span>' + U.esc(D.galeriaNota) + '</span></p>' : '') +
     '</div>' +
   '</section>' +
 

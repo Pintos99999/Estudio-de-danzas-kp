@@ -22,35 +22,58 @@ window.SITE_DATA = {
   },
 
   /* ---------------------------------------------------------
-     2. CONTACTO
+     2. CONTACTO GENERAL
      --------------------------------------------------------- */
   contacto: {
-    telefono: '4725 6647',
-    telefonoLink: '+59847256647',
-
-    // WHATSAPP -> dejalo vacío ('') si no lo querés mostrar.
-    // Para activarlo escribí el número en formato internacional
-    // SIN el signo +, por ejemplo: '59899123456'
-    whatsapp: '',
-
-    direccion: 'Dr. José Verocay 815',
-    codigoPostal: '60000',
-    localidad: 'Paysandú',
-    pais: 'Uruguay',
-
-    // Email del estudio. Si lo dejás vacío, no se muestra.
-    email: '',
-
+    email: 'institutokarenpintos@gmail.com',
     instagramUsuario: '@estudio_de_danza_karenpintos',
-    instagramUrl: 'https://www.instagram.com/estudio_de_danza_karenpintos/',
-
-    // Dirección que se usa para Google Maps (mapa + "cómo llegar")
-    mapsBusqueda: 'Dr. José Verocay 815, 60000 Paysandú, Uruguay'
+    instagramUrl: 'https://www.instagram.com/estudio_de_danza_karenpintos/'
   },
 
   /* ---------------------------------------------------------
-     3. EVENTO PRINCIPAL  ( GISELLE )
-     Cambiá acá todo lo referido a la presentación.
+     3. SUCURSALES
+     Para agregar otra sede, copiá un bloque y completalo.
+
+       whatsapp -> número internacional SIN el "+" ni espacios.
+                   Uruguay: 598 + celular sin el 0.
+                   Ej: 092 025 250  ->  '59892025250'
+                   Dejalo en '' si esa sede no tiene WhatsApp.
+     --------------------------------------------------------- */
+  sucursales: [
+    {
+      id: 'paysandu',
+      nombre: 'Paysandú',
+      direccion: 'Dr. José Verocay 815',
+      referencia: 'entre Ituzaingó y Sarandí',
+      localidad: 'Paysandú',
+      codigoPostal: '60000',
+
+      telefono: '4725 6647',
+      telefonoLink: '+59847256647',
+      celular: '092 025 250',
+      whatsapp: '59892025250',
+
+      mapsBusqueda: 'Dr. José Verocay 815, 60000 Paysandú, Uruguay'
+    },
+    {
+      id: 'young',
+      nombre: 'Young',
+      direccion: '25 de Agosto esquina Carlos Fischer',
+      referencia: '',
+      localidad: 'Young, Río Negro',
+      codigoPostal: '',
+
+      telefono: '',
+      telefonoLink: '',
+      celular: '099 655 632',
+      whatsapp: '59899655632',
+
+      mapsBusqueda: '25 de Agosto esquina Carlos Fischer, Young, Río Negro, Uruguay'
+    }
+  ],
+
+  /* ---------------------------------------------------------
+     4. EVENTO PRINCIPAL  ( GISELLE )
      --------------------------------------------------------- */
   evento: {
     titulo: 'Giselle',
@@ -58,9 +81,8 @@ window.SITE_DATA = {
     subtituloPlano: 'Una historia de amor, engaño y muerte',
     etiqueta: 'Próxima presentación',
 
-    // FOTO de portada (hero). Vacía = sólo la atmósfera de luces.
-    // Ej: 'assets/img/hero.jpg'  (horizontal, mínimo 1920px de ancho)
-    imagenHero: '',
+    // Imagen de fondo del hero ('' = sólo la atmósfera de luces)
+    imagenHero: 'assets/img/hero.jpg',
 
     diaSemana: 'Viernes',
     fechaCorta: '16 de Octubre · 2026',
@@ -81,17 +103,16 @@ window.SITE_DATA = {
     ],
 
     /* ENTRADAS
-       Cuando tengas el link real de venta de entradas, pegalo acá.
-       Mientras esté vacío, los botones llevan a la sección de contacto
-       para consultar por entradas (no se inventa ningún sistema de venta). */
+       Las entradas se venden en las dos sedes (así figura en la gráfica
+       oficial). Si más adelante hay venta online, pegá el link acá. */
     entradasUrl: '',
     entradasTextoActivo: 'Comprar entradas',
-    entradasTextoInactivo: 'Consultar entradas'
+    entradasTextoInactivo: 'Consultar entradas',
+    entradasNota: 'Entradas en venta en las dos sedes del estudio: Paysandú y Young.'
   },
 
   /* ---------------------------------------------------------
-     4. PRÓXIMAS PRESENTACIONES
-     Agregá / quitá objetos de esta lista libremente.
+     5. PRÓXIMAS PRESENTACIONES
      estado: 'confirmado' | 'en-preparacion' | 'proximamente'
      --------------------------------------------------------- */
   presentaciones: [
@@ -113,17 +134,18 @@ window.SITE_DATA = {
   ],
 
   /* ---------------------------------------------------------
-     5. SOBRE EL ESTUDIO
-     Textos generales, fáciles de reemplazar por los definitivos.
+     6. SOBRE EL ESTUDIO
      --------------------------------------------------------- */
   sobre: {
     titulo: 'Sobre nosotros',
     lead: 'Un espacio dedicado a la formación y a la expresión artística a través de la danza.',
 
-    // FOTO del estudio. Dejala vacía o poné la ruta, ej: 'assets/img/estudio.jpg'
-    imagen: '',
+    // Imagen del bloque ('' = marco decorativo)
+    imagen: 'assets/img/estudio.jpg',
+    imagenAlt: 'Giselle con el velo, de la campaña visual de la presentación',
+
     parrafos: [
-      'El Estudio de Danzas Karen Pintos es un espacio de formación en danza en Paysandú, donde el trabajo técnico y la expresión artística conviven en cada clase.',
+      'El Estudio de Danzas Karen Pintos es un espacio de formación en danza con sedes en Paysandú y Young, donde el trabajo técnico y la expresión artística conviven en cada clase.',
       'La sala es el lugar donde se construye: disciplina, constancia y detalle. El escenario es donde todo eso se transforma en emoción compartida.'
     ],
     pilares: [
@@ -135,14 +157,9 @@ window.SITE_DATA = {
   },
 
   /* ---------------------------------------------------------
-     6. DISCIPLINAS / CLASES
-     No hay disciplinas inventadas: completá esta lista con las
-     que realmente dicta el estudio.
-       nombre      -> título de la tarjeta
-       descripcion -> texto breve
-       nivel       -> edades / niveles (dejar '' si no aplica)
-       imagen      -> ruta a la foto, ej: 'assets/img/disciplinas/ballet.jpg'
-                      (si el archivo no existe, se muestra un fondo decorativo)
+     7. DISCIPLINAS / CLASES
+     Completá esta lista con las que realmente dicta el estudio.
+       imagen -> ruta a la foto ('' = fondo decorativo)
      --------------------------------------------------------- */
   disciplinas: [
     {
@@ -170,40 +187,45 @@ window.SITE_DATA = {
       imagen: ''
     }
   ],
-  disciplinasNota: 'Listado en construcción. Escribinos para conocer las disciplinas, horarios y niveles disponibles.',
+  disciplinasNota: 'Listado en construcción. Escribinos para conocer las disciplinas, horarios y niveles disponibles en cada sede.',
 
   /* ---------------------------------------------------------
-     7. GALERÍA
-     Colocá las fotos reales en  assets/img/galeria/
-     y actualizá "src" y "alt". Mientras el archivo no exista,
-     se muestra un marco decorativo indicando el espacio.
-       alto: 'alto' | 'medio' | 'bajo'  -> altura de la pieza
+     8. GALERÍA
+     Hoy muestra la campaña visual de Giselle.
+     Para poner fotos reales del estudio, reemplazá los archivos de
+     assets/img/galeria/ y actualizá el "alt" de cada una.
+       alto: 'alto' | 'medio' | 'bajo'
      --------------------------------------------------------- */
   galeria: [
-    { src: '', /* -> assets/img/galeria/01.jpg */ alt: 'Ensayo en sala del Estudio de Danzas Karen Pintos', alto: 'alto' },
-    { src: '', /* -> assets/img/galeria/02.jpg */ alt: 'Bailarina en puntas durante la clase', alto: 'medio' },
-    { src: '', /* -> assets/img/galeria/03.jpg */ alt: 'Presentación sobre el escenario', alto: 'bajo' },
-    { src: '', /* -> assets/img/galeria/04.jpg */ alt: 'Detalle de zapatillas de punta', alto: 'medio' },
-    { src: '', /* -> assets/img/galeria/05.jpg */ alt: 'Grupo de alumnas trabajando en la barra', alto: 'alto' },
-    { src: '', /* -> assets/img/galeria/06.jpg */ alt: 'Escena del ballet Giselle', alto: 'bajo' },
-    { src: '', /* -> assets/img/galeria/07.jpg */ alt: 'Bailarina entrando al escenario', alto: 'medio' },
-    { src: '', /* -> assets/img/galeria/08.jpg */ alt: 'Saludo final de la función', alto: 'alto' }
+    { src: 'assets/img/galeria/01.jpg', alt: 'Giselle con el velo, iluminada a contraluz', alto: 'alto' },
+    { src: 'assets/img/galeria/02.jpg', alt: 'El corps de ballet formando un círculo entre la niebla', alto: 'medio' },
+    { src: 'assets/img/galeria/03.jpg', alt: 'Bailarina de perfil bajo una luz lavanda', alto: 'medio' },
+    { src: 'assets/img/galeria/04.jpg', alt: 'Afiche de Giselle con siluetas suspendidas en la bruma', alto: 'alto' },
+    { src: 'assets/img/galeria/05.jpg', alt: 'Bailarina avanzando hacia la luz del escenario', alto: 'medio' },
+    { src: 'assets/img/galeria/06.jpg', alt: 'Las willis en ronda, versión vertical de la campaña', alto: 'alto' },
+    { src: 'assets/img/galeria/07.jpg', alt: 'Segundo afiche de la presentación de Giselle', alto: 'medio' },
+    { src: 'assets/img/galeria/08.jpg', alt: 'Tipografía de Giselle sobre un degradado rosa y violeta', alto: 'bajo' },
+    { src: 'assets/img/galeria/09.jpg', alt: 'Bailarina a lo lejos sobre el escenario en penumbra', alto: 'alto' },
+    { src: 'assets/img/galeria/10.jpg', alt: 'Placa tipográfica de Giselle sobre fondo crema', alto: 'bajo' },
+    { src: 'assets/img/galeria/11.jpg', alt: 'Puntos de venta de entradas en Paysandú y Young', alto: 'bajo' }
   ],
+  galeriaNota: 'Estas son las piezas de la campaña de Giselle. Cuando tengas fotos de las clases y las presentaciones, reemplazá los archivos de assets/img/galeria/.',
 
   /* ---------------------------------------------------------
-     8. FORMULARIO DE CONTACTO
-     El formulario NO envía mensajes hasta que pegues acá la URL
-     de un servicio (Formspree, Getform, Basin, Netlify Forms...).
-     Ejemplo: 'https://formspree.io/f/xxxxxxx'
+     9. FORMULARIO DE CONTACTO
+     Los mensajes llegan por email usando FormSubmit (sin backend).
+       endpoint -> '' desactiva el envío (el formulario lo avisa)
+     Para cambiar la casilla que recibe, cambiá el email del final.
      --------------------------------------------------------- */
   formulario: {
-    endpoint: '',
+    endpoint: 'https://formsubmit.co/ajax/institutokarenpintos@gmail.com',
+    asunto: 'Consulta desde la web — Estudio de Danzas Karen Pintos',
     tituloSeccion: '¿Querés ser parte?',
     textoSeccion: 'Escribinos para consultar por clases, disciplinas, horarios o entradas para Giselle.'
   },
 
   /* ---------------------------------------------------------
-     9. NAVEGACIÓN
+     10. NAVEGACIÓN
      --------------------------------------------------------- */
   navegacion: [
     { etiqueta: 'Inicio',      href: '#inicio' },
@@ -211,6 +233,7 @@ window.SITE_DATA = {
     { etiqueta: 'El estudio',  href: '#estudio' },
     { etiqueta: 'Disciplinas', href: '#disciplinas' },
     { etiqueta: 'Galería',     href: '#galeria' },
+    { etiqueta: 'Sedes',       href: '#ubicacion' },
     { etiqueta: 'Contacto',    href: '#contacto' }
   ]
 };

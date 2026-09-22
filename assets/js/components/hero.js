@@ -3,26 +3,26 @@ window.Hero = function () {
   var D = window.SITE_DATA, e = D.evento, s = D.estudio, t = U.entradas();
 
   var destellos = '';
-  for (var i = 0; i < 9; i++) {
-    destellos += '<span class="destello" style="left:' + (8 + i * 10.5) + '%;bottom:' +
-      (6 + (i % 4) * 11) + '%;animation-delay:' + (i * 1.4) + 's;animation-duration:' +
-      (10 + (i % 5) * 2.5) + 's"></span>';
+  for (var i = 0; i < 7; i++) {
+    destellos += '<span class="destello" style="left:' + (10 + i * 13) + '%;bottom:' +
+      (8 + (i % 4) * 11) + '%;animation-delay:' + (i * 1.6) + 's;animation-duration:' +
+      (11 + (i % 5) * 2.5) + 's"></span>';
   }
 
   return '' +
   '<section class="hero" id="inicio">' +
     '<div class="hero__fondo" aria-hidden="true"></div>' +
+
+    /* FOTO DE PORTADA: se activa con evento.imagenHero en siteData.js */
+    (e.imagenHero
+      ? '<img class="hero__foto parallax" data-speed="0.06" src="' + U.esc(e.imagenHero) +
+        '" alt="" aria-hidden="true" fetchpriority="high" onerror="this.remove()">'
+      : '') +
+
     '<span class="haz haz--1" aria-hidden="true"></span>' +
     '<span class="haz haz--2" aria-hidden="true"></span>' +
     '<span class="haz haz--3" aria-hidden="true"></span>' +
     destellos +
-
-    /* FOTO DE PORTADA (opcional): se activa poniendo evento.imagenHero en siteData.js */
-    (e.imagenHero ? '<img class="hero__foto" src="' + U.esc(e.imagenHero) +
-      '" alt="" aria-hidden="true" onerror="this.remove()">' : '') +
-
-    '<img class="hero__silueta parallax" data-speed="0.12" src="assets/img/bailarina.svg" ' +
-      'alt="" aria-hidden="true">' +
 
     '<div class="contenedor hero__contenido">' +
       '<p class="hero__estudio">' + U.esc(s.logoLinea1) + '<span>' + U.esc(s.logoLinea2) + '</span></p>' +

@@ -28,9 +28,9 @@ window.GiselleSection = function () {
     '</div>';
   }).join('');
 
-  var nota = t.hay ? '' :
-    '<p class="ficha__nota">El enlace de venta de entradas se publicará próximamente. ' +
-    'Mientras tanto podés consultar por disponibilidad.</p>';
+  var nota = e.entradasNota
+    ? '<p class="ficha__nota">' + U.esc(e.entradasNota) + '</p>'
+    : '';
 
   return '' +
   '<section class="seccion giselle" id="giselle" aria-labelledby="giselle-titulo">' +

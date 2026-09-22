@@ -1,10 +1,10 @@
 /* CONTACTO — canales + formulario */
 window.ContactSection = function () {
   var D = window.SITE_DATA, c = D.contacto, f = D.formulario;
-  var wa = U.whatsapp();
+  var email = U.email();
 
-  function canal(href, ico, titulo, valor, externo) {
-    return '<a class="canal" href="' + U.esc(href) + '"' +
+  function canal(href, ico, titulo, valor, externo, clase) {
+    return '<a class="canal ' + (clase || '') + '" href="' + U.esc(href) + '"' +
       (externo ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' +
       window.icon(ico, 20) +
       '<span class="canal__t">' + U.esc(titulo) + '</span>' +
@@ -12,12 +12,21 @@ window.ContactSection = function () {
     '</a>';
   }
 
-  var canales =
-    canal(c.instagramUrl, 'instagram', 'Instagram', c.instagramUsuario, true) +
-    canal('tel:' + c.telefonoLink, 'phone', 'Teléfono', c.telefono, false) +
-    (wa ? canal(wa, 'whatsapp', 'WhatsApp', 'Escribinos', true) : '') +
-    (c.email ? canal('mailto:' + c.email, 'mail', 'Email', c.email, false) : '') +
-    canal(U.mapsUrl(), 'mapPin', 'Ubicación', c.direccion + ', ' + c.localidad, true);
+  var canales = '';
+
+  /* WhatsApp de cada sede primero: es el canal más usado */
+  U.conWhatsapp().forEach(function (s) {
+    canales += canal(U.whatsapp(s), 'whatsapp', 'WhatsApp ' + s.nombre, s.celular, true, 'canal--wa');
+  });
+
+  canales += canal(c.instagramUrl, 'instagram', 'Instagram', c.instagramUsuario, true);
+  if (email) canales += canal('mailto:' + email, 'mail', 'Email', email, false);
+
+  U.sucursales().forEach(function (s) {
+    if (s.telefono) {
+      canales += canal('tel:' + s.telefonoLink, 'phone', 'Teléfono ' + s.nombre, s.telefono, false);
+    }
+  });
 
   return '' +
   '<section class="seccion contacto" id="contacto" aria-labelledby="contacto-titulo">' +
@@ -44,10 +53,21 @@ window.ContactSection = function () {
                 'required placeholder="tu@email.com">' +
             '</div>' +
             '<div class="campo">' +
+              '<label for="f-sede">Sede de interés</label>' +
+              '<select id="f-sede" name="sede">' +
+                U.sucursales().map(function (s) {
+                  return '<option value="' + U.esc(s.nombre) + '">' + U.esc(s.nombre) + '</option>';
+                }).join('') +
+                '<option value="Sin definir">Todavía no lo sé</option>' +
+              '</select>' +
+            '</div>' +
+            '<div class="campo">' +
               '<label for="f-mensaje">Mensaje</label>' +
               '<textarea id="f-mensaje" name="mensaje" required ' +
                 'placeholder="Contanos en qué te podemos ayudar"></textarea>' +
             '</div>' +
+            /* Trampa anti-spam de FormSubmit: invisible para personas */
+            '<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">' +
             '<p class="form__aviso" id="form-aviso" role="status" aria-live="polite" hidden></p>' +
             '<button class="btn btn--primario" type="submit">' +
               window.icon('mail', 17) + 'Enviar mensaje</button>' +

@@ -346,7 +346,7 @@ p:last-child { margin-bottom: 0; }
   position: relative;
   min-height: 100svh;
   display: flex; align-items: center;
-  padding-block: calc(var(--nav-h) + 3rem) clamp(5rem, 12vh, 8rem);
+  padding-block: calc(var(--nav-h) + 3rem) clamp(6rem, 16vh, 10rem);
   overflow: hidden;
   isolation: isolate;
 }
@@ -391,26 +391,25 @@ p:last-child { margin-bottom: 0; }
   50%      { opacity: .95; }
 }
 
-/* Foto de portada opcional (assets/img/hero.jpg) */
+/* Foto de portada (assets/img/hero.jpg) */
 .hero__foto {
-  position: absolute; inset: 0; z-index: -2;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 70% 40%;
-  opacity: .42;
-  mix-blend-mode: screen;
-  filter: saturate(.7) contrast(1.05);
-}
-
-/* Silueta de la bailarina */
-.hero__silueta {
-  position: absolute; z-index: -1;
-  right: clamp(-6%, 2vw, 6%); bottom: 0;
-  height: min(86vh, 820px); width: auto;
-  opacity: .34;
-  pointer-events: none;
-  filter: blur(3.5px) drop-shadow(0 0 80px rgba(120,116,214,.55));
+  position: absolute; inset: -8% 0; z-index: -2;
+  width: 100%; height: 116%;
+  object-fit: cover; object-position: 50% 42%;
+  opacity: .82;
+  filter: saturate(.92) contrast(1.02) brightness(.92);
   will-change: transform;
 }
+/* Velo para que el texto del hero siempre se lea sobre la foto */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, rgba(5,7,15,.9) 0%, rgba(6,9,22,.68) 36%, rgba(6,9,24,.22) 64%, rgba(6,9,24,.44) 100%),
+    linear-gradient(180deg, rgba(5,7,15,.7) 0%, transparent 28%, transparent 64%, rgba(5,7,15,.94) 100%);
+}
+
 
 /* Partículas / destellos */
 .destello {
@@ -855,29 +854,65 @@ p:last-child { margin-bottom: 0; }
 .instagram__texto { max-width: 52ch; margin-inline: auto; color: var(--texto-tenue); }
 .instagram .acciones { justify-content: center; margin-top: 2.2rem; }
 
-/* ---------- 14. UBICACIÓN ---------- */
-.ubicacion__grid {
-  display: grid; grid-template-columns: .85fr 1.15fr;
-  gap: clamp(2rem, 5vw, 4rem); align-items: center;
+/* ---------- 14. UBICACIÓN / SEDES ---------- */
+.sedes {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.8rem);
+  margin: 3rem 0 clamp(2.5rem, 5vw, 3.5rem);
 }
-.datos-lista { list-style: none; margin: 2rem 0 0; padding: 0; }
-.datos-lista li {
-  display: flex; gap: 1.1rem; align-items: flex-start;
-  padding: 1.25rem 0; border-top: 1px solid var(--linea);
+.sede {
+  position: relative;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  border: 1px solid var(--linea); border-radius: 3px;
+  background: linear-gradient(155deg, rgba(35,48,95,.3), rgba(9,13,30,.5));
+  transition: border-color .5s var(--ease), transform .5s var(--ease);
 }
-.datos-lista li:last-child { border-bottom: 1px solid var(--linea); }
-.datos-lista .ico { color: var(--rosa); margin-top: .25rem; }
-.datos-lista dt, .datos-lista__t {
-  font-size: .62rem; letter-spacing: .24em; text-transform: uppercase;
-  color: var(--texto-tenue); margin-bottom: .35rem;
+.sede:hover { border-color: rgba(244,92,156,.4); transform: translateY(-4px); }
+.sede__ciudad {
+  font-family: var(--serif); font-size: clamp(1.9rem, 4vw, 2.5rem);
+  color: var(--blanco); line-height: 1; margin: 0 0 1rem;
 }
-.datos-lista__v { color: var(--blanco); font-size: 1.05rem; line-height: 1.5; }
-.datos-lista__v a { border-bottom: 1px solid var(--linea-fuerte); transition: color .3s var(--ease), border-color .3s var(--ease); }
-.datos-lista__v a:hover { color: var(--rosa-claro); border-color: var(--rosa); }
+.sede__dir { color: var(--blanco); font-size: 1.05rem; margin: 0 0 .25rem; }
+.sede__ref { color: var(--lavanda); font-size: .9rem; margin: 0 0 .25rem; }
+.sede__loc {
+  font-size: .68rem; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--texto-tenue); margin: 0 0 1.2rem;
+}
+.sede__tels { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: .7rem; }
+.sede__tels li { display: flex; align-items: center; gap: .7rem; font-size: .98rem; }
+.sede__tels .ico { color: var(--rosa); }
+.sede__tels a { border-bottom: 1px solid var(--linea-fuerte); transition: color .3s var(--ease), border-color .3s var(--ease); }
+.sede__tels a:hover { color: var(--rosa-claro); border-color: var(--rosa); }
+.sede__acciones { display: flex; flex-wrap: wrap; gap: .7rem; }
+
+/* Botón verde de WhatsApp */
+.btn--wa {
+  border-color: rgba(37,211,102,.45);
+  background: rgba(37,211,102,.1);
+  color: #9BF0BF;
+}
+.btn--wa:hover { border-color: #25D366; background: rgba(37,211,102,.2); color: #C9FADB; }
+
+/* Pestañas del mapa */
+.mapa__tabs { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.2rem; }
+.mapa__tab {
+  padding: .6rem 1.3rem; min-height: 42px;
+  border: 1px solid var(--linea); border-radius: 999px;
+  background: transparent; color: var(--texto);
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+  cursor: pointer;
+  transition: color .35s var(--ease), border-color .35s var(--ease), background-color .35s var(--ease);
+}
+.mapa__tab:hover { border-color: var(--lavanda); color: var(--blanco); }
+.mapa__tab.is-active {
+  border-color: transparent; color: #fff;
+  background: linear-gradient(120deg, var(--fucsia), var(--rosa));
+}
+.mapa-bloque { margin-top: 0; }
 
 .mapa {
   position: relative;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
   border: 1px solid var(--linea); border-radius: 3px;
   overflow: hidden;
   background: var(--noche-2);
@@ -914,7 +949,7 @@ p:last-child { margin-bottom: 0; }
 .campo label {
   font-size: .64rem; letter-spacing: .24em; text-transform: uppercase; color: var(--texto-tenue);
 }
-.campo input, .campo textarea {
+.campo input, .campo textarea, .campo select {
   width: 100%;
   padding: .95rem 1.1rem;
   background: rgba(255,255,255,.03);
@@ -926,9 +961,59 @@ p:last-child { margin-bottom: 0; }
 }
 .campo textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
 .campo input::placeholder, .campo textarea::placeholder { color: rgba(153,151,181,.6); }
-.campo input:focus, .campo textarea:focus {
+.campo input:focus, .campo textarea:focus, .campo select:focus {
   outline: none; border-color: var(--rosa); background: rgba(244,92,156,.05);
 }
+.campo select {
+  appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none' stroke='%23B6B4E6' stroke-width='1.6'%3E%3Cpath d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1.1rem center;
+  padding-right: 2.8rem;
+}
+.campo select option { background: var(--azul-profundo); color: var(--blanco); }
+
+/* Canal de WhatsApp destacado en verde */
+.canal--wa .ico { color: #5BE38D; }
+.canal--wa:hover { border-color: rgba(37,211,102,.5); background: rgba(37,211,102,.07); }
+
+/* ---------- BOTÓN FLOTANTE DE WHATSAPP ---------- */
+.wa-wrap { position: fixed; right: clamp(1rem, 3vw, 2rem); bottom: clamp(1rem, 3vw, 2rem); z-index: 90; }
+.wa-fab {
+  display: flex; align-items: center; justify-content: center;
+  width: 58px; height: 58px; border-radius: 50%;
+  border: 0; cursor: pointer;
+  background: linear-gradient(140deg, #25D366, #128C7E);
+  color: #fff;
+  box-shadow: 0 12px 32px -10px rgba(18,140,126,.9), 0 0 0 0 rgba(37,211,102,.5);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.wa-fab:hover { transform: scale(1.06); box-shadow: 0 16px 40px -10px rgba(18,140,126,1); }
+.wa-fab.is-open { background: linear-gradient(140deg, #3B4478, #222A55); }
+
+.wa-menu {
+  position: absolute; right: 0; bottom: 72px;
+  min-width: 232px;
+  padding: 1rem;
+  border: 1px solid var(--linea-fuerte); border-radius: 10px;
+  background: rgba(10,14,32,.95);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px -24px #000;
+  animation: subir .35s var(--ease);
+}
+.wa-menu[hidden] { display: none; }
+.wa-menu__t {
+  font-size: .6rem; letter-spacing: .24em; text-transform: uppercase;
+  color: var(--texto-tenue); margin: 0 0 .8rem;
+}
+.wa-menu__item {
+  display: flex; flex-direction: column; gap: .15rem;
+  padding: .7rem .9rem; border-radius: 6px;
+  border: 1px solid transparent;
+  transition: background-color .3s var(--ease), border-color .3s var(--ease);
+}
+.wa-menu__item:hover { background: rgba(37,211,102,.1); border-color: rgba(37,211,102,.4); }
+.wa-menu__sede { color: var(--blanco); font-size: .95rem; }
+.wa-menu__tel { color: var(--texto-tenue); font-size: .78rem; letter-spacing: .06em; }
 .form .btn { justify-content: center; }
 .form__aviso {
   font-size: .84rem; line-height: 1.6;
@@ -948,8 +1033,13 @@ p:last-child { margin-bottom: 0; }
   background: var(--noche);
 }
 .footer__grid {
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+  display: grid; grid-template-columns: 1.5fr 1fr 1.3fr 1.2fr;
   gap: 2.5rem; align-items: start;
+}
+.footer__sede + .footer__sede { margin-top: 1.4rem; }
+.footer__sede strong {
+  color: var(--lavanda); font-weight: 400;
+  font-size: .64rem; letter-spacing: .22em; text-transform: uppercase;
 }
 .footer__marca .marca__nombre { font-size: 1.5rem; }
 .footer__lema { margin-top: 1rem; color: var(--texto-tenue); font-size: .9rem; max-width: 32ch; }
@@ -990,10 +1080,9 @@ p:last-child { margin-bottom: 0; }
 @media (max-width: 1020px) {
   .giselle__grid,
   .sobre__grid,
-  .ubicacion__grid,
   .contacto__grid { grid-template-columns: 1fr; }
   .galeria__masonry { columns: 2; }
-  .hero__silueta { opacity: .42; right: -14%; }
+  .hero__foto { object-position: 54% 44%; }
   .agenda__item { grid-template-columns: 1fr auto; }
   .agenda__meta { grid-column: 1 / -1; }
 
@@ -1007,8 +1096,9 @@ p:last-child { margin-bottom: 0; }
   :root { --nav-h: 68px; }
   .nav__menu, .nav__acciones .btn { display: none; }
   .nav__burger { display: flex; }
-  /* la silueta pasa a ser atmósfera, no protagonista */
-  .hero__silueta { height: min(58vh, 480px); right: -18%; bottom: 4%; opacity: .3; }
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+  .hero__foto { object-position: 56% 45%; opacity: .7; }
+  .wa-fab { width: 52px; height: 52px; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__marca { grid-column: 1 / -1; }
 }

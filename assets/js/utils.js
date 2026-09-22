@@ -23,29 +23,44 @@
       };
     },
 
-    /* Google Maps */
-    mapsUrl: function () {
-      return 'https://www.google.com/maps/search/?api=1&query=' +
-        encodeURIComponent(D.contacto.mapsBusqueda);
+    /* --- Sucursales --- */
+    sucursales: function () { return D.sucursales || []; },
+
+    sucursal: function (id) {
+      return (D.sucursales || []).filter(function (s) { return s.id === id; })[0];
     },
-    mapsEmbed: function () {
-      return 'https://maps.google.com/maps?q=' +
-        encodeURIComponent(D.contacto.mapsBusqueda) +
+
+    /* Dirección en una línea */
+    direccion: function (s) {
+      var p = [s.direccion];
+      if (s.referencia) p.push(s.referencia);
+      return p.join(', ');
+    },
+
+    /* Google Maps por sucursal */
+    mapsUrl: function (s) {
+      return 'https://www.google.com/maps/search/?api=1&query=' +
+        encodeURIComponent(s.mapsBusqueda);
+    },
+    mapsEmbed: function (s) {
+      return 'https://maps.google.com/maps?q=' + encodeURIComponent(s.mapsBusqueda) +
         '&t=&z=16&ie=UTF8&iwloc=&output=embed';
     },
 
-    /* WhatsApp (sólo si está configurado en siteData) */
-    whatsapp: function () {
-      var w = (D.contacto.whatsapp || '').replace(/\D/g, '');
+    /* WhatsApp de una sucursal (null si no tiene) */
+    whatsapp: function (s, texto) {
+      var w = (s && s.whatsapp || '').replace(/\D/g, '');
       if (!w) return null;
-      return 'https://wa.me/' + w + '?text=' +
-        encodeURIComponent('Hola! Quiero consultar por las clases del Estudio de Danzas Karen Pintos.');
+      var msg = texto || ('Hola! Quiero consultar por las clases del Estudio de Danzas Karen Pintos (sede ' + s.nombre + ').');
+      return 'https://wa.me/' + w + '?text=' + encodeURIComponent(msg);
     },
 
-    direccionCompleta: function () {
-      var c = D.contacto;
-      return c.direccion + ', ' + c.codigoPostal + ' ' + c.localidad + ', ' + c.pais;
+    /* Sucursales que tienen WhatsApp configurado */
+    conWhatsapp: function () {
+      return (D.sucursales || []).filter(function (s) { return !!(s.whatsapp || '').trim(); });
     },
+
+    email: function () { return (D.contacto.email || '').trim(); },
 
     /* <img> que sólo se dibuja si hay ruta, y se quita sola si el archivo falta */
     imgOpcional: function (src, alt, clase) {

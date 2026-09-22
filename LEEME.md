@@ -42,36 +42,44 @@ Casi todo está en **un solo archivo**: `assets/js/siteData.js`
 | Qué querés cambiar | Dónde |
 |---|---|
 | Nombre, ciudad, año del footer | `estudio` |
-| Teléfono, dirección, Instagram | `contacto` |
-| **WhatsApp** (apagado por defecto) | `contacto.whatsapp` |
+| Email e Instagram | `contacto` |
+| **Sedes**: dirección, teléfonos, WhatsApp | `sucursales` |
 | **Fecha, horarios, teatro, título de la obra** | `evento` |
 | **Link real de venta de entradas** | `evento.entradasUrl` |
 | Próximas presentaciones | `presentaciones` |
 | Textos de "Sobre nosotros" | `sobre` |
 | **Disciplinas** (nombre, descripción, nivel, foto) | `disciplinas` |
 | **Fotos de la galería** | `galeria` |
-| Conectar el formulario de contacto | `formulario.endpoint` |
+| Casilla que recibe el formulario | `formulario.endpoint` |
 | Ítems del menú | `navegacion` |
+
+### Sedes
+
+Hay dos cargadas: **Paysandú** (Dr. José Verocay 815, entre Ituzaingó y Sarandí —
+tel. 4725 6647, cel. 092 025 250) y **Young** (25 de Agosto esquina Carlos Fischer —
+cel. 099 655 632).
+
+Para agregar una tercera, copiá un bloque de `sucursales` y completalo. Todo lo
+demás se actualiza solo: las tarjetas de "Encontranos", las pestañas del mapa,
+los canales de contacto, el footer y el selector del botón de WhatsApp.
+
+### WhatsApp
+
+El número va en formato internacional, **sin `+` ni espacios**:
+
+```js
+// 092 025 250  ->  598 + 92025250
+whatsapp: '59892025250',
+```
+
+Si una sede lo deja en `''`, simplemente no aparece su botón de WhatsApp.
+El botón verde flotante abajo a la derecha muestra un selector de sede; si
+quedara una sola sede con WhatsApp, abre el chat directo sin preguntar.
 
 ### Entradas
 ```js
 entradasUrl: '',   // vacío  -> los botones dicen "Consultar entradas" y bajan a Contacto
 entradasUrl: 'https://...',  // con link -> dicen "Comprar entradas" y abren la venta
-```
-
-### WhatsApp
-Está **desactivado** a propósito, porque sólo se confirmó el teléfono 4725 6647.
-Para activarlo, poné el celular en formato internacional sin `+`:
-```js
-whatsapp: '59899123456',
-```
-Aparece solo en Contacto y en el footer.
-
-### Formulario de contacto
-Hoy **no envía nada** y lo dice con todas las letras (no simula un envío falso).
-Para activarlo, creá un formulario gratis en [Formspree](https://formspree.io) y pegá la URL:
-```js
-formulario: { endpoint: 'https://formspree.io/f/xxxxxxx', ... }
 ```
 
 ---
@@ -81,13 +89,25 @@ formulario: { endpoint: 'https://formspree.io/f/xxxxxxx', ... }
 Poné los archivos en `assets/img/` y escribí la ruta en `siteData.js`.
 Mientras una ruta esté vacía, se muestra un marco decorativo que indica el espacio.
 
-| Foto | Carpeta sugerida | Campo en siteData.js |
+Hoy el sitio usa la **campaña gráfica de Giselle** (la que mandaste). Los
+originales quedaron en `_fotos-origen/` (no se suben a GitHub, son 62 MB) y las
+versiones optimizadas para web están en `assets/img/`.
+
+| Foto | Archivo | Campo en siteData.js |
 |---|---|---|
 | Portada / hero | `assets/img/hero.jpg` | `evento.imagenHero` |
-| Sala del estudio | `assets/img/estudio.jpg` | `sobre.imagen` |
+| Bloque "Sobre nosotros" | `assets/img/estudio.jpg` | `sobre.imagen` |
 | Disciplinas | `assets/img/disciplinas/ballet.jpg` … | `disciplinas[].imagen` |
-| Galería (8 lugares) | `assets/img/galeria/01.jpg` … `08.jpg` | `galeria[].src` |
-| Imagen para compartir en WhatsApp | `assets/img/og-image.jpg` (1200×630 px) | ver punto 4 |
+| Galería (11 piezas) | `assets/img/galeria/01.jpg` … `11.jpg` | `galeria[].src` |
+| Imagen para compartir en WhatsApp | `assets/img/og-image.jpg` (1200×630 px) | ya configurada |
+
+Para poner **fotos reales de las clases y las presentaciones**, reemplazá los
+archivos de `assets/img/galeria/` conservando los nombres, y actualizá el texto
+`alt` de cada una en `siteData.js` (es lo que leen los lectores de pantalla y
+Google). Ideal: 1100 px de ancho, `.jpg` de buena calidad.
+
+Si necesitás volver a generar las versiones web desde los originales, está el
+script `_img.ps1` (`powershell -ExecutionPolicy Bypass -File _img.ps1 -Modo build`).
 
 Recomendación: fotos horizontales de al menos 1600 px de ancho para la portada,
 y verticales/cuadradas para la galería. Guardalas como `.jpg` de buena calidad
@@ -95,6 +115,33 @@ y verticales/cuadradas para la galería. Guardalas como `.jpg` de buena calidad
 
 Actualizá también el texto `alt` de cada foto: es lo que leen los lectores de
 pantalla y Google.
+
+---
+
+## 3.bis El formulario de contacto (IMPORTANTE)
+
+Los mensajes del formulario llegan a **institutokarenpintos@gmail.com** usando
+[FormSubmit](https://formsubmit.co), que no necesita servidor propio ni cuenta.
+
+> ### ⚠️ Falta un paso, una sola vez
+> FormSubmit exige confirmar la casilla antes de empezar a reenviar mensajes.
+>
+> 1. Entrá al sitio y mandá **un mensaje de prueba** desde el formulario.
+> 2. Abrí **institutokarenpintos@gmail.com**: te va a llegar un correo de
+>    FormSubmit con un botón de activación.
+> 3. Hacé clic ahí.
+>
+> Desde ese momento, todos los mensajes del formulario llegan solos a esa casilla.
+> Hasta que lo hagas, el formulario avisa en pantalla que no se pudo enviar.
+
+Para que reciba **otra** casilla, cambiá el email del final del endpoint:
+
+```js
+endpoint: 'https://formsubmit.co/ajax/OTROEMAIL@gmail.com',
+```
+
+(y repetí la activación con esa casilla). Si lo dejás en `''`, el formulario no
+envía nada y lo dice claramente, ofreciendo WhatsApp, Instagram y el email.
 
 ---
 

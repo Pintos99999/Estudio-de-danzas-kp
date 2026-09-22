@@ -20,14 +20,13 @@
       window.LocationSection(),
       window.ContactSection(),
     '</main>',
-    window.Footer()
+    window.Footer(),
+    window.WhatsappFab()
   ].join('');
 
   /* ---------- Navbar: fondo al hacer scroll ---------- */
   var nav = document.getElementById('nav');
-  var onScrollNav = function () {
-    nav.classList.toggle('is-scrolled', window.scrollY > 40);
-  };
+  function onScrollNav() { nav.classList.toggle('is-scrolled', window.scrollY > 40); }
   onScrollNav();
 
   /* ---------- Menú móvil ---------- */
@@ -86,7 +85,6 @@
     ticking = false;
     onScrollNav();
     if (reduce) return;
-    var y = window.scrollY;
     capas.forEach(function (el) {
       var r = el.getBoundingClientRect();
       if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
@@ -94,13 +92,49 @@
       var centro = r.top + r.height / 2 - window.innerHeight / 2;
       el.style.transform = 'translate3d(0,' + (-centro * s).toFixed(2) + 'px,0)';
     });
-    void y;
   }
   window.addEventListener('scroll', function () {
     if (!ticking) { ticking = true; window.requestAnimationFrame(pintar); }
   }, { passive: true });
   window.addEventListener('resize', pintar, { passive: true });
   pintar();
+
+  /* ---------- Mapa: cambiar de sede ---------- */
+  var mapaIframe = document.getElementById('mapa-iframe');
+  Array.prototype.forEach.call(document.querySelectorAll('.mapa__tab'), function (tab) {
+    tab.addEventListener('click', function () {
+      var sede = U.sucursal(tab.dataset.mapa);
+      if (!sede || !mapaIframe) return;
+      mapaIframe.src = U.mapsEmbed(sede);
+      mapaIframe.title = 'Mapa con la ubicación de la sede ' + sede.nombre;
+      Array.prototype.forEach.call(document.querySelectorAll('.mapa__tab'), function (t) {
+        var activo = t === tab;
+        t.classList.toggle('is-active', activo);
+        t.setAttribute('aria-pressed', activo ? 'true' : 'false');
+      });
+    });
+  });
+
+  /* ---------- Botón flotante de WhatsApp ---------- */
+  var waFab = document.getElementById('wa-fab');
+  var waMenu = document.getElementById('wa-menu');
+  if (waFab && waMenu) {
+    var waAbierto = false;
+    function wa(estado) {
+      waAbierto = estado;
+      waMenu.hidden = !estado;
+      waFab.setAttribute('aria-expanded', estado ? 'true' : 'false');
+      waFab.classList.toggle('is-open', estado);
+      waFab.innerHTML = window.icon(estado ? 'close' : 'whatsapp', estado ? 22 : 26);
+    }
+    waFab.addEventListener('click', function (ev) { ev.stopPropagation(); wa(!waAbierto); });
+    document.addEventListener('click', function (ev) {
+      if (waAbierto && !ev.target.closest('.wa-wrap')) wa(false);
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && waAbierto) { wa(false); waFab.focus(); }
+    });
+  }
 
   /* ---------- Lightbox de la galería ---------- */
   var lb = document.getElementById('lightbox');
@@ -117,7 +151,7 @@
 
     if (!g.src) {
       medio.innerHTML = '<div class="lightbox__vacio">Espacio reservado para una foto real' +
-        '<br><span style="text-transform:none;letter-spacing:0">Agregala en siteData.js → galeria</span></div>';
+        '<span style="text-transform:none;letter-spacing:0">Agregala en siteData.js → galeria</span></div>';
       return;
     }
 
@@ -125,7 +159,7 @@
     img.alt = g.alt;
     img.onload = function () { medio.innerHTML = ''; medio.appendChild(img); };
     img.onerror = function () {
-      medio.innerHTML = '<div class="lightbox__vacio">No se encontró la imagen<br>' + g.src + '</div>';
+      medio.innerHTML = '<div class="lightbox__vacio">No se encontró la imagen<span>' + g.src + '</span></div>';
     };
     img.src = g.src;
   }
@@ -177,17 +211,28 @@
   });
 
   /* ---------- Formulario de contacto ----------
-     Sin endpoint configurado NO simula ningún envío: lo dice claramente
-     y ofrece los canales directos. Con endpoint, envía por fetch. */
+     Envía por FormSubmit (sin backend propio). Si no hay endpoint
+     configurado, lo dice claramente en vez de simular un envío. */
   var form = document.getElementById('form-contacto');
   var aviso = document.getElementById('form-aviso');
   var endpoint = (D.formulario.endpoint || '').trim();
-  var wa = U.whatsapp();
 
   function decir(html, ok) {
     aviso.innerHTML = html;
     aviso.hidden = false;
     aviso.classList.toggle('form__aviso--ok', !!ok);
+  }
+
+  function viasAlternativas() {
+    var vias = [];
+    U.conWhatsapp().forEach(function (s) {
+      vias.push('<a href="' + U.whatsapp(s) + '" target="_blank" rel="noopener noreferrer">' +
+        'WhatsApp ' + s.nombre + '</a>');
+    });
+    vias.push('<a href="' + D.contacto.instagramUrl + '" target="_blank" rel="noopener noreferrer">Instagram</a>');
+    if (U.email()) vias.push('<a href="mailto:' + U.email() + '">' + U.email() + '</a>');
+    if (vias.length === 1) return vias[0];
+    return vias.slice(0, -1).join(', ') + ' o ' + vias[vias.length - 1];
   }
 
   form.addEventListener('submit', function (ev) {
@@ -201,13 +246,8 @@
     }
 
     if (!endpoint) {
-      var vias = ['<a href="' + D.contacto.instagramUrl + '" target="_blank" rel="noopener noreferrer">Instagram</a>'];
-      if (wa) vias.push('<a href="' + wa + '" target="_blank" rel="noopener noreferrer">WhatsApp</a>');
-      vias.push('al teléfono <a href="tel:' + D.contacto.telefonoLink + '">' + D.contacto.telefono + '</a>');
-
-      decir('Este formulario todavía <strong>no está conectado</strong> a un servicio de envío, ' +
-        'así que el mensaje no se envía. Escribinos por ' +
-        vias.slice(0, -1).join(', ') + ' o ' + vias[vias.length - 1] + '.', false);
+      decir('Este formulario todavía <strong>no está conectado</strong>, así que el mensaje no se envía. ' +
+        'Escribinos por ' + viasAlternativas() + '.', false);
       return;
     }
 
@@ -215,20 +255,31 @@
     btn.disabled = true;
     decir('Enviando…', false);
 
+    var datos = new FormData(form);
+    datos.append('_subject', D.formulario.asunto || 'Consulta desde la web');
+    datos.append('_template', 'table');
+    datos.append('_captcha', 'false');
+
     fetch(endpoint, {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
-      body: new FormData(form)
+      body: datos
     }).then(function (r) {
-      if (!r.ok) throw new Error('respuesta ' + r.status);
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok || j.success === 'false' || j.success === false) {
+          throw new Error(j.message || ('respuesta ' + r.status));
+        }
+        return j;
+      });
+    }).then(function () {
       form.reset();
       decir('¡Gracias! Recibimos tu mensaje y te respondemos a la brevedad.', true);
-    }).catch(function () {
-      decir('No pudimos enviar el mensaje. Probá de nuevo o escribinos por ' +
-        '<a href="' + D.contacto.instagramUrl + '" target="_blank" rel="noopener noreferrer">Instagram</a>.', false);
+    }).catch(function (err) {
+      decir('No pudimos enviar el mensaje (' + U.esc(err.message) + '). ' +
+        'Probá de nuevo o escribinos por ' + viasAlternativas() + '.', false);
     }).then(function () { btn.disabled = false; });
   });
 
-  /* ---------- Datos dinámicos en el <head> y el año ---------- */
+  /* ---------- Título de la pestaña ---------- */
   document.title = D.estudio.nombre + ' | ' + D.estudio.ciudad;
 })();
