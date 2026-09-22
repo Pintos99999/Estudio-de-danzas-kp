@@ -43,7 +43,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260922b">
 
   <!-- Datos estructurados (sólo información provista por el estudio) -->
   <script type="application/ld+json">
@@ -132,21 +132,24 @@
     </div>
   </noscript>
 
-  <!-- Datos + componentes + lógica (orden importante) -->
-  <script src="assets/js/siteData.js"></script>
-  <script src="assets/js/icons.js"></script>
-  <script src="assets/js/utils.js"></script>
-  <script src="assets/js/components/navbar.js"></script>
-  <script src="assets/js/components/hero.js"></script>
-  <script src="assets/js/components/giselle.js"></script>
-  <script src="assets/js/components/about.js"></script>
-  <script src="assets/js/components/classes.js"></script>
-  <script src="assets/js/components/gallery.js"></script>
-  <script src="assets/js/components/instagram.js"></script>
-  <script src="assets/js/components/location.js"></script>
-  <script src="assets/js/components/contact.js"></script>
-  <script src="assets/js/components/footer.js"></script>
-  <script src="assets/js/components/whatsapp.js"></script>
-  <script src="assets/js/main.js"></script>
+  <!-- Datos + componentes + lógica (el orden importa).
+       El "?v=" del final fuerza a los navegadores a bajar la versión nueva.
+       Si hacés un cambio y no lo ves online, cambiá ese número acá
+       (también está en la hoja de estilos, arriba) y volvé a hacer push. -->
+  <script src="assets/js/siteData.js?v=20260922b"></script>
+  <script src="assets/js/icons.js?v=20260922b"></script>
+  <script src="assets/js/utils.js?v=20260922b"></script>
+  <script src="assets/js/components/navbar.js?v=20260922b"></script>
+  <script src="assets/js/components/hero.js?v=20260922b"></script>
+  <script src="assets/js/components/giselle.js?v=20260922b"></script>
+  <script src="assets/js/components/about.js?v=20260922b"></script>
+  <script src="assets/js/components/classes.js?v=20260922b"></script>
+  <script src="assets/js/components/gallery.js?v=20260922b"></script>
+  <script src="assets/js/components/instagram.js?v=20260922b"></script>
+  <script src="assets/js/components/location.js?v=20260922b"></script>
+  <script src="assets/js/components/contact.js?v=20260922b"></script>
+  <script src="assets/js/components/footer.js?v=20260922b"></script>
+  <script src="assets/js/components/whatsapp.js?v=20260922b"></script>
+  <script src="assets/js/main.js?v=20260922b"></script>
 </body>
 </html>
