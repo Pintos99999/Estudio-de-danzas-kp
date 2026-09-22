@@ -3,9 +3,24 @@
 Landing page del estudio, con la presentación **Giselle** como protagonista.
 Sitio estático: HTML + CSS + JavaScript, **sin build ni dependencias**.
 
+### 🌐 Sitio online
+**<https://pintos99999.github.io/Estudio-de-danzas-kp/>**
+
+### Para actualizarlo
+Editás lo que quieras (casi siempre `assets/js/siteData.js`) y después:
+
+```powershell
+cd "C:\Users\56943042\Desktop\Danza Karen Pintos"
+git add -A
+git commit -m "Actualizar contenido"
+git push
+```
+
+En ~1 minuto los cambios están online.
+
 ---
 
-## 1. Cómo verlo
+## 1. Cómo verlo en tu compu
 
 **Opción A — doble clic**
 Abrí `index.html`. Funciona directamente en cualquier navegador.
@@ -83,12 +98,22 @@ pantalla y Google.
 
 ---
 
-## 4. Antes de publicar
+## 4. Pendiente: sacar el `noindex`
 
-En `index.html`, reemplazá `https://TU-DOMINIO.com` por el dominio real
-(aparece 3 veces: `canonical`, `og:url` y `og:image`) y subí la imagen
-`assets/img/og-image.jpg` de 1200×630 px. Eso es lo que se ve al pegar el link
-en WhatsApp, Instagram o Facebook.
+En `index.html` hay una etiqueta **temporal**:
+
+```html
+<meta name="robots" content="noindex, nofollow">
+```
+
+Impide que Google indexe el sitio. Está puesta a propósito porque todavía hay
+textos de relleno ("Completar con la descripción…", "Disciplina 3", "Disciplina 4").
+
+**Cuando completes las disciplinas y los textos definitivos, borrá esa línea**
+y hacé `git push`. Recién ahí el sitio empieza a aparecer en búsquedas.
+
+El resto ya está listo: la imagen de compartir (`assets/img/og-image.jpg`) y las
+URLs de Open Graph apuntan al sitio real, así que el link se ve bien en WhatsApp.
 
 ---
 
