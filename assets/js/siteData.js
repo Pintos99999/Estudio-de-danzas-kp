@@ -204,31 +204,42 @@ window.SITE_DATA = {
      --------------------------------------------------------- */
   disciplinas: [
     {
-      nombre: 'Ballet',
-      descripcion: 'Completar con la descripción de la disciplina.',
-      nivel: 'Niveles y edades a confirmar',
-      imagen: ''
+      nombre: 'Ballet clásico',
+      descripcion: 'La base de todo: postura, giros, saltos y trabajo en puntas. Se avanza por niveles, sin apuro y respetando el cuerpo de cada una.',
+      nivel: 'Desde los primeros pasos hasta puntas',
+      imagen: 'assets/img/disciplinas/ballet.jpg',
+      color: 'ballet'
     },
     {
-      nombre: 'Danza',
-      descripcion: 'Completar con la descripción de la disciplina.',
-      nivel: 'Niveles y edades a confirmar',
-      imagen: ''
+      nombre: 'Expresión corporal',
+      descripcion: 'La puerta de entrada de las más chicas. Se juega, se escucha música y se aprende a mover el cuerpo con soltura, sin pasos memorizados.',
+      nivel: 'Para los más chicos',
+      imagen: 'assets/img/disciplinas/expresion.jpg',
+      color: 'expresion'
     },
     {
-      nombre: 'Disciplina 3',
-      descripcion: 'Completar con la descripción de la disciplina.',
-      nivel: 'Niveles y edades a confirmar',
-      imagen: ''
+      nombre: 'Urban jazz',
+      descripcion: 'Danza urbana con la técnica del jazz: energía, coreografías con actitud y mucha música de ahora.',
+      nivel: 'Jóvenes y adultos',
+      imagen: 'assets/img/disciplinas/urban.jpg',
+      color: 'urban'
     },
     {
-      nombre: 'Disciplina 4',
-      descripcion: 'Completar con la descripción de la disciplina.',
-      nivel: 'Niveles y edades a confirmar',
-      imagen: ''
+      nombre: 'Danza árabe',
+      descripcion: 'El movimiento del tronco, las caderas y los brazos, con velos y la elegancia de una danza con siglos encima.',
+      nivel: 'Todas las edades',
+      imagen: 'assets/img/disciplinas/arabe.jpg',
+      color: 'arabe'
+    },
+    {
+      nombre: 'Fitness',
+      descripcion: 'Entrenamiento del cuerpo con música: fuerza, resistencia y movilidad, en grupo y sin necesidad de saber bailar.',
+      nivel: 'Adultos',
+      imagen: '',
+      color: 'fitness'
     }
   ],
-  disciplinasNota: 'Listado en construcción. Escribinos para conocer las disciplinas, horarios y niveles disponibles en cada sede.',
+  disciplinasNota: 'Los horarios y los niveles cambian según la sede. Escribinos y te decimos cuáles hay en Paysandú y cuáles en Young.',
 
   /* ---------------------------------------------------------
      7.bis SÉ PARTE — la foto del grupo y la invitación a sumarse
@@ -256,19 +267,17 @@ window.SITE_DATA = {
        alto: 'alto' | 'medio' | 'bajo'
      --------------------------------------------------------- */
   galeria: [
-    { src: 'assets/img/galeria/01.jpg', alt: 'Giselle con el velo, iluminada a contraluz', alto: 'alto' },
-    { src: 'assets/img/galeria/02.jpg', alt: 'El corps de ballet formando un círculo entre la niebla', alto: 'medio' },
-    { src: 'assets/img/galeria/03.jpg', alt: 'Bailarina de perfil bajo una luz lavanda', alto: 'medio' },
-    { src: 'assets/img/galeria/04.jpg', alt: 'Afiche de Giselle con siluetas suspendidas en la bruma', alto: 'alto' },
-    { src: 'assets/img/galeria/05.jpg', alt: 'Bailarina avanzando hacia la luz del escenario', alto: 'medio' },
-    { src: 'assets/img/galeria/06.jpg', alt: 'Las willis en ronda, versión vertical de la campaña', alto: 'alto' },
-    { src: 'assets/img/galeria/07.jpg', alt: 'Segundo afiche de la presentación de Giselle', alto: 'medio' },
-    { src: 'assets/img/galeria/08.jpg', alt: 'Tipografía de Giselle sobre un degradado rosa y violeta', alto: 'bajo' },
-    { src: 'assets/img/galeria/09.jpg', alt: 'Bailarina a lo lejos sobre el escenario en penumbra', alto: 'alto' },
-    { src: 'assets/img/galeria/10.jpg', alt: 'Placa tipográfica de Giselle sobre fondo crema', alto: 'bajo' },
-    { src: 'assets/img/galeria/11.jpg', alt: 'Puntos de venta de entradas en Paysandú y Young', alto: 'bajo' }
+    { src: 'assets/img/galeria/01.jpg', alt: 'Una bailarina en puntas, de vestido celeste, junto a un árbol de utilería', alto: 'medio' },
+    { src: 'assets/img/galeria/02.jpg', alt: 'El grupo de contemporáneo extiende una tela blanca bajo los haces de luz, con dos lunas de fondo', alto: 'medio' },
+    { src: 'assets/img/galeria/03.jpg', alt: 'Las bailarinas de danza árabe en el escenario, iluminadas de rojo', alto: 'medio' },
+    { src: 'assets/img/galeria/04.jpg', alt: 'Las alumnas más chicas de ballet, de vestido celeste, con los brazos en alto', alto: 'alto' },
+    { src: 'assets/img/galeria/05.jpg', alt: 'Un cuadro de grupo en rosa y negro, con el escenario iluminado de rojo', alto: 'medio' },
+    { src: 'assets/img/galeria/06.jpg', alt: 'Una bailarina en pleno salto frente a un telón de hongos', alto: 'medio' },
+    { src: 'assets/img/galeria/07.jpg', alt: 'Tres alumnas caracterizadas, en una escena actuada de la función', alto: 'medio' },
+    { src: 'assets/img/galeria/08.jpg', alt: 'Escena de grupo alrededor de una mesa larga, con vestuario de personajes', alto: 'medio' }
   ],
-  galeriaNota: 'Estas son las piezas de la campaña de Giselle. Cuando tengas fotos de las clases y las presentaciones, reemplazá los archivos de assets/img/galeria/.',
+  galeriaLead: 'Momentos de nuestras funciones en el teatro.',
+  galeriaNota: 'Fotos: Esteban Solari.',
 
   /* ---------------------------------------------------------
      9. FORMULARIO DE CONTACTO

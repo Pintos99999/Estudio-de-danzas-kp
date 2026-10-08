@@ -252,71 +252,36 @@ Los datos del evento para Google **se generan solos** desde la próxima
 presentación. Cuando la función pasa, dejan de publicarse: Google nunca va a
 mostrar en el buscador una función vencida.
 
-> ### ⚠️ Falta sacar el `noindex`
-> En `index.html` hay una línea que le pide a Google que NO indexe el sitio:
-> ```html
-> <meta name="robots" content="noindex, nofollow">
-> ```
-> Está puesta a propósito mientras las disciplinas digan "Disciplina 3" y
-> "Completar con la descripción". Si Google entra ahora, eso es lo que va a
-> mostrar en los resultados.
->
-> **Primero completá las disciplinas, después borrá esa línea.** Recién ahí
-> conviene dar de alta el sitio en Google Search Console.
+## Google: ya está habilitado
+
+El `noindex` **ya se sacó**: el sitio es indexable. El siguiente paso lo hacés
+vos una sola vez: entrá a [Google Search Console](https://search.google.com/search-console),
+agregá `https://pintos99999.github.io/Estudio-de-danzas-kp/` y pegá el sitemap
+`sitemap.xml`. Google tarda unos días en empezar a mostrarlo.
 
 ---
 
-## 9. Cómo está ordenado el CSS
+## 10. Las disciplinas
 
-Los estilos ya no están en un archivo único. Están en `assets/css/partes/`,
-un archivo por apartado, y se cargan en ese orden desde `index.html`:
+Las cinco están cargadas en `siteData.js`, cada una con su color de marca:
 
-| Archivo | Qué tiene |
-|---|---|
-| `01-variables.css` | **Los colores, las tipografías y las medidas** |
-| `02-base.css` | Lo general: textos, títulos, contenedores |
-| `03-botones.css` | Botones |
-| `04-menu.css` | Menú de arriba y menú del celular |
-| `05-portada.css` | Portada, aviso de la obra, cuenta regresiva |
-| `06-estudio.css` | Sobre nosotros y disciplinas |
-| `07-escenario.css` | Del salón al teatro |
-| `08-familia.css` | Sé parte de la familia |
-| `09-galeria.css` | Galería, visor de fotos e Instagram |
-| `10-sedes-contacto.css` | Sedes, mapa, formulario y WhatsApp |
-| `11-pie.css` | Pie de página |
-| `12-animacion-responsive.css` | Animaciones y celular |
+| Disciplina | Color | Gráfica |
+|---|---|---|
+| Ballet clásico | rosa claro | `assets/img/disciplinas/ballet.jpg` |
+| Expresión corporal | violeta | `assets/img/disciplinas/expresion.jpg` |
+| Urban jazz | rojo | `assets/img/disciplinas/urban.jpg` |
+| Danza árabe | amarillo | `assets/img/disciplinas/arabe.jpg` |
+| Fitness | verde lima | *(falta la gráfica)* |
 
-El orden importa: `01-variables.css` tiene que ir primero y
-`12-animacion-responsive.css` último.
+Los colores salen de `01-variables.css` (`--disc-ballet`, `--disc-urban`…) y se
+tomaron de las propias gráficas, así que son los de la marca.
 
-### Los colores: un solo lugar
+**La tarjeta usa la gráfica para mostrar el nombre**, por eso el título no se
+repite abajo: queda igual en el código para Google y para los lectores de
+pantalla. Fitness, que no tiene gráfica, muestra una chapa verde con el nombre.
+Si conseguís el cuadrado oficial de Fitness, guardalo como
+`assets/img/disciplinas/fitness.jpg` y poné esa ruta en `imagen`.
 
-**`01-variables.css` es el único archivo del sitio con colores escritos.**
-En todos los demás no hay ni un `#` ni un `rgba(...)`: todos sacan el color
-de ahí.
-
-Está en dos capas. Primero la paleta, con nombre:
-
-```css
---rosa:    244 92 156;
---lavanda: 182 180 230;
---verde:    37 211 102;
-```
-
-Y después los usos, que salen de la paleta:
-
-```css
---acento:       rgb(var(--rosa));
---acento-borde: rgb(var(--rosa) / .4);   /* el mismo rosa, al 40% */
---linea:        rgb(var(--lavanda) / .16);
-```
-
-Por eso los colores van como tres números y sin almohadilla: así el mismo
-color se puede usar entero o transparente.
-
-**Si cambiás `--rosa`, cambia todo el sitio de una vez**: los botones, el
-borde del aviso, el subrayado del menú, las sombras y los degradados.
-Está probado: cambiando ese único valor, todo eso se actualiza junto.
-
-Para retocar un color, entrá a `01-variables.css` y cambiá el número. No
-hace falta tocar ningún otro archivo.
+Las descripciones y los niveles los redacté yo a partir de lo que es cada
+disciplina. **Revisalos**: si en el estudio se dictan con otra edad u otro
+enfoque, cambialos en `siteData.js`.

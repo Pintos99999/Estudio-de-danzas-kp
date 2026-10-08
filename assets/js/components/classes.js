@@ -2,13 +2,18 @@
 window.ClassesSection = function () {
   var D = window.SITE_DATA;
 
-  var tarjetas = D.disciplinas.map(function (d, i) {
-    var n = (i + 1) < 10 ? '0' + (i + 1) : String(i + 1);
-    return '<article class="tarjeta reveal" style="--d:' + (i * 90) + 'ms">' +
-      (d.imagen ? U.imgOpcional(d.imagen, 'Clase de ' + d.nombre + ' en el estudio', 'tarjeta__img') : '') +
-      '<span class="tarjeta__n" aria-hidden="true">' + n + '</span>' +
+  var tarjetas = D.disciplinas.map(function (d) {
+    var color = d.color ? ' style="--color-disc: var(--disc-' + U.esc(d.color) + ')"' : '';
+    return '<article class="tarjeta reveal"' + color + '>' +
+      /* Si hay gráfica oficial, ella muestra el nombre: el título queda
+         sólo para Google y los lectores de pantalla, sin repetirlo. */
+      (d.imagen
+        ? U.imgOpcional(d.imagen, d.nombre, 'tarjeta__img')
+        : '<span class="tarjeta__chapa" aria-hidden="true">' + U.esc(d.nombre) + '</span>') +
       '<div class="tarjeta__cuerpo">' +
-        '<h3>' + U.esc(d.nombre) + '</h3>' +
+        /* El nombre ya se ve en la gráfica o en la chapa de color: acá
+           queda sólo para Google y los lectores de pantalla. */
+        '<h3 class="sr-only">' + U.esc(d.nombre) + '</h3>' +
         '<p>' + U.esc(d.descripcion) + '</p>' +
         (d.nivel ? '<span class="tarjeta__nivel">' + U.esc(d.nivel) + '</span>' : '') +
       '</div>' +

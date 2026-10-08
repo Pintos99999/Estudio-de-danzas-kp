@@ -29,6 +29,7 @@ window.Footer = function () {
       '<div class="footer__grid">' +
 
         '<div class="footer__marca">' +
+          '<img class="footer__logo" src="assets/img/logo-k.png" alt="" width="56" height="56" loading="lazy" onerror="this.remove()">' +
           '<span class="marca__sup">' + U.esc(s.logoLinea1) + '</span>' +
           '<span class="marca__nombre">' + U.esc(s.logoLinea2) + '</span>' +
           '<p class="footer__lema">Formación y expresión artística a través de la danza. ' +

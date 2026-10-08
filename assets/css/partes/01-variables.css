@@ -49,6 +49,14 @@
   --rosa-claro:    255 140 188;
   --fucsia:        195 48 138;
 
+  /* Los colores de cada disciplina, tomados de la gráfica oficial.
+     Cada tarjeta de disciplina usa el suyo. */
+  --disc-ballet:    255 204 227;   /* rosa claro */
+  --disc-expresion: 144  30 169;   /* violeta */
+  --disc-urban:     237  74  79;   /* rojo */
+  --disc-arabe:     255 191   8;   /* amarillo */
+  --disc-fitness:   145 209   0;   /* verde lima */
+
   /* Verdes: sólo para WhatsApp, que tiene su color propio */
   --verde:         37 211 102;
   --verde-oscuro:  18 140 126;
