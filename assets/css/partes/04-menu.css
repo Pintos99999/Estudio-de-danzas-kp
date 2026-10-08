@@ -97,3 +97,21 @@
 
 /* El botón del encabezado nunca parte en dos líneas */
 .nav__acciones .btn { white-space: nowrap; }
+
+/* ---- BOTÓN DE IDIOMA ----
+   Discreto, al lado del botón de contacto. Muestra el idioma
+   actual encendido y el otro apagado. */
+.idioma {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .45rem .7rem; min-height: 38px;
+  border: 1px solid var(--linea); border-radius: 999px;
+  background: transparent; cursor: pointer;
+  font-size: .64rem; letter-spacing: .14em; font-weight: 400;
+  transition: border-color .35s var(--ease), background-color .35s var(--ease);
+}
+.idioma:hover { border-color: var(--linea-fuerte); background: rgb(var(--lavanda) / .07); }
+.idioma__actual { color: var(--texto-fuerte); }
+.idioma__otro { color: var(--texto-suave); }
+.idioma__actual::after {
+  content: '/'; margin-left: .3rem; color: var(--texto-suave); opacity: .5;
+}

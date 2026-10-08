@@ -51,11 +51,14 @@
 
   /* Los colores de cada disciplina, tomados de la gráfica oficial.
      Cada tarjeta de disciplina usa el suyo. */
-  --disc-ballet:    255 204 227;   /* rosa claro */
-  --disc-expresion: 144  30 169;   /* violeta */
-  --disc-urban:     237  74  79;   /* rojo */
-  --disc-arabe:     255 191   8;   /* amarillo */
-  --disc-fitness:   145 209   0;   /* verde lima */
+  /* fondo del bloque */              /* el "+" de atrás */
+  --disc-ballet:        255 204 227;  --disc-ballet-mas:    244 141 173;
+  --disc-expresion:     144  30 169;  --disc-expresion-mas: 199  64 232;
+  --disc-urban:         237  74  79;  --disc-urban-mas:     240 126  79;
+  --disc-arabe:         255 191   8;  --disc-arabe-mas:     250 213  60;
+
+  /* Texto sobre un bloque claro (ballet) */
+  --disc-texto-oscuro:  150  32  77;
 
   /* Verdes: sólo para WhatsApp, que tiene su color propio */
   --verde:         37 211 102;

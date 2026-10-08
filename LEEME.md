@@ -263,25 +263,65 @@ agregá `https://pintos99999.github.io/Estudio-de-danzas-kp/` y pegá el sitemap
 
 ## 10. Las disciplinas
 
-Las cinco están cargadas en `siteData.js`, cada una con su color de marca:
+Las cuatro están en `siteData.js`. **El nombre es texto, no una imagen**:
+el bloque de color y el "+" se dibujan con CSS. Así Google lee "Ballet
+clásico" como texto y no como una foto.
 
-| Disciplina | Color | Gráfica |
-|---|---|---|
-| Ballet clásico | rosa claro | `assets/img/disciplinas/ballet.jpg` |
-| Expresión corporal | violeta | `assets/img/disciplinas/expresion.jpg` |
-| Urban jazz | rojo | `assets/img/disciplinas/urban.jpg` |
-| Danza árabe | amarillo | `assets/img/disciplinas/arabe.jpg` |
-| Fitness | verde lima | *(falta la gráfica)* |
+Cada una lleva un `color` (`ballet`, `expresion`, `urban`, `arabe`) que sale
+de `01-variables.css`, tomado de la gráfica oficial.
 
-Los colores salen de `01-variables.css` (`--disc-ballet`, `--disc-urban`…) y se
-tomaron de las propias gráficas, así que son los de la marca.
+Para agregar una disciplina, copiá un bloque y poné su color. Si es un color
+nuevo, agregalo primero a `01-variables.css` con su tono para el "+":
 
-**La tarjeta usa la gráfica para mostrar el nombre**, por eso el título no se
-repite abajo: queda igual en el código para Google y para los lectores de
-pantalla. Fitness, que no tiene gráfica, muestra una chapa verde con el nombre.
-Si conseguís el cuadrado oficial de Fitness, guardalo como
-`assets/img/disciplinas/fitness.jpg` y poné esa ruta en `imagen`.
+```css
+--disc-fitness:     145 209   0;   --disc-fitness-mas: 185 232  80;
+```
 
-Las descripciones y los niveles los redacté yo a partir de lo que es cada
-disciplina. **Revisalos**: si en el estudio se dictan con otra edad u otro
-enfoque, cambialos en `siteData.js`.
+Si el fondo es claro (como el ballet), poné `textoOscuro: true` para que el
+nombre se lea.
+
+---
+
+## 11. Los dos idiomas
+
+El sitio está en español e inglés. El botón **ES / EN** está arriba a la
+derecha, al lado de "Consultar clases".
+
+Los textos que se traducen se escriben así en `siteData.js`:
+
+```js
+titulo: { es: 'Disciplinas', en: 'Classes' }
+```
+
+Si un texto no lleva traducción, se deja como está y se muestra igual en los
+dos idiomas. **Si le falta el inglés, se muestra el español**: nunca queda un
+hueco en blanco.
+
+Los textos de los botones y etiquetas sueltas están todos juntos al final del
+archivo, en `ui`.
+
+La elección queda guardada en el navegador de cada visitante.
+
+> **Para tener en cuenta con Google:** los dos idiomas viven en la misma
+> dirección web. Google va a indexar el español, que es el idioma por defecto
+> y el de tu público. El inglés sirve para quien entre y prefiera leerlo, pero
+> no te va a traer visitas en inglés desde el buscador. Para eso harían falta
+> direcciones separadas (`/en/`), que es bastante más trabajo y sólo vale la
+> pena si aparece público de afuera.
+
+---
+
+## 12. El anuncio de funciones, apagado
+
+La sección del escenario está **desactivada**. En `siteData.js`:
+
+```js
+escenario: { activo: false, ... }
+```
+
+Con eso, el sitio no menciona ninguna función: no aparece la sección, ni el
+aviso de la portada, ni el ítem en el menú, ni los datos del evento para
+Google. Los datos de Giselle quedaron guardados abajo, sin borrar.
+
+Para volver a anunciar una función, poné `activo: true` y actualizá la obra en
+`presentaciones`. Vuelve a aparecer todo solo, con su cuenta regresiva.

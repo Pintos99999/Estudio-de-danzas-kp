@@ -1,7 +1,4 @@
-/* PORTADA — el estudio.
-   Si hay una presentación próxima aparece un aviso que lleva a la
-   sección del escenario; si no la hay, el aviso sencillamente no está.
-   La portada funciona igual con obra o sin obra. */
+/* PORTADA — el estudio. */
 window.Hero = function () {
   var D = window.SITE_DATA, inst = D.instituto;
 
@@ -12,6 +9,8 @@ window.Hero = function () {
       (11 + (i % 5) * 2.5) + 's"></span>';
   }
 
+  /* Aviso de función: sólo si la sección del escenario está activa
+     y hay una obra por venir. Si no, la portada no la menciona. */
   var proxima = U.proxima();
   var aviso = '';
   if (proxima) {
@@ -20,7 +19,7 @@ window.Hero = function () {
       aviso =
         '<a class="aviso" href="#escenario">' +
           '<span class="aviso__punto" aria-hidden="true"></span>' +
-          '<span class="aviso__obra">' + U.esc(proxima.titulo) + ' en el teatro</span>' +
+          '<span class="aviso__obra">' + U.te(proxima.titulo) + '</span>' +
           '<span class="aviso__falta" id="aviso-falta">' + U.textoFalta(c) + '</span>' +
         '</a>';
     }
@@ -28,8 +27,8 @@ window.Hero = function () {
 
   var cifras = (inst.cifras || []).map(function (x) {
     return '<div class="cifra">' +
-      '<b>' + U.esc(x.valor) + '</b>' +
-      '<span>' + U.esc(x.etiqueta) + '</span>' +
+      '<b>' + U.te(x.valor) + '</b>' +
+      '<span>' + U.te(x.etiqueta) + '</span>' +
     '</div>';
   }).join('');
 
@@ -49,23 +48,23 @@ window.Hero = function () {
 
     '<div class="contenedor hero__contenido">' +
       aviso +
-      /* El h1 completo es lo que lee Google: "Estudio de Danzas Karen Pintos" */
+      '<p class="hero__lugar">' + U.te(inst.eyebrow) + '</p>' +
       '<h1 class="hero__titulo">' +
-        '<span class="hero__previo">' + U.esc(inst.previo) + '</span> ' +
-        '<span class="hero__nombre script">' + U.esc(inst.titulo) + '</span>' +
+        '<span class="hero__previo">' + U.te(inst.previo) + '</span> ' +
+        '<span class="hero__nombre script">' + U.te(inst.titulo) + '</span>' +
       '</h1>' +
-      '<p class="hero__lema">' + U.esc(inst.lema) + '</p>' +
-      '<p class="hero__bajada">' + U.esc(inst.bajada) + '</p>' +
+      '<p class="hero__lema">' + U.te(inst.lema) + '</p>' +
+      '<p class="hero__bajada">' + U.te(inst.bajada) + '</p>' +
       '<div class="acciones">' +
         '<a class="btn btn--primario" href="#contacto">' +
-          window.icon('sparkle', 17) + 'Consultar por clases</a>' +
-        '<a class="btn btn--ghost" href="#disciplinas">Ver las disciplinas</a>' +
+          window.icon('sparkle', 17) + U.ui('consultarPorClases') + '</a>' +
+        '<a class="btn btn--ghost" href="#disciplinas">' + U.ui('verDisciplinas') + '</a>' +
       '</div>' +
       (cifras ? '<div class="cifras">' + cifras + '</div>' : '') +
     '</div>' +
 
-    '<a class="scroll-hint" href="#estudio" aria-label="Bajar a la sección El estudio">' +
-      '<span>Descubrir</span>' +
+    '<a class="scroll-hint" href="#estudio" aria-label="' + U.ui('elEstudio') + '">' +
+      '<span>' + U.ui('descubrir') + '</span>' +
       '<span class="scroll-hint__linea" aria-hidden="true"></span>' +
     '</a>' +
   '</section>';
