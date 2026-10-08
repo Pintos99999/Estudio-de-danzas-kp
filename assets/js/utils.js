@@ -62,6 +62,23 @@
 
     email: function () { return (D.contacto.email || '').trim(); },
 
+    /* Cuenta regresiva: devuelve null si la fecha es inválida,
+       {pasado:true} si ya ocurrió, o los días/horas/min/seg que faltan. */
+    cuenta: function (iso) {
+      var destino = new Date(iso).getTime();
+      if (isNaN(destino)) return null;
+      var falta = destino - Date.now();
+      if (falta <= 0) return { pasado: true };
+      var seg = Math.floor(falta / 1000);
+      return {
+        pasado: false,
+        d: Math.floor(seg / 86400),
+        h: Math.floor((seg % 86400) / 3600),
+        m: Math.floor((seg % 3600) / 60),
+        s: seg % 60
+      };
+    },
+
     /* <img> que sólo se dibuja si hay ruta, y se quita sola si el archivo falta */
     imgOpcional: function (src, alt, clase) {
       if (!src || !String(src).trim()) return '';

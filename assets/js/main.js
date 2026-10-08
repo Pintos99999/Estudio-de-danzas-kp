@@ -12,8 +12,8 @@
     window.Navbar(),
     '<main id="contenido">',
       window.Hero(),
-      window.GiselleSection(),
       window.AboutSection(),
+      window.GiselleSection(),
       window.ClassesSection(),
       window.Gallery(),
       window.InstagramSection(),
@@ -98,6 +98,54 @@
   }, { passive: true });
   window.addEventListener('resize', pintar, { passive: true });
   pintar();
+
+  /* ---------- Cuenta regresiva ----------
+     Actualiza los cuatro números cada segundo. Cuando llega a cero,
+     reemplaza el reloj por el mensaje de función realizada. */
+  var reloj = document.getElementById('reloj');
+  if (reloj && reloj.dataset.fecha) {
+    var avisoFalta = document.getElementById('aviso-falta');
+    var relojTexto = document.getElementById('reloj-texto');
+    var cajas = {};
+    Array.prototype.forEach.call(reloj.querySelectorAll('[data-cuenta]'), function (el) {
+      cajas[el.dataset.cuenta] = el;
+    });
+
+    var tic = window.setInterval(function () {
+      var c = U.cuenta(reloj.dataset.fecha);
+      if (!c) { window.clearInterval(tic); return; }
+
+      if (c.pasado) {
+        window.clearInterval(tic);
+        reloj.classList.add('reloj--pasado');
+        reloj.innerHTML = '<p class="reloj__fin">' +
+          U.esc(D.evento.funcionRealizada || 'Función realizada.') + '</p>';
+        var av = document.querySelector('.aviso');
+        if (av) av.remove();
+        return;
+      }
+
+      ['d', 'h', 'm', 's'].forEach(function (k) {
+        if (!cajas[k]) return;
+        var v = c[k] < 10 ? '0' + c[k] : String(c[k]);
+        if (cajas[k].textContent !== v) {
+          cajas[k].textContent = v;
+          cajas[k].classList.remove('late');
+          void cajas[k].offsetWidth;        // reinicia la animación
+          cajas[k].classList.add('late');
+        }
+      });
+
+      if (relojTexto) {
+        relojTexto.textContent = 'Faltan ' + c.d + ' días para la primera función.';
+      }
+      if (avisoFalta) {
+        avisoFalta.textContent = c.d > 0
+          ? 'faltan ' + c.d + (c.d === 1 ? ' día' : ' días')
+          : 'es hoy';
+      }
+    }, 1000);
+  }
 
   /* ---------- Mapa: cambiar de sede ---------- */
   var mapaIframe = document.getElementById('mapa-iframe');
@@ -280,6 +328,8 @@
     }).then(function () { btn.disabled = false; });
   });
 
-  /* ---------- Título de la pestaña ---------- */
-  document.title = D.estudio.nombre + ' | ' + D.estudio.ciudad;
+  /* ---------- Título de la pestaña ----------
+     Se arma con las sedes cargadas, para no dejar ninguna afuera. */
+  var ciudades = U.sucursales().map(function (s) { return s.nombre; });
+  document.title = D.estudio.nombre + (ciudades.length ? ' | ' + ciudades.join(' y ') : '');
 })();

@@ -1,6 +1,8 @@
-/* HERO — portada a pantalla completa */
+/* HERO — portada del estudio.
+   El protagonista es el instituto; Giselle aparece como un aviso
+   con la cuenta regresiva, que lleva a su sección. */
 window.Hero = function () {
-  var D = window.SITE_DATA, e = D.evento, s = D.estudio, t = U.entradas();
+  var D = window.SITE_DATA, inst = D.instituto, e = D.evento;
 
   var destellos = '';
   for (var i = 0; i < 7; i++) {
@@ -9,11 +11,33 @@ window.Hero = function () {
       (11 + (i % 5) * 2.5) + 's"></span>';
   }
 
+  /* Aviso del evento con los días que faltan (se refresca desde main.js) */
+  var c = U.cuenta(e.fechaHoraISO);
+  var aviso = '';
+  if (c && !c.pasado) {
+    aviso =
+      '<a class="aviso" href="#giselle">' +
+        '<span class="aviso__punto" aria-hidden="true"></span>' +
+        '<span class="aviso__obra">' + U.esc(e.titulo) + '</span>' +
+        '<span class="aviso__sep" aria-hidden="true"></span>' +
+        '<span class="aviso__falta" id="aviso-falta">' +
+          (c.d > 0 ? 'faltan ' + c.d + (c.d === 1 ? ' día' : ' días') : 'es hoy') +
+        '</span>' +
+        window.icon('arrowRight', 14) +
+      '</a>';
+  }
+
+  var cifras = (inst.cifras || []).map(function (x) {
+    return '<div class="cifra">' +
+      '<b>' + U.esc(x.valor) + '</b>' +
+      '<span>' + U.esc(x.etiqueta) + '</span>' +
+    '</div>';
+  }).join('');
+
   return '' +
   '<section class="hero" id="inicio">' +
     '<div class="hero__fondo" aria-hidden="true"></div>' +
 
-    /* FOTO DE PORTADA: se activa con evento.imagenHero en siteData.js */
     (e.imagenHero
       ? '<img class="hero__foto parallax" data-speed="0.06" src="' + U.esc(e.imagenHero) +
         '" alt="" aria-hidden="true" fetchpriority="high" onerror="this.remove()">'
@@ -25,25 +49,22 @@ window.Hero = function () {
     destellos +
 
     '<div class="contenedor hero__contenido">' +
-      '<p class="hero__estudio">' + U.esc(s.logoLinea1) + '<span>' + U.esc(s.logoLinea2) + '</span></p>' +
-      '<p class="hero__etiqueta">' + U.esc(e.etiqueta) + '</p>' +
-      '<h1 class="hero__titulo script">' + U.esc(e.titulo) + '</h1>' +
-      '<p class="hero__sub">' + e.subtitulo + '</p>' +
-      '<p class="hero__datos">' +
-        '<b>' + U.esc(e.fechaCorta) + '</b>' +
-        '<span class="hero__sep" aria-hidden="true"></span>' +
-        U.esc(e.teatro) +
-        '<span class="hero__sep" aria-hidden="true"></span>' +
-        U.esc(e.teatroCiudad) +
-      '</p>' +
+      aviso +
+      '<p class="hero__lugar">' + U.esc(inst.eyebrow) + '</p>' +
+      '<p class="hero__previo">' + U.esc(inst.previo) + '</p>' +
+      '<h1 class="hero__titulo script">' + U.esc(inst.titulo) + '</h1>' +
+      '<p class="hero__lema">' + U.esc(inst.lema) + '</p>' +
+      '<p class="hero__bajada">' + U.esc(inst.bajada) + '</p>' +
       '<div class="acciones">' +
-        '<a class="btn btn--primario" href="' + U.esc(t.href) + '"' + t.attrs + '>' +
-          window.icon('ticket', 17) + 'Ver entradas</a>' +
-        '<a class="btn btn--ghost" href="#giselle">Conocé Giselle' + window.icon('arrowRight', 17) + '</a>' +
+        '<a class="btn btn--primario" href="#disciplinas">' +
+          window.icon('sparkle', 17) + 'Quiero tomar clases</a>' +
+        '<a class="btn btn--ghost" href="#estudio">Conocé el estudio' +
+          window.icon('arrowRight', 17) + '</a>' +
       '</div>' +
+      (cifras ? '<div class="cifras">' + cifras + '</div>' : '') +
     '</div>' +
 
-    '<a class="scroll-hint" href="#giselle" aria-label="Bajar a la sección Giselle">' +
+    '<a class="scroll-hint" href="#estudio" aria-label="Bajar a la sección El estudio">' +
       '<span>Descubrir</span>' +
       '<span class="scroll-hint__linea" aria-hidden="true"></span>' +
     '</a>' +

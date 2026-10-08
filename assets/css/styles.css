@@ -457,8 +457,10 @@ p:last-child { margin-bottom: 0; }
 @keyframes latir { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
 
 .hero__titulo {
-  font-size: clamp(4.6rem, 17vw, 11.5rem);
-  margin: 0 0 .1em;
+  /* "Karen Pintos" es mas largo que una sola palabra: entra en una linea */
+  font-size: clamp(2.8rem, 7.6vw, 6.4rem);
+  line-height: .98;
+  margin: 0 0 .05em;
   opacity: 0; animation: aparecer 1.8s var(--ease) .6s forwards;
 }
 
@@ -1145,4 +1147,164 @@ p:last-child { margin-bottom: 0; }
 @media print {
   .nav, .menu-movil, .scroll-hint, .lightbox, .haz, .destello { display: none !important; }
   body { background: #fff; color: #111; }
+}
+
+/* =============================================================
+   PORTADA DEL ESTUDIO, AVISO DEL EVENTO Y CUENTA REGRESIVA
+   ============================================================= */
+
+/* ---------- Portada ---------- */
+.hero__lugar {
+  font-size: .68rem; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--lavanda); margin: 0 0 1.6rem;
+}
+.hero__previo {
+  font-size: .78rem; letter-spacing: .42em; text-transform: uppercase;
+  color: var(--texto-tenue); margin: 0 0 .4rem; padding-left: .3em;
+}
+.hero__lema {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.3rem, 2.7vw, 1.95rem);
+  color: var(--lavanda-luz);
+  margin: .2rem 0 .9rem;
+}
+.hero__bajada {
+  max-width: 48ch; color: var(--texto);
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  margin-bottom: 2.4rem;
+}
+
+/* Tres datos cortos bajo los botones */
+.cifras {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2.4rem);
+  margin-top: clamp(2rem, 4.5vh, 3.2rem);
+  padding-top: clamp(1.4rem, 3vh, 2rem);
+  border-top: 1px solid var(--linea);
+  max-width: 46rem;
+}
+.cifra { display: flex; flex-direction: column; gap: .2rem; }
+.cifra b {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  color: var(--blanco); line-height: 1;
+}
+.cifra span {
+  font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--texto-tenue);
+}
+
+/* ---------- Aviso del evento en la portada ---------- */
+.aviso {
+  display: inline-flex; align-items: center; gap: .7rem;
+  padding: .5rem 1.1rem .5rem .9rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(244,92,156,.4); border-radius: 999px;
+  background: rgba(244,92,156,.09);
+  backdrop-filter: blur(8px);
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--blanco);
+  transition: border-color .4s var(--ease), background-color .4s var(--ease), transform .4s var(--ease);
+}
+.aviso:hover {
+  border-color: var(--rosa); background: rgba(244,92,156,.17);
+  transform: translateY(-2px);
+}
+.aviso .ico { color: var(--rosa-claro); transition: transform .4s var(--ease); }
+.aviso:hover .ico { transform: translateX(3px); }
+.aviso__punto {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--rosa);
+  box-shadow: 0 0 0 0 rgba(244,92,156,.7);
+  animation: latido 2.4s infinite;
+}
+@keyframes latido {
+  0%   { box-shadow: 0 0 0 0 rgba(244,92,156,.7); }
+  70%  { box-shadow: 0 0 0 9px rgba(244,92,156,0); }
+  100% { box-shadow: 0 0 0 0 rgba(244,92,156,0); }
+}
+.aviso__obra { font-family: var(--serif); font-size: .95rem; letter-spacing: .04em; text-transform: none; }
+.aviso__sep { width: 1px; height: 13px; background: var(--linea-fuerte); }
+.aviso__falta { color: var(--rosa-claro); }
+
+/* ---------- Encabezado de la sección Giselle ---------- */
+.giselle__encabezado { max-width: 60ch; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+.giselle__obra {
+  font-size: clamp(3.4rem, 9vw, 6rem);
+  line-height: .95; margin: 0 0 1.2rem;
+}
+
+/* ---------- Cuenta regresiva ---------- */
+.reloj {
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(1.8rem, 4vw, 2.6rem);
+  border: 1px solid var(--linea-fuerte); border-radius: 4px;
+  background:
+    radial-gradient(120% 160% at 15% 0%, rgba(195,48,138,.2), transparent 60%),
+    linear-gradient(150deg, rgba(35,48,95,.34), rgba(9,13,30,.5));
+}
+.reloj__titulo {
+  display: flex; align-items: center; gap: .6rem;
+  font-size: .68rem; letter-spacing: .28em; text-transform: uppercase;
+  color: var(--lavanda); margin: 0 0 1.6rem;
+}
+.reloj__titulo .ico { color: var(--rosa); }
+
+.reloj__cajas { display: flex; align-items: flex-start; gap: clamp(.5rem, 2vw, 1.4rem); }
+.reloj__caja { display: flex; flex-direction: column; align-items: center; gap: .5rem; min-width: 0; flex: 1 1 0; }
+.reloj__num {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  line-height: 1;
+  color: var(--blanco);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+.reloj__num.late { animation: pulsoNum .45s var(--ease); }
+@keyframes pulsoNum {
+  0%   { opacity: .45; transform: translateY(-5px); }
+  100% { opacity: 1;   transform: translateY(0); }
+}
+.reloj__t {
+  font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--texto-tenue); text-align: center;
+}
+.reloj__sep {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  color: var(--lavanda-soft); opacity: .5;
+  line-height: 1.2;
+  align-self: flex-start;
+}
+
+.reloj--pasado { text-align: center; }
+.reloj__fin {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+  color: var(--lavanda-luz); margin: 0;
+}
+
+/* ---------- Manifiesto del estudio ---------- */
+.manifiesto {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.6vw, 2.9rem);
+  font-style: italic; line-height: 1.32;
+  color: var(--lavanda-luz);
+  max-width: 26ch;
+  margin: 0 0 clamp(3rem, 7vw, 5rem);
+  padding-left: clamp(1rem, 2.5vw, 1.8rem);
+  border-left: 1px solid var(--rosa);
+  text-wrap: balance;
+}
+
+@media (max-width: 560px) {
+  .reloj__sep { display: none; }
+  .reloj__cajas { gap: .4rem; }
+  .manifiesto { max-width: none; }
+  .cifras { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviso__punto { animation: none; }
+  .reloj__num.late { animation: none; }
 }

@@ -12,9 +12,16 @@ window.AboutSection = function () {
     '</article>';
   }).join('');
 
+  var manifiesto = (D.instituto && D.instituto.manifiesto)
+    ? '<p class="manifiesto reveal">' + U.esc(D.instituto.manifiesto) + '</p>'
+    : '';
+
   return '' +
   '<section class="seccion seccion--linea" id="estudio" aria-labelledby="estudio-titulo">' +
     '<div class="contenedor">' +
+
+      manifiesto +
+
       '<div class="sobre__grid">' +
 
         '<div class="reveal">' +

@@ -1,4 +1,4 @@
-/* SECCIÓN GISELLE + agenda de presentaciones */
+/* GISELLE — el evento del estudio, con cuenta regresiva */
 window.GiselleSection = function () {
   var D = window.SITE_DATA, e = D.evento, t = U.entradas();
 
@@ -15,6 +15,38 @@ window.GiselleSection = function () {
 
   var partes = e.fechaLarga.split(' ');           // "16 Octubre 2026"
   var diaNum = partes[0], mes = partes[1] || '', anio = partes[2] || '';
+
+  /* ---- Cuenta regresiva ---- */
+  var c = U.cuenta(e.fechaHoraISO);
+  var reloj = '';
+
+  if (c && !c.pasado) {
+    var casillas = [
+      { k: 'd', t: 'días' },
+      { k: 'h', t: 'horas' },
+      { k: 'm', t: 'minutos' },
+      { k: 's', t: 'segundos' }
+    ].map(function (x) {
+      var v = c[x.k];
+      return '<div class="reloj__caja">' +
+        '<b class="reloj__num" data-cuenta="' + x.k + '">' + (v < 10 ? '0' + v : v) + '</b>' +
+        '<span class="reloj__t">' + x.t + '</span>' +
+      '</div>';
+    }).join('<span class="reloj__sep" aria-hidden="true">:</span>');
+
+    reloj =
+      '<div class="reloj reveal" id="reloj" data-fecha="' + U.esc(e.fechaHoraISO) + '">' +
+        '<p class="reloj__titulo">' + window.icon('sparkle', 16) + 'Falta para la primera función</p>' +
+        '<div class="reloj__cajas" role="timer" aria-live="off">' + casillas + '</div>' +
+        /* Texto equivalente para lectores de pantalla, sin el tic-tac */
+        '<p class="sr-only" id="reloj-texto">Faltan ' + c.d + ' días para la primera función.</p>' +
+      '</div>';
+  } else if (c && c.pasado) {
+    reloj =
+      '<div class="reloj reloj--pasado reveal" id="reloj">' +
+        '<p class="reloj__fin">' + U.esc(e.funcionRealizada || 'Función realizada.') + '</p>' +
+      '</div>';
+  }
 
   var agenda = D.presentaciones.map(function (p) {
     var clase = p.estado === 'confirmado' ? 'chip chip--confirmado' : 'chip';
@@ -35,11 +67,20 @@ window.GiselleSection = function () {
   return '' +
   '<section class="seccion giselle" id="giselle" aria-labelledby="giselle-titulo">' +
     '<div class="contenedor">' +
+
+      '<div class="giselle__encabezado reveal">' +
+        '<p class="eyebrow">' + U.esc(e.etiqueta) + '</p>' +
+        '<h2 class="titulo-seccion" id="giselle-titulo">' +
+          'Este año subimos <em>Giselle</em> al escenario</h2>' +
+        '<p class="lead">El trabajo de todo un año, en dos funciones.</p>' +
+      '</div>' +
+
+      reloj +
+
       '<div class="giselle__grid">' +
 
         '<div class="reveal">' +
-          '<p class="eyebrow">Ballet · ' + U.esc(e.etiqueta) + '</p>' +
-          '<h2 class="titulo-seccion giselle__titulo script" id="giselle-titulo">' + U.esc(e.titulo) + '</h2>' +
+          '<p class="giselle__obra script">' + U.esc(e.titulo) + '</p>' +
           '<blockquote class="giselle__cita">' + U.esc(e.subtituloPlano) + '</blockquote>' +
           '<div class="texto-tenue">' + parrafos + '</div>' +
         '</div>' +

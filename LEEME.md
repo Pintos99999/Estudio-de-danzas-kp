@@ -1,3 +1,5 @@
+| Nombre, ciudad, año del footer | `estudio` |
+| **Portada: lema, bajada, manifiesto, los 3 datos** | `instituto` |
 # Estudio de Danzas Karen Pintos — sitio web
 
 Landing page del estudio, con la presentación **Giselle** como protagonista.
@@ -195,3 +197,24 @@ Instagram, y todo lo de Giselle (fecha, funciones, teatro).
 4 "pilares", y las 4 disciplinas de ejemplo.
 No se inventaron profesores, precios, horarios de clase, premios, años de
 trayectoria, testimonios ni redes sociales adicionales.
+
+---
+
+## 7. La cuenta regresiva
+
+La portada y la sección de Giselle muestran cuánto falta para la primera
+función. Sale de un solo campo, en `evento`:
+
+```js
+fechaHoraISO: '2026-10-16T17:00:00-03:00',
+```
+
+El `-03:00` es la hora de Uruguay: así el contador marca lo mismo para alguien
+que entre desde Montevideo que desde España.
+
+Cuando la fecha pasa, el contador se apaga solo: desaparece el aviso de la
+portada y en lugar de los números aparece el texto de `funcionRealizada`.
+No hay que tocar nada el día después de la función.
+
+Para la presentación del año que viene, cambiá esa fecha (y los textos de
+`evento`) y el contador vuelve a arrancar.

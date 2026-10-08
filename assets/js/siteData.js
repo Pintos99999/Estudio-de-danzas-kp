@@ -22,6 +22,28 @@ window.SITE_DATA = {
   },
 
   /* ---------------------------------------------------------
+     1.bis IDENTIDAD — lo primero que se ve al entrar
+     Esta es la portada del sitio: habla del estudio, no de una obra.
+     --------------------------------------------------------- */
+  instituto: {
+    eyebrow: 'Paysandú · Young · Uruguay',
+    previo: 'Estudio de Danzas',
+    titulo: 'Karen Pintos',
+    lema: 'Donde la técnica se vuelve emoción.',
+    bajada: 'Un espacio de formación en danza con dos sedes, donde cada alumna encuentra su tiempo, su cuerpo y su manera de decir las cosas sin palabras.',
+
+    /* Frase grande que abre la sección del estudio */
+    manifiesto: 'Enseñamos danza. Pero lo que de verdad se aprende acá es a sostener una idea con el cuerpo, a confiar en el grupo y a pararse frente a los demás.',
+
+    /* Tres datos cortos bajo la portada. Borrá los que no quieras. */
+    cifras: [
+      { valor: 'Dos sedes', etiqueta: 'Paysandú y Young' },
+      { valor: 'Clases', etiqueta: 'por nivel y por edad' },
+      { valor: 'Teatro', etiqueta: 'una presentación al año' }
+    ]
+  },
+
+  /* ---------------------------------------------------------
      2. CONTACTO GENERAL
      --------------------------------------------------------- */
   contacto: {
@@ -88,6 +110,13 @@ window.SITE_DATA = {
     fechaCorta: '16 de Octubre · 2026',
     fechaLarga: '16 Octubre 2026',
     fechaISO: '2026-10-16',
+
+    /* CUENTA REGRESIVA
+       Fecha y hora de la primera función, en hora de Uruguay (-03:00).
+       Cuando la función pasa, el contador se apaga solo y en su lugar
+       aparece el texto de "funcionRealizada". */
+    fechaHoraISO: '2026-10-16T17:00:00-03:00',
+    funcionRealizada: 'Gracias a todas las que subieron al escenario y a todos los que vinieron a verlas.',
 
     funciones: [
       { hora: '17:00', nombre: 'Primera función' },
@@ -229,8 +258,8 @@ window.SITE_DATA = {
      --------------------------------------------------------- */
   navegacion: [
     { etiqueta: 'Inicio',      href: '#inicio' },
-    { etiqueta: 'Giselle',     href: '#giselle' },
     { etiqueta: 'El estudio',  href: '#estudio' },
+    { etiqueta: 'Giselle',     href: '#giselle' },
     { etiqueta: 'Disciplinas', href: '#disciplinas' },
     { etiqueta: 'Galería',     href: '#galeria' },
     { etiqueta: 'Sedes',       href: '#ubicacion' },
