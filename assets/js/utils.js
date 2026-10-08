@@ -104,12 +104,22 @@
       return (D.sucursales || []).filter(function (s) { return s.id === id; })[0];
     },
 
-    mapsUrl: function (s) {
-      return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.mapsBusqueda);
+    /* Si la sede tiene coordenadas, se usan ésas: el mapa cae en el
+       punto exacto y no depende de que Google interprete bien la
+       dirección escrita. Si no las tiene, busca por dirección. */
+    punto: function (s) {
+      return (s.coordenadas && s.coordenadas.trim()) ? s.coordenadas.trim() : s.mapsBusqueda;
     },
+
+    /* "Cómo llegar": abre Google Maps con la ruta hasta la sede */
+    mapsUrl: function (s) {
+      return 'https://www.google.com/maps/dir/?api=1&destination=' +
+        encodeURIComponent(U.punto(s));
+    },
+
     mapsEmbed: function (s) {
-      return 'https://maps.google.com/maps?q=' + encodeURIComponent(s.mapsBusqueda) +
-        '&t=&z=16&ie=UTF8&iwloc=&output=embed';
+      return 'https://maps.google.com/maps?q=' + encodeURIComponent(U.punto(s)) +
+        '&t=&z=17&ie=UTF8&iwloc=&output=embed';
     },
 
     whatsapp: function (s, texto) {

@@ -60,6 +60,9 @@
   /* Texto sobre un bloque claro (ballet) */
   --disc-texto-oscuro:  150  32  77;
 
+  /* Azul de Facebook */
+  --azul-facebook: 66 103 178;
+
   /* Verdes: sólo para WhatsApp, que tiene su color propio */
   --verde:         37 211 102;
   --verde-oscuro:  18 140 126;

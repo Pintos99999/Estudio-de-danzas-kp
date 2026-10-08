@@ -1,0 +1,58 @@
+/* =============================================================
+   REDES — Instagram, Facebook y correo, cada uno con su apartado
+   ============================================================= */
+.redes { background: linear-gradient(180deg, var(--fondo), var(--fondo-suave) 50%, var(--fondo)); }
+.redes__intro { max-width: 48ch; margin-bottom: clamp(2.2rem, 5vw, 3.2rem); }
+
+.redes__grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.red {
+  --color-red: var(--lavanda);
+  display: flex; flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--linea); border-radius: 3px;
+  background: linear-gradient(165deg, rgb(var(--azul) / .45), var(--fondo-suave) 75%);
+  transition: transform .45s var(--ease), border-color .45s var(--ease), box-shadow .45s var(--ease);
+}
+.red:hover {
+  transform: translateY(-5px);
+  border-color: rgb(var(--color-red) / .6);
+  box-shadow: 0 24px 55px -35px rgb(var(--color-red) / .8);
+}
+
+/* Cada red con su color propio */
+.red--instagram { --color-red: var(--rosa); }
+.red--facebook  { --color-red: var(--azul-facebook); }
+.red--email     { --color-red: var(--lavanda); }
+
+.red__ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; margin-bottom: 1.1rem;
+  border-radius: 50%;
+  background: rgb(var(--color-red) / .14);
+  color: rgb(var(--color-red));
+}
+.red__nombre {
+  font-family: var(--serif); font-size: 1.5rem;
+  color: var(--texto-fuerte); line-height: 1.1;
+}
+.red__usuario {
+  font-size: .82rem; color: rgb(var(--color-red));
+  margin-top: .2rem; word-break: break-word;
+}
+.red__detalle {
+  font-size: .88rem; color: var(--texto-suave);
+  margin: .9rem 0 1.3rem; flex: 1;
+}
+.red__accion {
+  align-self: flex-start;
+  font-size: .66rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--texto-fuerte);
+  padding-bottom: .35rem;
+  border-bottom: 1px solid rgb(var(--color-red) / .55);
+  transition: border-color .4s var(--ease);
+}
+.red:hover .red__accion { border-color: rgb(var(--color-red)); }

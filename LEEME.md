@@ -325,3 +325,48 @@ Google. Los datos de Giselle quedaron guardados abajo, sin borrar.
 
 Para volver a anunciar una función, poné `activo: true` y actualizá la obra en
 `presentaciones`. Vuelve a aparecer todo solo, con su cuenta regresiva.
+
+---
+
+## 13. Las redes
+
+Hay una sección propia —**"Seguinos y escribinos"**— con una tarjeta por canal:
+Instagram, Facebook y correo. Cada una con su color.
+
+Los enlaces están en `contacto`, dentro de `siteData.js`:
+
+```js
+instagramUrl: 'https://www.instagram.com/estudio_de_danza_karenpintos/',
+facebookUrl:  'https://www.facebook.com/danzaskarenpintos',
+email:        'institutokarenpintos@gmail.com',
+```
+
+Para sacar una red, borrá su bloque de `redes.canales`. Para agregar otra
+(TikTok, YouTube), hay que sumar también su ícono en `icons.js`.
+
+Las tres aparecen además en la sección de contacto, en el pie, y en los datos
+que lee Google (`sameAs` de `index.html`).
+
+---
+
+## 14. Los mapas
+
+Cada sede tiene sus **coordenadas exactas** en `siteData.js`:
+
+```js
+coordenadas: '-32.6955116,-57.6324761',
+```
+
+El mapa y el botón "Cómo llegar" usan esas coordenadas, **no la dirección
+escrita**. Así el pin cae donde tiene que caer y no donde Google cree que
+queda la calle.
+
+Para corregir o mover un pin:
+
+1. Abrí Google Maps y buscá el lugar.
+2. Clic derecho exactamente sobre la puerta del estudio.
+3. La primera línea del menú son las coordenadas: hacé clic y se copian.
+4. Pegalas en `coordenadas` de esa sede.
+
+El campo `mapsBusqueda` queda sólo como referencia escrita; si borrás las
+coordenadas, el mapa vuelve a buscar por dirección.

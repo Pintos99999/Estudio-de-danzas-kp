@@ -3,8 +3,8 @@ window.Footer = function () {
   var D = window.SITE_DATA, c = D.contacto, s = D.estudio;
   var email = U.email();
 
-  var nav = D.navegacion.map(function (n) {
-    return '<li><a href="' + n.href + '">' + U.esc(n.etiqueta) + '</a></li>';
+  var nav = U.navegacion().map(function (n) {
+    return '<li><a href="' + n.href + '">' + U.te(n.etiqueta) + '</a></li>';
   }).join('');
 
   var sedes = U.sucursales().map(function (x) {
@@ -30,27 +30,27 @@ window.Footer = function () {
 
         '<div class="footer__marca">' +
           '<img class="footer__logo" src="assets/img/logo-k.png" alt="" width="56" height="56" loading="lazy" onerror="this.remove()">' +
-          '<span class="marca__sup">' + U.esc(s.logoLinea1) + '</span>' +
-          '<span class="marca__nombre">' + U.esc(s.logoLinea2) + '</span>' +
-          '<p class="footer__lema">Formación y expresión artística a través de la danza. ' +
-            'Sedes en Paysandú y Young, ' + U.esc(s.pais) + '.</p>' +
+          '<span class="marca__sup">' + U.te(s.logoLinea1) + '</span>' +
+          '<span class="marca__nombre">' + U.te(s.logoLinea2) + '</span>' +
+          '<p class="footer__lema">' + U.ui('lemaPie') + '</p>' +
         '</div>' +
 
         '<div>' +
-          '<p class="footer__t">Secciones</p>' +
+          '<p class="footer__t">' + U.ui('secciones') + '</p>' +
           '<ul class="footer__lista">' + nav + '</ul>' +
         '</div>' +
 
         '<div>' +
-          '<p class="footer__t">Sedes</p>' +
-          sedes +
+          '<p class="footer__t">' + U.ui('sedes') + '</p>' + sedes +
         '</div>' +
 
         '<div>' +
-          '<p class="footer__t">Contacto</p>' +
+          '<p class="footer__t">' + U.ui('contacto') + '</p>' +
           '<ul class="footer__lista">' +
-            '<li><a href="' + U.esc(c.instagramUrl) + '" target="_blank" rel="noopener noreferrer">' +
-              U.esc(c.instagramUsuario) + '</a></li>' +
+            '<li><a href="' + U.esc(c.instagramUrl) + '" target="_blank" rel="noopener noreferrer">Instagram</a></li>' +
+            (c.facebookUrl
+              ? '<li><a href="' + U.esc(c.facebookUrl) + '" target="_blank" rel="noopener noreferrer">Facebook</a></li>'
+              : '') +
             (email ? '<li><a href="mailto:' + U.esc(email) + '">' + U.esc(email) + '</a></li>' : '') +
           '</ul>' +
         '</div>' +
@@ -59,7 +59,7 @@ window.Footer = function () {
 
       '<div class="footer__base">' +
         '<span>© ' + U.esc(s.anio) + ' ' + U.esc(s.nombre) + '</span>' +
-        '<a class="footer__arriba" href="#inicio">' + window.icon('arrowRight', 14) + 'Volver arriba</a>' +
+        '<a class="footer__arriba" href="#inicio">' + U.ui('volverArriba') + '</a>' +
       '</div>' +
     '</div>' +
   '</footer>';

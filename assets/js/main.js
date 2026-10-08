@@ -24,7 +24,7 @@
         window.EscenarioSection(),
         window.FamiliaSection(),
         window.Gallery(),
-        window.InstagramSection(),
+        window.RedesSection(),
         window.LocationSection(),
         window.ContactSection(),
       '</main>',

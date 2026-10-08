@@ -69,7 +69,42 @@ window.SITE_DATA = {
   contacto: {
     email: 'institutokarenpintos@gmail.com',
     instagramUsuario: '@estudio_de_danza_karenpintos',
-    instagramUrl: 'https://www.instagram.com/estudio_de_danza_karenpintos/'
+    instagramUrl: 'https://www.instagram.com/estudio_de_danza_karenpintos/',
+    facebookUsuario: 'Estudio de Danzas Karen Pintos',
+    facebookUrl: 'https://www.facebook.com/danzaskarenpintos'
+  },
+
+  /* ---------------------------------------------------------
+     2.bis REDES — la sección donde se las promociona
+     Para sacar una red, borrá su bloque de esta lista.
+       tipo -> instagram | facebook | email
+     --------------------------------------------------------- */
+  redes: {
+    titulo: { es: 'Seguinos y escribinos', en: 'Follow us, write to us' },
+    lead: {
+      es: 'Todos los días subimos algo: clases, ensayos y lo que pasa atrás del escenario.',
+      en: 'We post something every day: classes, rehearsals and what happens backstage.'
+    },
+    canales: [
+      {
+        tipo: 'instagram',
+        nombre: 'Instagram',
+        detalle: { es: 'Lo del día a día, en fotos y videos', en: 'Day to day, in photos and video' },
+        accion: { es: 'Seguir', en: 'Follow' }
+      },
+      {
+        tipo: 'facebook',
+        nombre: 'Facebook',
+        detalle: { es: 'Avisos, novedades y fotos de las funciones', en: 'Notices, news and photos from the shows' },
+        accion: { es: 'Seguir', en: 'Follow' }
+      },
+      {
+        tipo: 'email',
+        nombre: { es: 'Correo', en: 'Email' },
+        detalle: { es: 'Para consultas que llevan más de un mensaje', en: 'For questions that take more than a message' },
+        accion: { es: 'Escribir', en: 'Write' }
+      }
+    ]
   },
 
   /* ---------------------------------------------------------
@@ -90,6 +125,11 @@ window.SITE_DATA = {
       telefonoLink: '+59847256647',
       celular: '092 025 250',
       whatsapp: '59892025250',
+
+      /* Coordenadas exactas: el mapa apunta acá, sin depender de que
+         Google adivine la dirección. Se sacan de Google Maps con
+         clic derecho sobre el punto exacto. */
+      coordenadas: '-32.3206073,-58.0729974',
       mapsBusqueda: 'Dr. José Verocay 815, 60000 Paysandú, Uruguay'
     },
     {
@@ -103,7 +143,9 @@ window.SITE_DATA = {
       telefonoLink: '',
       celular: '099 655 632',
       whatsapp: '59899655632',
-      mapsBusqueda: '25 de Agosto esquina Carlos Fischer, Young, Río Negro, Uruguay'
+
+      coordenadas: '-32.6955116,-57.6324761',
+      mapsBusqueda: '25 de Agosto 3595, Young, Río Negro, Uruguay'
     }
   ],
 
