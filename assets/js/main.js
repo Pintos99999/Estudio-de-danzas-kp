@@ -137,12 +137,10 @@
       });
 
       if (relojTexto) {
-        relojTexto.textContent = 'Faltan ' + c.d + ' días para la primera función.';
+        relojTexto.textContent = 'La primera función ' + U.textoFalta(c) + '.';
       }
       if (avisoFalta) {
-        avisoFalta.textContent = c.d > 0
-          ? 'faltan ' + c.d + (c.d === 1 ? ' día' : ' días')
-          : 'es hoy';
+        avisoFalta.textContent = U.textoFalta(c);
       }
     }, 1000);
   }
@@ -190,11 +188,13 @@
   var pie = document.getElementById('lightbox-pie');
   var indice = 0;
   var ultimoFoco = null;
+  var pedido = 0;        // descarta cargas que quedaron viejas al pasar rápido
 
   function mostrar(i) {
     var total = D.galeria.length;
     indice = (i + total) % total;
     var g = D.galeria[indice];
+    var mio = ++pedido;
     pie.textContent = g.alt + '  ·  ' + (indice + 1) + ' / ' + total;
 
     if (!g.src) {
@@ -205,9 +205,14 @@
 
     var img = new Image();
     img.alt = g.alt;
-    img.onload = function () { medio.innerHTML = ''; medio.appendChild(img); };
+    img.onload = function () {
+      if (mio !== pedido) return;           // ya se pidió otra imagen
+      medio.innerHTML = ''; medio.appendChild(img);
+    };
     img.onerror = function () {
-      medio.innerHTML = '<div class="lightbox__vacio">No se encontró la imagen<span>' + g.src + '</span></div>';
+      if (mio !== pedido) return;
+      medio.innerHTML = '<div class="lightbox__vacio">No se encontró la imagen<span>' +
+        U.esc(g.src) + '</span></div>';
     };
     img.src = g.src;
   }

@@ -70,13 +70,33 @@
       var falta = destino - Date.now();
       if (falta <= 0) return { pasado: true };
       var seg = Math.floor(falta / 1000);
+
+      /* "d" son bloques de 24 horas: sirve para el reloj, pero NO para decir
+         de qué día se trata. A las 21:00 del día anterior faltan 20 horas y
+         "d" vale 0, aunque la función sea mañana. Por eso calculamos aparte
+         la diferencia en días de calendario. */
+      var ahora = new Date();
+      var dia0 = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+      var evt = new Date(destino);
+      var dia1 = new Date(evt.getFullYear(), evt.getMonth(), evt.getDate());
+
       return {
         pasado: false,
         d: Math.floor(seg / 86400),
         h: Math.floor((seg % 86400) / 3600),
         m: Math.floor((seg % 3600) / 60),
-        s: seg % 60
+        s: seg % 60,
+        diasCalendario: Math.round((dia1 - dia0) / 86400000)
       };
+    },
+
+    /* Texto corto del aviso: "faltan 8 días", "es mañana", "es hoy". */
+    textoFalta: function (c) {
+      if (!c || c.pasado) return '';
+      var n = c.diasCalendario;
+      if (n > 1) return 'faltan ' + n + ' días';
+      if (n === 1) return 'es mañana';
+      return 'es hoy';
     },
 
     /* <img> que sólo se dibuja si hay ruta, y se quita sola si el archivo falta */

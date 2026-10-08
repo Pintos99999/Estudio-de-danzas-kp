@@ -21,7 +21,7 @@ window.Hero = function () {
         '<span class="aviso__obra">' + U.esc(e.titulo) + '</span>' +
         '<span class="aviso__sep" aria-hidden="true"></span>' +
         '<span class="aviso__falta" id="aviso-falta">' +
-          (c.d > 0 ? 'faltan ' + c.d + (c.d === 1 ? ' día' : ' días') : 'es hoy') +
+          U.textoFalta(c) +
         '</span>' +
         window.icon('arrowRight', 14) +
       '</a>';

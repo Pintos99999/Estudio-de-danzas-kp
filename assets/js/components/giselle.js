@@ -39,7 +39,7 @@ window.GiselleSection = function () {
         '<p class="reloj__titulo">' + window.icon('sparkle', 16) + 'Falta para la primera función</p>' +
         '<div class="reloj__cajas" role="timer" aria-live="off">' + casillas + '</div>' +
         /* Texto equivalente para lectores de pantalla, sin el tic-tac */
-        '<p class="sr-only" id="reloj-texto">Faltan ' + c.d + ' días para la primera función.</p>' +
+        '<p class="sr-only" id="reloj-texto">La primera función ' + U.textoFalta(c) + '.</p>' +
       '</div>';
   } else if (c && c.pasado) {
     reloj =
