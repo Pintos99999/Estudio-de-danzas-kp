@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pintos99999.github.io/Estudio-de-danzas-kp/sitemap.xml

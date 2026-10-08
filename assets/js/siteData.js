@@ -35,6 +35,9 @@ window.SITE_DATA = {
     /* Frase grande que abre la sección del estudio */
     manifiesto: 'Enseñamos danza. Pero lo que de verdad se aprende acá es a sostener una idea con el cuerpo, a confiar en el grupo y a pararse frente a los demás.',
 
+    /* Imagen de portada ('' = sólo la atmósfera de luces) */
+    imagen: 'assets/img/hero.jpg',
+
     /* Tres datos cortos bajo la portada. Borrá los que no quieras. */
     cifras: [
       { valor: 'Dos sedes', etiqueta: 'Paysandú y Young' },
@@ -95,72 +98,81 @@ window.SITE_DATA = {
   ],
 
   /* ---------------------------------------------------------
-     4. EVENTO PRINCIPAL  ( GISELLE )
-     --------------------------------------------------------- */
-  evento: {
-    titulo: 'Giselle',
-    subtitulo: 'Una historia de amor,<br>engaño y muerte',
-    subtituloPlano: 'Una historia de amor, engaño y muerte',
-    etiqueta: 'Próxima presentación',
+     4. PRESENTACIONES
+     -------------------------------------------------------------
+     Cada obra que el estudio sube al escenario es UNA FILA de esta
+     lista. No hay una sección dedicada a ninguna obra en particular.
 
-    // Imagen de fondo del hero ('' = sólo la atmósfera de luces)
-    imagenHero: 'assets/img/hero.jpg',
+     La web mira la fecha de cada una y sola decide qué mostrar:
+       · la más próxima que todavía no pasó  -> va arriba, con la
+         cuenta regresiva y el botón de entradas;
+       · las que ya pasaron -> bajan a "Ya las presentamos".
 
-    diaSemana: 'Viernes',
-    fechaCorta: '16 de Octubre · 2026',
-    fechaLarga: '16 Octubre 2026',
-    fechaISO: '2026-10-16',
+     Así que el día después de una función NO hay que borrar nada:
+     Giselle se acomoda sola entre las anteriores.
 
-    /* CUENTA REGRESIVA
-       Fecha y hora de la primera función, en hora de Uruguay (-03:00).
-       Cuando la función pasa, el contador se apaga solo y en su lugar
-       aparece el texto de "funcionRealizada". */
-    fechaHoraISO: '2026-10-16T17:00:00-03:00',
-    funcionRealizada: 'Gracias a todas las que subieron al escenario y a todos los que vinieron a verlas.',
+     Para anunciar la obra del año que viene, copiá un bloque, cambiá
+     los datos y listo: pasa a ser la próxima.
 
-    funciones: [
-      { hora: '17:00', nombre: 'Primera función' },
-      { hora: '20:30', nombre: 'Segunda función' }
-    ],
-
-    teatro: 'Teatro Florencio Sánchez',
-    teatroCiudad: 'Paysandú',
-
-    descripcion: [
-      'Giselle es una presentación de ballet del Estudio de Danzas Karen Pintos, llevada al escenario por sus alumnas y bailarinas.',
-      'Una historia de amor, engaño y muerte contada a través del movimiento: el resultado de un año de entrenamiento, ensayos y trabajo colectivo.'
-    ],
-
-    /* ENTRADAS
-       Las entradas se venden en las dos sedes (así figura en la gráfica
-       oficial). Si más adelante hay venta online, pegá el link acá. */
-    entradasUrl: '',
-    entradasTextoActivo: 'Comprar entradas',
-    entradasTextoInactivo: 'Consultar entradas',
-    entradasNota: 'Entradas en venta en las dos sedes del estudio: Paysandú y Young.'
-  },
-
-  /* ---------------------------------------------------------
-     5. PRÓXIMAS PRESENTACIONES
-     estado: 'confirmado' | 'en-preparacion' | 'proximamente'
+       fechaHoraISO -> fecha y hora de la PRIMERA función,
+                       en hora de Uruguay (-03:00). Es el único dato
+                       que la web usa para ordenar y contar.
      --------------------------------------------------------- */
   presentaciones: [
     {
       titulo: 'Giselle',
-      fecha: 'Viernes 16 de Octubre 2026',
-      lugar: 'Teatro Florencio Sánchez · Paysandú',
-      detalle: 'Funciones 17:00 y 20:30',
-      estado: 'confirmado'
+      subtitulo: 'Una historia de amor, engaño y muerte',
+      tipo: 'Ballet',
+
+      fechaHoraISO: '2026-10-16T17:00:00-03:00',
+      fechaLegible: 'Viernes 16 de octubre de 2026',
+      anio: '2026',
+
+      funciones: [
+        { hora: '17:00', nombre: 'Primera función' },
+        { hora: '20:30', nombre: 'Segunda función' }
+      ],
+
+      lugar: 'Teatro Florencio Sánchez',
+      ciudad: 'Paysandú',
+
+      descripcion: [
+        'Giselle la bailan las alumnas del estudio: un año de clases, ensayos y trabajo de grupo que termina arriba de un escenario.',
+        'Es la historia de una muchacha que se enamora de quien no debía, y de las mujeres que vuelven de la muerte a bailar. Un clásico del ballet romántico, contado sin una sola palabra.'
+      ],
+
+      /* Si algún día hay venta online, pegá el link acá. */
+      entradasUrl: '',
+      entradasNota: 'Las entradas se venden en las dos sedes del estudio, en Paysandú y en Young.'
     }
-    // Ejemplo para agregar más adelante:
-    // {
-    //   titulo: 'Nombre de la presentación',
-    //   fecha: 'Fecha a confirmar',
-    //   lugar: 'Lugar a confirmar',
-    //   detalle: '',
-    //   estado: 'proximamente'
-    // }
+
+    /* La obra del año que viene va así (descomentá y completá):
+    {
+      titulo: 'Nombre de la obra',
+      subtitulo: '',
+      tipo: 'Ballet',
+      fechaHoraISO: '2027-10-15T17:00:00-03:00',
+      fechaLegible: 'Viernes 15 de octubre de 2027',
+      anio: '2027',
+      funciones: [ { hora: '17:00', nombre: 'Primera función' } ],
+      lugar: 'Teatro Florencio Sánchez',
+      ciudad: 'Paysandú',
+      descripcion: [ 'De qué se trata.' ],
+      entradasUrl: '',
+      entradasNota: ''
+    }
+    */
   ],
+
+  /* Textos fijos de la sección. No dependen de ninguna obra. */
+  escenario: {
+    titulo: 'Del salón al teatro',
+    lead: 'Todos los años el estudio arma una obra y la presenta en el teatro. Es donde se ve, junto, el trabajo de todo el año.',
+    etiquetaProxima: 'La que viene',
+    etiquetaAnteriores: 'Ya las presentamos',
+    tituloReloj: 'Falta para la primera función',
+    sinProxima: 'Estamos preparando la próxima. Seguinos en Instagram para enterarte de la fecha.'
+  },
 
   /* ---------------------------------------------------------
      6. SOBRE EL ESTUDIO
@@ -259,8 +271,8 @@ window.SITE_DATA = {
   navegacion: [
     { etiqueta: 'Inicio',      href: '#inicio' },
     { etiqueta: 'El estudio',  href: '#estudio' },
-    { etiqueta: 'Giselle',     href: '#giselle' },
     { etiqueta: 'Disciplinas', href: '#disciplinas' },
+    { etiqueta: 'Escenario',   href: '#escenario' },
     { etiqueta: 'Galería',     href: '#galeria' },
     { etiqueta: 'Sedes',       href: '#ubicacion' },
     { etiqueta: 'Contacto',    href: '#contacto' }

@@ -13,8 +13,8 @@
     '<main id="contenido">',
       window.Hero(),
       window.AboutSection(),
-      window.GiselleSection(),
       window.ClassesSection(),
+      window.EscenarioSection(),
       window.Gallery(),
       window.InstagramSection(),
       window.LocationSection(),
@@ -100,8 +100,9 @@
   pintar();
 
   /* ---------- Cuenta regresiva ----------
-     Actualiza los cuatro números cada segundo. Cuando llega a cero,
-     reemplaza el reloj por el mensaje de función realizada. */
+     Cuando llega a cero no "apaga" nada: vuelve a dibujar la sección
+     del escenario. La obra pasa sola a "Ya las presentamos" y, si hay
+     otra más adelante, esa toma su lugar. Sin tocar el sitio. */
   var reloj = document.getElementById('reloj');
   if (reloj && reloj.dataset.fecha) {
     var avisoFalta = document.getElementById('aviso-falta');
@@ -117,9 +118,8 @@
 
       if (c.pasado) {
         window.clearInterval(tic);
-        reloj.classList.add('reloj--pasado');
-        reloj.innerHTML = '<p class="reloj__fin">' +
-          U.esc(D.evento.funcionRealizada || 'Función realizada.') + '</p>';
+        var seccion = document.getElementById('escenario');
+        if (seccion) seccion.outerHTML = window.EscenarioSection();
         var av = document.querySelector('.aviso');
         if (av) av.remove();
         return;
@@ -332,6 +332,41 @@
         'Probá de nuevo o escribinos por ' + viasAlternativas() + '.', false);
     }).then(function () { btn.disabled = false; });
   });
+
+  /* ---------- Datos estructurados del evento (para Google) ----------
+     Se arman desde la próxima presentación. Si no hay ninguna próxima,
+     no se publica ningún evento: así Google nunca muestra en el
+     buscador una función que ya pasó. */
+  (function () {
+    var p = U.proxima();
+    if (!p) return;
+
+    var ld = {
+      '@context': 'https://schema.org',
+      '@type': 'TheaterEvent',
+      name: p.titulo + ' — ' + D.estudio.nombre,
+      startDate: p.fechaHoraISO,
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      organizer: { '@type': 'DanceSchool', name: D.estudio.nombre },
+      location: {
+        '@type': 'PerformingArtsTheater',
+        name: p.lugar,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: p.ciudad,
+          addressCountry: 'UY'
+        }
+      }
+    };
+    if (p.subtitulo) ld.description = p.subtitulo;
+    if (p.entradasUrl) ld.offers = { '@type': 'Offer', url: p.entradasUrl };
+
+    var s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(ld);
+    document.head.appendChild(s);
+  })();
 
   /* ---------- Título de la pestaña ----------
      Se arma con las sedes cargadas, para no dejar ninguna afuera. */

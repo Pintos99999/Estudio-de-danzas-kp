@@ -4,9 +4,8 @@ window.AboutSection = function () {
 
   var parrafos = s.parrafos.map(function (p) { return '<p>' + U.esc(p) + '</p>'; }).join('');
 
-  var pilares = s.pilares.map(function (p, i) {
+  var pilares = s.pilares.map(function (p) {
     return '<article class="pilar">' +
-      '<span class="pilar__n">0' + (i + 1) + '</span>' +
       '<h3>' + U.esc(p.titulo) + '</h3>' +
       '<p>' + U.esc(p.texto) + '</p>' +
     '</article>';

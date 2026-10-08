@@ -198,23 +198,68 @@ Instagram, y todo lo de Giselle (fecha, funciones, teatro).
 No se inventaron profesores, precios, horarios de clase, premios, años de
 trayectoria, testimonios ni redes sociales adicionales.
 
+
 ---
 
-## 7. La cuenta regresiva
+## 7. Las presentaciones (y por qué no hay que borrar nada)
 
-La portada y la sección de Giselle muestran cuánto falta para la primera
-función. Sale de un solo campo, en `evento`:
+**No existe una sección de Giselle.** Existe una sección fija —"Del salón al
+teatro"— y Giselle es una fila de la lista `presentaciones` en `siteData.js`.
+
+La web mira la fecha de cada obra y decide sola:
+
+| Si la fecha… | La obra… |
+|---|---|
+| todavía no pasó | va arriba, con la cuenta regresiva y el botón de entradas |
+| ya pasó | baja a "Ya las presentamos" |
+
+Así que **el día después de una función no hay que tocar el sitio**. El 17 de
+octubre a la mañana, Giselle aparece sola en la lista de obras ya presentadas,
+el contador desaparece, el botón de entradas desaparece y el aviso de la
+portada también. Si no hay ninguna obra próxima, la sección dice "Estamos
+preparando la próxima".
+
+### Anunciar la obra del año que viene
+
+En `siteData.js`, dentro de `presentaciones`, hay un bloque de ejemplo
+comentado. Descomentalo, completá los datos y guardá. Esa obra pasa a ser la
+próxima, con su cuenta regresiva, y Giselle queda como historia.
+
+El único dato que la web usa para decidir es `fechaHoraISO`:
 
 ```js
-fechaHoraISO: '2026-10-16T17:00:00-03:00',
+fechaHoraISO: '2027-10-15T17:00:00-03:00',
 ```
 
-El `-03:00` es la hora de Uruguay: así el contador marca lo mismo para alguien
-que entre desde Montevideo que desde España.
+(fecha y hora de la primera función; el `-03:00` es la hora de Uruguay)
 
-Cuando la fecha pasa, el contador se apaga solo: desaparece el aviso de la
-portada y en lugar de los números aparece el texto de `funcionRealizada`.
-No hay que tocar nada el día después de la función.
+### El botón del encabezado
 
-Para la presentación del año que viene, cambiá esa fecha (y los textos de
-`evento`) y el contador vuelve a arrancar.
+Dice **"Consultar clases"**, no "Entradas". Es a propósito: el encabezado es del
+estudio y tiene que servir todo el año. Las entradas se ofrecen dentro de la
+sección del escenario, sólo mientras haya una función por venir.
+
+---
+
+## 8. Google
+
+Ya está preparado: título y descripción orientados a "clases de danza en
+Paysandú y Young", el `h1` de la página es el nombre del estudio, hay
+`robots.txt` y `sitemap.xml`, y los datos del estudio están en formato
+Schema.org con las dos sedes.
+
+Los datos del evento para Google **se generan solos** desde la próxima
+presentación. Cuando la función pasa, dejan de publicarse: Google nunca va a
+mostrar en el buscador una función vencida.
+
+> ### ⚠️ Falta sacar el `noindex`
+> En `index.html` hay una línea que le pide a Google que NO indexe el sitio:
+> ```html
+> <meta name="robots" content="noindex, nofollow">
+> ```
+> Está puesta a propósito mientras las disciplinas digan "Disciplina 3" y
+> "Completar con la descripción". Si Google entra ahora, eso es lo que va a
+> mostrar en los resultados.
+>
+> **Primero completá las disciplinas, después borrá esa línea.** Recién ahí
+> conviene dar de alta el sitio en Google Search Console.

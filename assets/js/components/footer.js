@@ -29,8 +29,8 @@ window.Footer = function () {
       '<div class="footer__grid">' +
 
         '<div class="footer__marca">' +
-          '<span class="marca__sup">Estudio de Danzas</span>' +
-          '<span class="marca__nombre">Karen Pintos</span>' +
+          '<span class="marca__sup">' + U.esc(s.logoLinea1) + '</span>' +
+          '<span class="marca__nombre">' + U.esc(s.logoLinea2) + '</span>' +
           '<p class="footer__lema">Formación y expresión artística a través de la danza. ' +
             'Sedes en Paysandú y Young, ' + U.esc(s.pais) + '.</p>' +
         '</div>' +

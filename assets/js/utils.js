@@ -11,14 +11,43 @@
         .replace(/"/g, '&quot;');
     },
 
-    /* Enlace de entradas: si no hay URL real, lleva a contacto */
-    entradas: function () {
-      var e = D.evento;
-      var hay = !!(e.entradasUrl && e.entradasUrl.trim());
+    /* --- Presentaciones ---
+       La fecha decide todo: no hay que marcar nada a mano. */
+
+    /* La próxima que todavía no pasó (la más cercana), o null. */
+    proxima: function () {
+      var ahora = Date.now();
+      return (D.presentaciones || [])
+        .filter(function (p) {
+          var t = new Date(p.fechaHoraISO).getTime();
+          return !isNaN(t) && t > ahora;
+        })
+        .sort(function (a, b) {
+          return new Date(a.fechaHoraISO) - new Date(b.fechaHoraISO);
+        })[0] || null;
+    },
+
+    /* Las que ya pasaron, de la más reciente a la más vieja. */
+    anteriores: function () {
+      var ahora = Date.now();
+      return (D.presentaciones || [])
+        .filter(function (p) {
+          var t = new Date(p.fechaHoraISO).getTime();
+          return !isNaN(t) && t <= ahora;
+        })
+        .sort(function (a, b) {
+          return new Date(b.fechaHoraISO) - new Date(a.fechaHoraISO);
+        });
+    },
+
+    /* Enlace de entradas de una obra. Sin URL real, lleva a contacto. */
+    entradas: function (p) {
+      if (!p) return null;
+      var hay = !!(p.entradasUrl && p.entradasUrl.trim());
       return {
         hay: hay,
-        href: hay ? e.entradasUrl : '#contacto',
-        texto: hay ? e.entradasTextoActivo : e.entradasTextoInactivo,
+        href: hay ? p.entradasUrl : '#contacto',
+        texto: hay ? 'Comprar entradas' : 'Consultar entradas',
         attrs: hay ? ' target="_blank" rel="noopener noreferrer"' : ''
       };
     },
