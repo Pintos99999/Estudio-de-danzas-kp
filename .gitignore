@@ -4,5 +4,5 @@ desktop.ini
 
 # Originales de las imágenes (pesados) y scripts auxiliares
 _fotos-origen/
-_img.ps1
+_*.ps1
 _*.jpg
