@@ -231,6 +231,24 @@ window.SITE_DATA = {
   disciplinasNota: 'Listado en construcción. Escribinos para conocer las disciplinas, horarios y niveles disponibles en cada sede.',
 
   /* ---------------------------------------------------------
+     7.bis SÉ PARTE — la foto del grupo y la invitación a sumarse
+     --------------------------------------------------------- */
+  familia: {
+    titulo: 'Sé parte de la familia',
+
+    imagen: 'assets/img/familia.jpg',
+    imagenAlt: 'Las alumnas del estudio sobre el escenario del teatro, saludando al final de la función, con el público iluminando la sala',
+    pieFoto: 'Todas las alumnas del estudio, al cerrar la función.',
+
+    parrafos: [
+      'Esto es lo que queda después de un año de clases: un escenario lleno y una sala de pie.',
+      'Se empieza de a poco, sin saber nada, a cualquier edad. El resto se construye yendo. Si querés probar, escribinos y te contamos cómo sumarte.'
+    ],
+
+    boton: 'Quiero sumarme'
+  },
+
+  /* ---------------------------------------------------------
      8. GALERÍA
      Hoy muestra la campaña visual de Giselle.
      Para poner fotos reales del estudio, reemplazá los archivos de
@@ -270,7 +288,7 @@ window.SITE_DATA = {
      --------------------------------------------------------- */
   navegacion: [
     { etiqueta: 'Inicio',      href: '#inicio' },
-    { etiqueta: 'El estudio',  href: '#estudio' },
+    { etiqueta: 'Estudio',     href: '#estudio' },
     { etiqueta: 'Disciplinas', href: '#disciplinas' },
     { etiqueta: 'Escenario',   href: '#escenario' },
     { etiqueta: 'Galería',     href: '#galeria' },

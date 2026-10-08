@@ -1,0 +1,331 @@
+/* ---------- 7. HERO ---------- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex; align-items: center;
+  padding-block: calc(var(--nav-h) + 3rem) clamp(6rem, 16vh, 10rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__fondo { position: absolute; inset: 0; z-index: -3; background: var(--fondo); }
+
+/* Atmósfera: penumbra azul + halos lavanda/rosa */
+.hero__fondo::before {
+  content: ''; position: absolute; inset: -20%;
+  background:
+    radial-gradient(58% 50% at 48% 18%, rgb(var(--violeta) / .26), transparent 72%),
+    radial-gradient(40% 40% at 84% 74%, rgb(var(--rosa) / .13), transparent 74%),
+    radial-gradient(70% 60% at 12% 70%, rgb(var(--azul) / .85), transparent 78%),
+    linear-gradient(180deg, rgb(var(--azul-noche)) 0%, rgb(var(--azul-nocturno)) 34%, rgb(var(--azul-profundo)) 58%, rgb(var(--azul-noche)) 100%);
+}
+/* Piso del escenario */
+.hero__fondo::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 34%;
+  background: linear-gradient(180deg, transparent, rgb(var(--azul-noche) / .92) 62%, var(--fondo));
+}
+
+/* Rayos de luz atravesando el humo */
+.haz {
+  position: absolute; top: -18%; z-index: -2;
+  width: 46vw; height: 130%;
+  background: linear-gradient(180deg, rgb(var(--lavanda-haz) / .2), rgb(var(--lavanda-haz) / .04) 45%, transparent 78%);
+  filter: blur(34px);
+  transform-origin: top center;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.haz--1 { left: 4%;  transform: rotate(13deg);  animation: respira 13s var(--ease) infinite; }
+.haz--2 { left: 34%; width: 30vw; transform: rotate(-5deg);
+  background: linear-gradient(180deg, rgb(var(--blanco-puro) / .22), rgb(var(--lavanda) / .05) 50%, transparent 80%);
+  animation: respira 17s var(--ease) infinite reverse; }
+.haz--3 { right: 2%; transform: rotate(-16deg);
+  background: linear-gradient(180deg, rgb(var(--rosa) / .12), rgb(var(--rosa) / .02) 50%, transparent 80%);
+  animation: respira 15s var(--ease) infinite 2s; }
+
+@keyframes respira {
+  0%, 100% { opacity: .5; }
+  50%      { opacity: .95; }
+}
+
+/* Foto de portada (assets/img/hero.jpg) */
+.hero__foto {
+  position: absolute; inset: -8% 0; z-index: -2;
+  width: 100%; height: 116%;
+  object-fit: cover; object-position: 50% 42%;
+  opacity: .82;
+  filter: saturate(.92) contrast(1.02) brightness(.92);
+  will-change: transform;
+}
+/* Velo para que el texto del hero siempre se lea sobre la foto */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, rgb(var(--azul-noche) / .9) 0%, rgb(var(--azul-noche) / .68) 36%, rgb(var(--azul-noche) / .22) 64%, rgb(var(--azul-noche) / .44) 100%),
+    linear-gradient(180deg, rgb(var(--azul-noche) / .7) 0%, transparent 28%, transparent 64%, rgb(var(--azul-noche) / .94) 100%);
+}
+
+
+/* Partículas / destellos */
+.destello {
+  position: absolute; z-index: -1;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--acento-claro);
+  box-shadow: 0 0 14px 3px rgb(var(--rosa) / .55);
+  opacity: 0;
+  animation: flotar 12s linear infinite;
+}
+@keyframes flotar {
+  0%   { opacity: 0; transform: translateY(20px) scale(.6); }
+  18%  { opacity: .9; }
+  70%  { opacity: .5; }
+  100% { opacity: 0; transform: translateY(-160px) scale(1.1); }
+}
+
+.hero__contenido { position: relative; max-width: 42rem; }
+
+.hero__estudio {
+  font-size: clamp(.62rem, 1.6vw, .76rem);
+  letter-spacing: .44em; text-transform: uppercase;
+  color: rgb(var(--lavanda));
+  margin: 0 0 clamp(1.2rem, 3vw, 2rem);
+  opacity: 0; animation: aparecer 1.2s var(--ease) .2s forwards;
+}
+.hero__estudio span { display: block; color: var(--texto-fuerte); margin-top: .45rem; }
+
+.hero__etiqueta {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .42rem 1rem;
+  border: 1px solid rgb(var(--rosa) / .4);
+  border-radius: 999px;
+  background: rgb(var(--rosa) / .09);
+  font-size: .63rem; letter-spacing: .26em; text-transform: uppercase;
+  color: var(--acento-claro);
+  margin-bottom: 1.4rem;
+  opacity: 0; animation: aparecer 1.2s var(--ease) .45s forwards;
+}
+.hero__etiqueta::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--acento); box-shadow: 0 0 10px var(--acento);
+  animation: latir 2.6s ease-in-out infinite;
+}
+@keyframes latir { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
+
+.hero__titulo {
+  /* "Karen Pintos" es mas largo que una sola palabra: entra en una linea */
+  font-size: clamp(2.8rem, 7.6vw, 6.4rem);
+  line-height: .98;
+  margin: 0 0 .05em;
+  opacity: 0; animation: aparecer 1.8s var(--ease) .6s forwards;
+}
+
+.hero__sub {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.15rem, 3.1vw, 1.95rem);
+  line-height: 1.35;
+  color: var(--texto-destacado);
+  margin: 0 0 clamp(1.8rem, 4vw, 2.6rem);
+  opacity: 0; animation: aparecer 1.4s var(--ease) .95s forwards;
+}
+
+.hero__datos {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1.1rem;
+  font-size: .73rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--texto);
+  margin-bottom: clamp(2rem, 5vw, 2.8rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--linea);
+  opacity: 0; animation: aparecer 1.4s var(--ease) 1.15s forwards;
+}
+.hero__datos b { color: var(--texto-fuerte); font-weight: 400; }
+.hero__sep { width: 4px; height: 4px; border-radius: 50%; background: var(--acento); }
+
+.hero .acciones { opacity: 0; animation: aparecer 1.4s var(--ease) 1.35s forwards; }
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(26px); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+
+.scroll-hint {
+  position: absolute; left: 50%; bottom: 2rem;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .8rem;
+  font-size: .6rem; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--texto-suave);
+  opacity: 0; animation: aparecer 1.4s var(--ease) 1.8s forwards;
+  transition: color .35s var(--ease);
+}
+.scroll-hint:hover { color: rgb(var(--lavanda)); }
+.scroll-hint__linea {
+  width: 1px; height: 58px;
+  background: linear-gradient(180deg, var(--linea-fuerte), transparent);
+  position: relative; overflow: hidden;
+}
+.scroll-hint__linea::after {
+  content: ''; position: absolute; top: 0; left: 0; width: 1px; height: 22px;
+  background: var(--acento);
+  animation: bajar 2.6s var(--ease) infinite;
+}
+@keyframes bajar {
+  0%   { transform: translateY(-24px); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: translateY(58px); opacity: 0; }
+}
+
+/* =============================================================
+   PORTADA DEL ESTUDIO, AVISO DEL EVENTO Y CUENTA REGRESIVA
+   ============================================================= */
+
+/* ---------- Portada ---------- */
+.hero__lugar {
+  font-size: .68rem; letter-spacing: .32em; text-transform: uppercase;
+  color: rgb(var(--lavanda)); margin: 0 0 1.6rem;
+}
+.hero__previo {
+  font-size: .78rem; letter-spacing: .42em; text-transform: uppercase;
+  color: var(--texto-suave); margin: 0 0 .4rem; padding-left: .3em;
+}
+.hero__lema {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.3rem, 2.7vw, 1.95rem);
+  color: var(--texto-destacado);
+  margin: .2rem 0 .9rem;
+}
+.hero__bajada {
+  max-width: 48ch; color: var(--texto);
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  margin-bottom: 2.4rem;
+}
+
+/* Tres datos cortos bajo los botones */
+.cifras {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2.4rem);
+  margin-top: clamp(2rem, 4.5vh, 3.2rem);
+  padding-top: clamp(1.4rem, 3vh, 2rem);
+  border-top: 1px solid var(--linea);
+  max-width: 46rem;
+}
+.cifra { display: flex; flex-direction: column; gap: .2rem; }
+.cifra b {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  color: var(--texto-fuerte); line-height: 1;
+}
+.cifra span {
+  font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+/* ---------- Aviso del evento en la portada ---------- */
+.aviso {
+  display: inline-flex; align-items: center; gap: .7rem;
+  padding: .5rem 1.1rem .5rem .9rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgb(var(--rosa) / .4); border-radius: 999px;
+  background: rgb(var(--rosa) / .09);
+  backdrop-filter: blur(8px);
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--texto-fuerte);
+  transition: border-color .4s var(--ease), background-color .4s var(--ease), transform .4s var(--ease);
+}
+.aviso:hover {
+  border-color: var(--acento); background: rgb(var(--rosa) / .17);
+  transform: translateY(-2px);
+}
+.aviso .ico { color: var(--acento-claro); transition: transform .4s var(--ease); }
+.aviso:hover .ico { transform: translateX(3px); }
+.aviso__punto {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--acento);
+  box-shadow: 0 0 0 0 rgb(var(--rosa) / .7);
+  animation: latido 2.4s infinite;
+}
+@keyframes latido {
+  0%   { box-shadow: 0 0 0 0 rgb(var(--rosa) / .7); }
+  70%  { box-shadow: 0 0 0 9px rgb(var(--rosa) / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(var(--rosa) / 0); }
+}
+.aviso__obra { font-family: var(--serif); font-size: .95rem; letter-spacing: .04em; text-transform: none; }
+.aviso__sep { width: 1px; height: 13px; background: var(--linea-fuerte); }
+.aviso__falta { color: var(--acento-claro); }
+
+
+/* ---------- Cuenta regresiva ---------- */
+.reloj {
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(1.8rem, 4vw, 2.6rem);
+  border: 1px solid var(--linea-fuerte); border-radius: 4px;
+  background:
+    radial-gradient(120% 160% at 15% 0%, rgb(var(--fucsia) / .2), transparent 60%),
+    linear-gradient(150deg, rgb(var(--azul-claro) / .34), rgb(var(--azul-nocturno) / .5));
+}
+.reloj__titulo {
+  display: flex; align-items: center; gap: .6rem;
+  font-size: .68rem; letter-spacing: .28em; text-transform: uppercase;
+  color: rgb(var(--lavanda)); margin: 0 0 1.6rem;
+}
+.reloj__titulo .ico { color: var(--acento); }
+
+.reloj__cajas { display: flex; align-items: flex-start; gap: clamp(.5rem, 2vw, 1.4rem); }
+.reloj__caja { display: flex; flex-direction: column; align-items: center; gap: .5rem; min-width: 0; flex: 1 1 0; }
+.reloj__num {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  line-height: 1;
+  color: var(--texto-fuerte);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+.reloj__num.late { animation: pulsoNum .45s var(--ease); }
+@keyframes pulsoNum {
+  0%   { opacity: .45; transform: translateY(-5px); }
+  100% { opacity: 1;   transform: translateY(0); }
+}
+.reloj__t {
+  font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--texto-suave); text-align: center;
+}
+.reloj__sep {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  color: rgb(var(--lavanda-suave)); opacity: .5;
+  line-height: 1.2;
+  align-self: flex-start;
+}
+
+.reloj--pasado { text-align: center; }
+.reloj__fin {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+  color: var(--texto-destacado); margin: 0;
+}
+
+/* ---------- Manifiesto del estudio ---------- */
+.manifiesto {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.6vw, 2.9rem);
+  font-style: italic; line-height: 1.32;
+  color: var(--texto-destacado);
+  max-width: 26ch;
+  margin: 0 0 clamp(3rem, 7vw, 5rem);
+  padding-left: clamp(1rem, 2.5vw, 1.8rem);
+  border-left: 1px solid var(--acento);
+  text-wrap: balance;
+}
+
+@media (max-width: 560px) {
+  .reloj__sep { display: none; }
+  .reloj__cajas { gap: .4rem; }
+  .manifiesto { max-width: none; }
+  .cifras { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviso__punto { animation: none; }
+  .reloj__num.late { animation: none; }
+}
+

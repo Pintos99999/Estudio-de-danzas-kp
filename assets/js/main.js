@@ -15,6 +15,7 @@
       window.AboutSection(),
       window.ClassesSection(),
       window.EscenarioSection(),
+      window.FamiliaSection(),
       window.Gallery(),
       window.InstagramSection(),
       window.LocationSection(),

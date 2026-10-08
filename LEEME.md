@@ -263,3 +263,60 @@ mostrar en el buscador una función vencida.
 >
 > **Primero completá las disciplinas, después borrá esa línea.** Recién ahí
 > conviene dar de alta el sitio en Google Search Console.
+
+---
+
+## 9. Cómo está ordenado el CSS
+
+Los estilos ya no están en un archivo único. Están en `assets/css/partes/`,
+un archivo por apartado, y se cargan en ese orden desde `index.html`:
+
+| Archivo | Qué tiene |
+|---|---|
+| `01-variables.css` | **Los colores, las tipografías y las medidas** |
+| `02-base.css` | Lo general: textos, títulos, contenedores |
+| `03-botones.css` | Botones |
+| `04-menu.css` | Menú de arriba y menú del celular |
+| `05-portada.css` | Portada, aviso de la obra, cuenta regresiva |
+| `06-estudio.css` | Sobre nosotros y disciplinas |
+| `07-escenario.css` | Del salón al teatro |
+| `08-familia.css` | Sé parte de la familia |
+| `09-galeria.css` | Galería, visor de fotos e Instagram |
+| `10-sedes-contacto.css` | Sedes, mapa, formulario y WhatsApp |
+| `11-pie.css` | Pie de página |
+| `12-animacion-responsive.css` | Animaciones y celular |
+
+El orden importa: `01-variables.css` tiene que ir primero y
+`12-animacion-responsive.css` último.
+
+### Los colores: un solo lugar
+
+**`01-variables.css` es el único archivo del sitio con colores escritos.**
+En todos los demás no hay ni un `#` ni un `rgba(...)`: todos sacan el color
+de ahí.
+
+Está en dos capas. Primero la paleta, con nombre:
+
+```css
+--rosa:    244 92 156;
+--lavanda: 182 180 230;
+--verde:    37 211 102;
+```
+
+Y después los usos, que salen de la paleta:
+
+```css
+--acento:       rgb(var(--rosa));
+--acento-borde: rgb(var(--rosa) / .4);   /* el mismo rosa, al 40% */
+--linea:        rgb(var(--lavanda) / .16);
+```
+
+Por eso los colores van como tres números y sin almohadilla: así el mismo
+color se puede usar entero o transparente.
+
+**Si cambiás `--rosa`, cambia todo el sitio de una vez**: los botones, el
+borde del aviso, el subrayado del menú, las sombras y los degradados.
+Está probado: cambiando ese único valor, todo eso se actualiza junto.
+
+Para retocar un color, entrá a `01-variables.css` y cambiá el número. No
+hace falta tocar ningún otro archivo.

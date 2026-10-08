@@ -1,0 +1,132 @@
+/* =============================================================
+   1. VARIABLES
+   -------------------------------------------------------------
+   ESTE ES EL ÚNICO ARCHIVO DEL SITIO CON COLORES ESCRITOS.
+   Todo lo demás los hereda de acá. Si cambiás un color en este
+   archivo, cambia en toda la página de una sola vez.
+
+   Está en dos capas:
+     A) LA PALETA  -> los colores de la marca, con nombre.
+     B) LOS USOS   -> para qué se usa cada uno (fondo, texto,
+                      líneas, botones...). Salen de la paleta.
+
+   Los colores de la paleta se escriben como tres números
+   (rojo verde azul) y no con almohadilla, para poder usarlos
+   también translúcidos:  rgb(var(--azul) / .4)  = azul al 40%.
+   ============================================================= */
+
+:root {
+
+  /* ---------------------------------------------------------
+     A) LA PALETA
+     --------------------------------------------------------- */
+
+  /* Azules: del más oscuro (el fondo de la página) al más claro */
+  --azul-noche:    5 7 15;
+  --azul-nocturno: 9 13 30;
+  --azul-profundo: 13 20 46;
+  --azul:          22 32 74;
+  --azul-claro:    35 48 95;
+
+  /* Lavandas: los grises violáceos del texto y las líneas */
+  --lavanda:       182 180 230;
+  --lavanda-suave: 142 140 196;
+  --lavanda-luz:   228 226 247;
+
+  /* Violetas de atmósfera: los halos y los haces de luz del fondo */
+  --violeta:       116 112 206;
+  --lavanda-haz:   198 196 255;
+
+  /* Neutros */
+  --blanco:        248 247 252;
+  --blanco-puro:   255 255 255;
+  --gris-claro:    207 206 226;
+  --gris:          153 151 181;
+  --negro:         0 0 0;
+
+  /* Rosas: el color de la marca, el que lleva la atención */
+  --rosa:          244 92 156;
+  --rosa-claro:    255 140 188;
+  --fucsia:        195 48 138;
+
+  /* Verdes: sólo para WhatsApp, que tiene su color propio */
+  --verde:         37 211 102;
+  --verde-oscuro:  18 140 126;
+  --verde-claro:   155 240 191;
+  --verde-brillo:  91 227 141;
+
+
+  /* ---------------------------------------------------------
+     B) LOS USOS  (todo sale de la paleta de arriba)
+     --------------------------------------------------------- */
+
+  /* Fondos */
+  --fondo:         rgb(var(--azul-noche));
+  --fondo-suave:   rgb(var(--azul-nocturno));
+  --fondo-panel:   linear-gradient(155deg,
+                     rgb(var(--azul-claro) / .3),
+                     rgb(var(--azul-nocturno) / .5));
+  --fondo-vidrio:  rgb(var(--azul) / .55);
+
+  /* Textos */
+  --texto:         rgb(var(--gris-claro));
+  --texto-suave:   rgb(var(--gris));
+  --texto-fuerte:  rgb(var(--blanco));
+  --texto-destacado: rgb(var(--lavanda-luz));
+
+  /* Líneas y bordes */
+  --linea:         rgb(var(--lavanda) / .16);
+  --linea-fuerte:  rgb(var(--lavanda) / .32);
+
+  /* Acento (la marca) */
+  --acento:        rgb(var(--rosa));
+  --acento-claro:  rgb(var(--rosa-claro));
+  --acento-hondo:  rgb(var(--fucsia));
+  --acento-velo:   rgb(var(--rosa) / .1);
+  --acento-borde:  rgb(var(--rosa) / .4);
+  --degradado-acento: linear-gradient(120deg,
+                        rgb(var(--fucsia)),
+                        rgb(var(--rosa)) 55%,
+                        rgb(var(--rosa-claro)));
+
+  /* WhatsApp */
+  --wa:            rgb(var(--verde));
+  --wa-texto:      rgb(var(--verde-claro));
+  --wa-borde:      rgb(var(--verde) / .45);
+  --wa-velo:       rgb(var(--verde) / .1);
+  --wa-degradado:  linear-gradient(140deg,
+                     rgb(var(--verde)), rgb(var(--verde-oscuro)));
+
+  /* Sombras */
+  --sombra-acento: 0 10px 34px -14px rgb(var(--rosa) / .85);
+  --sombra-honda:  0 24px 60px -24px rgb(var(--negro));
+
+  /* Sobre la foto de portada: el velo que deja leer el texto */
+  --velo-portada:
+    linear-gradient(100deg,
+      rgb(var(--azul-noche) / .9) 0%,
+      rgb(var(--azul-noche) / .68) 36%,
+      rgb(var(--azul-noche) / .22) 64%,
+      rgb(var(--azul-noche) / .44) 100%),
+    linear-gradient(180deg,
+      rgb(var(--azul-noche) / .7) 0%,
+      transparent 28%, transparent 64%,
+      rgb(var(--azul-noche) / .94) 100%);
+
+
+  /* ---------------------------------------------------------
+     C) TIPOGRAFÍAS, MEDIDAS Y MOVIMIENTO
+     --------------------------------------------------------- */
+  --serif:  'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans:   'Jost', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --script: 'Pinyon Script', 'Cormorant Garamond', cursive;
+
+  --ancho:     1240px;
+  --gutter:    clamp(1.25rem, 4vw, 3.5rem);
+  --seccion-y: clamp(5rem, 11vw, 9.5rem);
+  --nav-h:     76px;
+
+  --ease:  cubic-bezier(.22, .61, .36, 1);
+  --lento: .9s;
+  --medio: .55s;
+}

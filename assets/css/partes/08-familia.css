@@ -1,0 +1,48 @@
+/* =============================================================
+   8. SÉ PARTE — la foto del grupo y la invitación
+   ============================================================= */
+.familia { padding-block: var(--seccion-y); }
+
+.familia__grid {
+  display: grid; grid-template-columns: 1.15fr .85fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+/* --- La foto --- */
+.familia__foto { margin: 0; position: relative; }
+.familia__foto img {
+  width: 100%; height: auto;
+  /* Reserva el alto antes de que la foto cargue, para que la
+     página no pegue un salto (Google penaliza ese salto). */
+  aspect-ratio: 1400 / 933;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid var(--linea);
+  background: rgb(var(--azul-nocturno));
+}
+.familia__foto figcaption {
+  margin-top: .9rem;
+  font-size: .82rem; color: var(--texto-suave);
+  line-height: 1.5;
+}
+
+/* --- El texto --- */
+.familia__titulo {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5.4vw, 4rem);
+  line-height: 1.05;
+  color: var(--texto-fuerte);
+  margin: 0 0 1.4rem;
+  text-wrap: balance;
+}
+.familia__cuerpo {
+  color: var(--texto);
+  max-width: 44ch;
+  margin-bottom: 2rem;
+}
+.familia__cuerpo p + p { margin-top: 1rem; }
+
+@media (max-width: 860px) {
+  .familia__grid { grid-template-columns: 1fr; }
+}

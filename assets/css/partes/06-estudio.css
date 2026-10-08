@@ -1,0 +1,117 @@
+/* ---------- 9. SOBRE ---------- */
+.sobre__grid {
+  display: grid; grid-template-columns: .9fr 1.1fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+.pilares {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 1px; background: var(--linea);
+  border: 1px solid var(--linea);
+  margin-top: 2.5rem;
+}
+.pilar {
+  background: var(--fondo);
+  padding: clamp(1.4rem, 3vw, 2rem);
+  transition: background-color .5s var(--ease);
+}
+.pilar:hover { background: rgb(var(--azul-profundo)); }
+.pilar__n {
+  font-size: .62rem; letter-spacing: .24em; color: var(--acento); display: block; margin-bottom: .9rem;
+}
+.pilar h3 { font-size: 1.5rem; margin-bottom: .5rem; }
+.pilar p { font-size: .88rem; color: var(--texto-suave); line-height: 1.65; }
+
+/* Retrato decorativo */
+.retrato {
+  position: relative;
+  max-width: 440px;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--linea);
+  border-radius: 3px;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--azul) 0%, var(--fondo-suave) 60%, rgb(var(--negro)) 100%);
+}
+.retrato::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(55% 45% at 50% 30%, rgb(var(--lavanda) / .22), transparent 70%);
+}
+.retrato img { width: 100%; height: 100%; object-fit: cover; }
+.retrato__vacio {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .9rem; text-align: center; padding: 2rem;
+  color: rgb(var(--lavanda-suave));
+}
+.retrato__vacio::before { content: ''; position: absolute; inset: 16px; border: 1px solid var(--linea); }
+.retrato__vacio small {
+  font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; line-height: 1.7; max-width: 18ch;
+}
+.retrato__marca {
+  position: absolute; left: 1.4rem; bottom: 1.3rem; z-index: 2;
+  font-size: .64rem; letter-spacing: .26em; text-transform: uppercase;
+  color: rgb(var(--lavanda));
+}
+
+/* ---------- 10. DISCIPLINAS ---------- */
+.disciplinas { background: linear-gradient(180deg, var(--fondo), var(--fondo-suave) 50%, var(--fondo)); }
+.disciplinas__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.6rem);
+  margin-top: 3rem;
+}
+.tarjeta {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 400px;
+  padding: 1.8rem;
+  border: 1px solid var(--linea);
+  border-radius: 3px;
+  overflow: hidden;
+  background: linear-gradient(170deg, var(--azul) -10%, var(--fondo-suave) 65%);
+  transition: transform .6s var(--ease), border-color .6s var(--ease), box-shadow .6s var(--ease);
+}
+.tarjeta::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(70% 50% at 50% 0%, rgb(var(--lavanda) / .2), transparent 70%);
+  opacity: .8; transition: opacity .6s var(--ease);
+}
+.tarjeta::after {
+  content: ''; position: absolute; inset: auto 0 0 0; height: 70%;
+  background: linear-gradient(180deg, transparent, rgb(var(--azul-noche) / .92));
+}
+.tarjeta:hover {
+  transform: translateY(-8px);
+  border-color: rgb(var(--rosa) / .4);
+  box-shadow: 0 30px 70px -40px rgb(var(--rosa) / .55);
+}
+.tarjeta:hover::before { opacity: 1; }
+.tarjeta__img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+  transition: transform 1.2s var(--ease), opacity .6s var(--ease);
+}
+.tarjeta:hover .tarjeta__img { transform: scale(1.06); }
+.tarjeta__cuerpo { position: relative; z-index: 2; }
+.tarjeta__n {
+  position: absolute; top: 1.5rem; right: 1.7rem; z-index: 2;
+  font-family: var(--serif); font-size: 2.4rem; color: rgb(var(--lavanda) / .28);
+}
+.tarjeta h3 { font-size: 2rem; margin-bottom: .6rem; }
+.tarjeta p { font-size: .88rem; color: var(--texto-suave); margin-bottom: .9rem; }
+.tarjeta__nivel {
+  display: inline-block;
+  font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--acento-claro);
+  padding-top: .8rem; border-top: 1px solid var(--linea);
+  width: 100%;
+}
+.nota {
+  margin-top: 2rem; padding: 1.1rem 1.4rem;
+  border: 1px dashed var(--linea-fuerte); border-radius: 3px;
+  font-size: .85rem; color: var(--texto-suave);
+  display: flex; gap: .9rem; align-items: center;
+}
+.nota .ico { color: var(--acento); }
+
