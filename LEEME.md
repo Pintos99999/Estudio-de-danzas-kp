@@ -12,7 +12,7 @@ Sitio estático: HTML + CSS + JavaScript, **sin build ni dependencias**.
 Editás lo que quieras (casi siempre `assets/js/siteData.js`) y después:
 
 ```powershell
-cd "C:\Users\56943042\Desktop\Danza Karen Pintos"
+cd "<la carpeta del proyecto>"
 git add -A
 git commit -m "Actualizar contenido"
 git push
@@ -370,3 +370,39 @@ Para corregir o mover un pin:
 
 El campo `mapsBusqueda` queda sólo como referencia escrita; si borrás las
 coordenadas, el mapa vuelve a buscar por dirección.
+
+---
+
+## 15. Llevar el proyecto a otra computadora
+
+Todo el sitio vive en GitHub, así que no hay que copiar carpetas a mano.
+En la otra computadora, abrí una terminal y escribí:
+
+```bash
+git clone https://github.com/Pintos99999/Estudio-de-danzas-kp.git
+```
+
+Eso baja todo: el sitio, las imágenes listas para la web, el servidor local,
+el procesador de imágenes y este manual. Son unos 4 MB, baja en segundos.
+
+Después abrís esa carpeta con Claude y seguís trabajando igual.
+
+### Para que los cambios vuelvan
+
+Las dos computadoras trabajan contra el mismo repositorio. La regla es simple:
+
+- **Antes de empezar** a trabajar: `git pull` (trae lo que hiciste en la otra)
+- **Al terminar**: `git push` (sube lo que hiciste en ésta)
+
+Si te olvidás del `pull` y las dos tocaron el mismo archivo, Git te avisa y hay
+que resolverlo a mano. Con el `pull` de entrada, no pasa.
+
+### Lo único que NO viaja
+
+La carpeta `_fotos-origen/` (65 MB de fotos originales) está excluida a
+propósito, para que el repositorio no se vuelva pesado.
+
+**No hace falta para que el sitio ande**: las versiones optimizadas ya están en
+`assets/img/`. Sólo la necesitás si vas a volver a generar las imágenes con
+`_img.ps1`. Si la querés en la otra computadora, copiala por pendrive o por
+Google Drive.

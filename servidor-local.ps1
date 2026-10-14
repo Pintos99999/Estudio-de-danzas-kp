@@ -1,5 +1,7 @@
 param(
-  [string]$Root = "C:\Users\56943042\Desktop\Danza Karen Pintos",
+  # Por defecto sirve la carpeta donde está este archivo, así funciona
+  # en cualquier computadora sin tocar nada.
+  [string]$Root = $PSScriptRoot,
   [int]$Port = 8787
 )
 $ErrorActionPreference = "Stop"
