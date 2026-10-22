@@ -63,9 +63,9 @@
 
     /* --- Presentaciones --- */
     proxima: function () {
-      if (!U.activo('escenario')) return null;
+      if (!U.activo('eventos')) return null;
       var ahora = Date.now();
-      return (D.presentaciones || [])
+      return (D.listaEventos || [])
         .filter(function (p) {
           var t = new Date(p.fechaHoraISO).getTime();
           return !isNaN(t) && t > ahora;
@@ -74,9 +74,9 @@
     },
 
     anteriores: function () {
-      if (!U.activo('escenario')) return [];
+      if (!U.activo('eventos')) return [];
       var ahora = Date.now();
-      return (D.presentaciones || [])
+      return (D.listaEventos || [])
         .filter(function (p) {
           var t = new Date(p.fechaHoraISO).getTime();
           return !isNaN(t) && t <= ahora;
@@ -84,17 +84,35 @@
         .sort(function (a, b) { return new Date(b.fechaHoraISO) - new Date(a.fechaHoraISO); });
     },
 
-    entradas: function (p) {
-      if (!p) return null;
-      var hay = !!(p.entradasUrl && p.entradasUrl.trim());
+    /* Cómo se consiguen las entradas de un evento.
+       'link' -> venta online   'sedes' -> en las sedes   'consultar' -> por mensaje */
+    entradas: function (ev) {
+      if (!ev) return null;
+      var e = ev.entradas || {};
+      var es = idioma === 'es';
+      var url = (e.url || '').trim();
+
+      if (e.modo === 'link' && url) {
+        return {
+          href: url,
+          texto: es ? 'Comprar entradas' : 'Buy tickets',
+          attrs: ' target="_blank" rel="noopener noreferrer"'
+        };
+      }
       return {
-        hay: hay,
-        href: hay ? p.entradasUrl : '#contacto',
-        texto: hay
-          ? (idioma === 'es' ? 'Comprar entradas' : 'Buy tickets')
-          : (idioma === 'es' ? 'Consultar entradas' : 'Ask about tickets'),
-        attrs: hay ? ' target="_blank" rel="noopener noreferrer"' : ''
+        href: '#contacto',
+        texto: es ? 'Consultar entradas' : 'Ask about tickets',
+        attrs: ''
       };
+    },
+
+    /* Convierte un enlace de YouTube en uno para incrustar.
+       Devuelve null si no se reconoce. */
+    youtube: function (url) {
+      var m = String(url || '').match(
+        /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+      return m ? { id: m[1], embed: 'https://www.youtube-nocookie.com/embed/' + m[1] + '?autoplay=1&rel=0',
+                   miniatura: 'https://i.ytimg.com/vi/' + m[1] + '/hqdefault.jpg' } : null;
     },
 
     /* --- Sucursales --- */

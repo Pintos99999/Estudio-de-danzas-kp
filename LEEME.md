@@ -311,23 +311,6 @@ La elección queda guardada en el navegador de cada visitante.
 
 ---
 
-## 12. El anuncio de funciones, apagado
-
-La sección del escenario está **desactivada**. En `siteData.js`:
-
-```js
-escenario: { activo: false, ... }
-```
-
-Con eso, el sitio no menciona ninguna función: no aparece la sección, ni el
-aviso de la portada, ni el ítem en el menú, ni los datos del evento para
-Google. Los datos de Giselle quedaron guardados abajo, sin borrar.
-
-Para volver a anunciar una función, poné `activo: true` y actualizá la obra en
-`presentaciones`. Vuelve a aparecer todo solo, con su cuenta regresiva.
-
----
-
 ## 13. Las redes
 
 Hay una sección propia —**"Seguinos y escribinos"**— con una tarjeta por canal:
@@ -406,3 +389,78 @@ propósito, para que el repositorio no se vuelva pesado.
 `assets/img/`. Sólo la necesitás si vas a volver a generar las imágenes con
 `_img.ps1`. Si la querés en la otra computadora, copiala por pendrive o por
 Google Drive.
+
+---
+
+## 16. EL PANEL
+
+Toda la carga de contenido se hace desde el panel. No hace falta tocar código.
+
+**Dirección:** `panel.html`, al lado del sitio.
+Online: https://pintos99999.github.io/Estudio-de-danzas-kp/panel.html
+
+> **No está enlazado desde ninguna parte del sitio**: no aparece en el menú,
+> ni en el pie, ni en el mapa del sitio, y le pedimos a Google que no lo
+> muestre. Sólo entra quien conozca la dirección. Guardala en favoritos.
+>
+> Aunque alguien la adivine, **no puede publicar nada**: para guardar cambios
+> hace falta la clave de GitHub, que está sólo en el navegador de tu hermana.
+
+### Qué se puede hacer
+
+| Pestaña | Qué carga |
+|---|---|
+| **Eventos** | Eventos con fecha, horarios, lugar, entradas, fotos, videos y descripción |
+| **Portada** | Lema, bajada y los tres datos |
+| **El estudio** | Manifiesto, textos, pilares y "Sé parte de la familia" |
+| **Disciplinas** | Agregar, quitar y editar disciplinas con su color |
+| **Galería** | Subir y borrar fotos, y describir cada una |
+| **Sedes** | Direcciones, teléfonos, WhatsApp y coordenadas |
+| **Redes** | Instagram, Facebook, correo y textos de contacto |
+
+Todo lo que se escribe tiene su casilla en **español y en inglés**. Si el
+inglés queda vacío, el sitio muestra el español.
+
+### Los eventos
+
+Cada evento se muestra como ella elija:
+
+- **Sólo contador** — la cuenta regresiva, la fecha, el lugar y las entradas
+- **Contador y fotos** — lo anterior más las fotos
+- **Todo** — lo anterior más los videos y la descripción
+
+El interruptor de arriba prende y apaga **toda la sección**. Apagada, el sitio
+no menciona ningún evento: no aparece la sección, ni el aviso de la portada,
+ni el ítem del menú, ni los datos del evento para Google.
+
+Al poner la fecha y la hora, el resto se calcula solo: la cuenta regresiva, el
+año y la fecha escrita en los dos idiomas. Cuando el evento pasa, baja solo a
+"Eventos anteriores".
+
+**Entradas:** se elige entre venta en las sedes, venta online con enlace, o
+todavía sin venta. Se puede agregar el precio y una aclaración.
+
+**Videos:** se pega el enlace de YouTube tal cual. En el sitio se ve la
+miniatura y el video recién se carga cuando alguien lo toca, para no frenar
+la página.
+
+### Las fotos
+
+Se arrastran al recuadro o se tocan para elegirlas. **El panel las achica
+solo** (1400 px de ancho) antes de subirlas, así que no hay que preparar nada.
+
+Conviene describir cada foto en una línea: es lo que lee Google y lo que
+escucha alguien que no puede ver la imagen.
+
+### Publicar
+
+El botón **Publicar cambios** sube todo y en un minuto se ve en el sitio.
+
+La primera vez pide una clave de GitHub. Se crea una sola vez y queda guardada
+en ese navegador; el propio panel explica los cuatro pasos.
+
+Mientras tanto, lo que se va escribiendo **queda guardado en la computadora**.
+Si se cierra el panel sin publicar, al volver aparece un aviso y nada se pierde.
+
+Si no se quiere usar la clave (por ejemplo en una computadora prestada), está
+**Descargar archivo**: genera el archivo y después se sube a GitHub a mano.

@@ -21,7 +21,7 @@
         window.Hero(),
         window.AboutSection(),
         window.ClassesSection(),
-        window.EscenarioSection(),
+        window.EventosSection(),
         window.FamiliaSection(),
         window.Gallery(),
         window.RedesSection(),
@@ -141,8 +141,8 @@
 
         if (c.pasado) {
           window.clearInterval(tic); tic = null;
-          var seccion = document.getElementById('escenario');
-          if (seccion) seccion.outerHTML = window.EscenarioSection();
+          var seccion = document.getElementById('eventos');
+          if (seccion) seccion.outerHTML = window.EventosSection();
           var av = document.querySelector('.aviso');
           if (av) av.remove();
           return;
@@ -199,6 +199,23 @@
         if (ev.key === 'Escape' && waAbierto) { wa(false); waFab.focus(); }
       });
     }
+
+    /* ---------- Videos del evento ----------
+       Hasta que alguien lo toca, sólo se bajó la miniatura. Recién
+       al tocarlo se carga YouTube, para no frenar la página.
+       Se escucha en el documento, así sigue andando aunque la
+       sección se vuelva a dibujar. */
+    document.addEventListener('click', function (ev) {
+      var caja = ev.target.closest('.video');
+      if (!caja || caja.querySelector('iframe')) return;
+      var marco = document.createElement('iframe');
+      marco.src = caja.dataset.embed;
+      marco.title = 'Video';
+      marco.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+      marco.allowFullscreen = true;
+      caja.innerHTML = '';
+      caja.appendChild(marco);
+    });
 
     /* ---------- Lightbox de la galería ---------- */
     var lb = document.getElementById('lightbox');

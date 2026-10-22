@@ -150,56 +150,80 @@ window.SITE_DATA = {
   ],
 
   /* ---------------------------------------------------------
-     4. EL ESCENARIO  (anuncio de funciones)
+     4. EVENTOS
      -------------------------------------------------------------
-     DESACTIVADO POR AHORA.
+     Todo esto se carga desde el PANEL (panel.html). No hace falta
+     tocarlo a mano.
 
-     Para volver a anunciar una función, poné  activo: true  y
-     completá la obra en "presentaciones". La sección vuelve a
-     aparecer sola, con su cuenta regresiva y su aviso en la
-     portada, y también vuelve al menú.
+     eventos.activo  -> prende o apaga la sección en el sitio.
+                        Apagada, el sitio no menciona ningún evento.
      --------------------------------------------------------- */
-  escenario: {
+  eventos: {
     activo: false,
 
-    titulo: { es: 'Del salón al teatro', en: 'From the studio to the stage' },
+    etiqueta: { es: 'Eventos', en: 'Events' },
+    titulo: { es: 'Próximo evento', en: 'Next event' },
     lead: {
-      es: 'Todos los años el estudio arma una obra y la presenta en el teatro. Es donde se ve, junto, el trabajo de todo el año.',
-      en: 'Every year the studio puts together a show and takes it to the theatre. That is where a whole year of work is seen at once.'
+      es: 'Todos los años subimos al escenario lo que se trabajó en el salón.',
+      en: 'Every year we take to the stage what was worked on in the studio.'
     },
-    etiquetaProxima: { es: 'La que viene', en: 'Coming up' },
-    etiquetaAnteriores: { es: 'Ya las presentamos', en: 'Already performed' },
-    tituloReloj: { es: 'Falta para la primera función', en: 'Until the first show' },
-    sinProxima: {
-      es: 'Estamos preparando la próxima. Seguinos en Instagram para enterarte de la fecha.',
+    tituloReloj: { es: 'Falta para el evento', en: 'Time to go' },
+    etiquetaAnteriores: { es: 'Eventos anteriores', en: 'Past events' },
+    sinProximo: {
+      es: 'Estamos preparando el próximo. Seguinos en Instagram para enterarte de la fecha.',
       en: 'We are working on the next one. Follow us on Instagram to hear the date first.'
     }
   },
 
-  /* Cada obra es una fila. La fecha decide sola si va arriba
-     (todavía no pasó) o abajo en "ya las presentamos". */
-  presentaciones: [
+  /* Cada evento es una fila de esta lista. La fecha decide sola si va
+     arriba (todavía no pasó) o abajo en "eventos anteriores".
+
+       modo -> cuánto se muestra de este evento:
+               'contador'  = sólo la cuenta regresiva y los datos
+               'fotos'     = lo anterior + las fotos
+               'completo'  = lo anterior + los videos y la descripción
+
+       entradas.modo -> 'sedes'     = se venden en las sedes del estudio
+                        'link'      = hay venta online (completar url)
+                        'consultar' = todavía no hay venta, se consulta
+  */
+  listaEventos: [
     {
+      id: 'giselle-2026',
       titulo: 'Giselle',
       subtitulo: { es: 'Una historia de amor, engaño y muerte', en: 'A story of love, betrayal and death' },
-      tipo: 'Ballet',
+      modo: 'completo',
+
       fechaHoraISO: '2026-10-16T17:00:00-03:00',
       fechaLegible: { es: 'Viernes 16 de octubre de 2026', en: 'Friday 16 October 2026' },
       anio: '2026',
+
       funciones: [
         { hora: '17:00', nombre: { es: 'Primera función', en: 'First show' } },
         { hora: '20:30', nombre: { es: 'Segunda función', en: 'Second show' } }
       ],
+
       lugar: 'Teatro Florencio Sánchez',
       ciudad: 'Paysandú',
+      direccion: '',
+      coordenadas: '',
+
       descripcion: [
         { es: 'Giselle la bailan las alumnas del estudio: un año de clases, ensayos y trabajo de grupo que termina arriba de un escenario.',
           en: 'Giselle is danced by the studio students: a year of classes, rehearsals and teamwork that ends up on a stage.' }
       ],
-      entradasUrl: '',
-      entradasNota: {
-        es: 'Las entradas se venden en las dos sedes del estudio.',
-        en: 'Tickets are sold at both studio locations.'
+
+      imagenes: [],
+      videos: [],
+
+      entradas: {
+        modo: 'sedes',
+        url: '',
+        precio: '',
+        nota: {
+          es: 'Las entradas se venden en las dos sedes del estudio.',
+          en: 'Tickets are sold at both studio locations.'
+        }
       }
     }
   ],
@@ -379,7 +403,7 @@ window.SITE_DATA = {
     { etiqueta: { es: 'Inicio', en: 'Home' }, href: '#inicio' },
     { etiqueta: { es: 'Estudio', en: 'Studio' }, href: '#estudio' },
     { etiqueta: { es: 'Disciplinas', en: 'Classes' }, href: '#disciplinas' },
-    { etiqueta: { es: 'Escenario', en: 'Stage' }, href: '#escenario', soloSi: 'escenario' },
+    { etiqueta: { es: 'Eventos', en: 'Events' }, href: '#eventos', soloSi: 'eventos' },
     { etiqueta: { es: 'Galería', en: 'Gallery' }, href: '#galeria' },
     { etiqueta: { es: 'Sedes', en: 'Locations' }, href: '#ubicacion' },
     { etiqueta: { es: 'Contacto', en: 'Contact' }, href: '#contacto' }
