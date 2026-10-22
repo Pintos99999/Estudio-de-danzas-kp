@@ -1,5 +1,3 @@
-| Nombre, ciudad, año del footer | `estudio` |
-| **Portada: lema, bajada, manifiesto, los 3 datos** | `instituto` |
 # Estudio de Danzas Karen Pintos — sitio web
 
 Landing page del estudio, con la presentación **Giselle** como protagonista.
@@ -410,16 +408,53 @@ Online: https://pintos99999.github.io/Estudio-de-danzas-kp/panel.html
 
 | Pestaña | Qué carga |
 |---|---|
-| **Eventos** | Eventos con fecha, horarios, lugar, entradas, fotos, videos y descripción |
-| **Portada** | Lema, bajada y los tres datos |
-| **El estudio** | Manifiesto, textos, pilares y "Sé parte de la familia" |
-| **Disciplinas** | Agregar, quitar y editar disciplinas con su color |
-| **Galería** | Subir y borrar fotos, y describir cada una |
-| **Sedes** | Direcciones, teléfonos, WhatsApp y coordenadas |
-| **Redes** | Instagram, Facebook, correo y textos de contacto |
+| **Inicio** | El tablero: cuatro botones grandes y cómo está la página ahora mismo |
+| **Avisos** | Carteles cortos: inscripciones abiertas, cambios de horario, suspensiones |
+| **Eventos y funciones** | Eventos con fecha, horarios, lugar, entradas, fotos, videos y descripción |
+| **Fotos del estudio** | Subir y borrar fotos de la galería, y describir cada una |
+| **Textos de la página** | Portada, manifiesto, pilares y disciplinas |
+| **Sedes y contacto** | Direcciones, teléfonos, WhatsApp, mapas, redes y formulario |
+| **Asistente** | El ayudante que redacta textos, y el chat del sitio |
 
 Todo lo que se escribe tiene su casilla en **español y en inglés**. Si el
-inglés queda vacío, el sitio muestra el español.
+no queda ninguno a la vista, la franja entera desaparece del sitio.
+
+### Inicio: el tablero
+
+Al entrar no hay que buscar nada. Hay cuatro botones grandes —
+**Crear un aviso**, **Publicar un evento**, **Cargar una función** y
+**Gestionar entradas** — que llevan directo al formulario correspondiente
+y, cuando corresponde, ya dejan creada la ficha vacía para empezar a
+completar.
+
+Abajo hay cuatro fichas que dicen **cómo está la página en este momento**:
+cuántos avisos se están viendo, si la sección de eventos está encendida,
+cuál es el próximo evento y cuántas fotos tiene la galería.
+
+### Ver cómo queda antes de publicar
+
+El botón **Ver cómo queda** abre el sitio real, con los cambios todavía sin
+publicar, en una ventana dentro del panel. Se puede mirar en tamaño
+computadora, tablet y celular.
+
+No se publica nada: los datos de ensayo viven sólo en ese navegador y se
+borran al cerrar la vista previa. Desde ahí se puede seguir editando o
+publicar de una vez.
+
+### Los avisos
+
+Son los carteles cortos de la franja de novedades. Cada uno tiene título,
+texto, un botón opcional y un tipo:
+
+- **Novedad** — lo habitual, en rosa
+- **Inscripciones** — para lo que urge, en dorado
+- **Importante** — cambios y suspensiones, más marcado
+
+Se les puede poner **desde** y **hasta**: el aviso aparece y desaparece solo
+en esas fechas, sin que nadie tenga que acordarse de sacarlo.
+
+Cada aviso se puede **ocultar** sin borrarlo, por si sirve más adelante. Si
+no queda ninguno a la vista, la franja entera desaparece del sitio.
 
 ### Los eventos
 
@@ -464,3 +499,27 @@ Si se cierra el panel sin publicar, al volver aparece un aviso y nada se pierde.
 
 Si no se quiere usar la clave (por ejemplo en una computadora prestada), está
 **Descargar archivo**: genera el archivo y después se sube a GitHub a mano.
+
+### El asistente (Gemini)
+
+Hay dos cosas distintas, y las dos son opcionales:
+
+**El chat del sitio.** Una burbuja abajo a la izquierda donde quien visita la
+página puede preguntar por las disciplinas, las sedes, el próximo evento y las
+entradas. Responde con lo que está cargado en el panel: cuando tu hermana
+publica un cambio, el chat se entera solo. Tiene prohibido inventar precios,
+edades y horarios: si no los sabe, deriva al WhatsApp.
+
+**El ayudante del panel.** Le pedís "un aviso de que abrieron las
+inscripciones" y te deja el texto redactado en español y en inglés, con un
+botón para copiarlo. **No publica ni cambia nada por su cuenta**: eso lo seguís
+haciendo vos, revisando y apretando *Publicar cambios*.
+
+Para que funcionen hay que instalarlos una vez. Está todo explicado en
+**`asistente/LEEME-ASISTENTE.md`**. Mientras no se instale, el chat no aparece
+en el sitio y el panel avisa que falta configurarlo: nada se rompe.
+
+> **Por qué hace falta instalar algo aparte:** usar Gemini requiere una clave
+> de Google que se paga. Si esa clave estuviera en el JavaScript de la página,
+> cualquiera podría verla y gastarla. Por eso vive en un ayudante aparte
+> (`asistente/worker.js`), que es la única pieza que corre en un servidor.

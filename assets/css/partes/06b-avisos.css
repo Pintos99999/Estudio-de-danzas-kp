@@ -1,0 +1,74 @@
+/* ---------- 6b. AVISOS Y NOVEDADES ----------
+   La franja de carteles cortos. Cada tipo de aviso tiene su color,
+   que sale de las variables: rosa lo habitual, dorado lo que urge. */
+
+.seccion--avisos {
+  padding-block: clamp(3rem, 7vw, 5rem);
+  background: var(--fondo-suave);
+}
+
+.avisos__titulo {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  margin-bottom: 2rem;
+}
+
+.avisos__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(.9rem, 2vw, 1.4rem);
+}
+
+.aviso-tarjeta {
+  --tono: var(--acento);
+  --tono-velo: var(--acento-velo);
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-suave);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.aviso-tarjeta:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-media);
+}
+
+/* La cinta de color de la izquierda */
+.aviso-tarjeta__marca {
+  flex: 0 0 5px;
+  background: var(--tono);
+}
+
+.aviso-tarjeta__cuerpo { padding: 1.25rem 1.4rem; }
+
+.aviso-tarjeta__titulo {
+  font-family: var(--sans);
+  font-size: 1.02rem; font-weight: 500;
+  letter-spacing: .005em;
+  margin: 0 0 .45rem;
+}
+
+.aviso-tarjeta__texto {
+  font-size: .91rem;
+  color: var(--texto);
+  margin: 0 0 .7rem;
+}
+.aviso-tarjeta__texto:last-child { margin-bottom: 0; }
+
+.aviso-tarjeta .btn--texto { color: var(--tono); border-color: var(--tono-velo); }
+.aviso-tarjeta .btn--texto:hover { border-color: var(--tono); }
+
+/* ---- Los tres tipos ---- */
+.aviso-tarjeta--inscripciones {
+  --tono: var(--realce);
+  --tono-velo: var(--realce-borde);
+  background: linear-gradient(140deg, var(--realce-velo), var(--superficie) 62%);
+}
+.aviso-tarjeta--importante {
+  --tono: var(--acento-hondo);
+  --tono-velo: var(--acento-borde);
+  background: linear-gradient(140deg, var(--acento-velo), var(--superficie) 62%);
+}
+.aviso-tarjeta--importante .aviso-tarjeta__marca { width: 7px; flex-basis: 7px; }

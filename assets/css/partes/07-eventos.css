@@ -13,8 +13,8 @@
   font-family: var(--script);
   font-size: clamp(3.4rem, 8.5vw, 6rem);
   line-height: .92; margin: 0 0 .6rem;
-  background: linear-gradient(105deg, rgb(var(--blanco-puro)) 10%,
-              var(--texto-destacado) 38%, var(--acento-claro) 72%);
+  background: linear-gradient(104deg, var(--acento-hondo) 6%,
+              var(--acento) 40%, var(--realce) 86%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   padding-bottom: .1em;
 }
@@ -28,7 +28,7 @@
 /* --- Dónde, cuándo y entradas --- */
 .obra__datos {
   padding: clamp(1.6rem, 3.5vw, 2.3rem);
-  border: 1px solid var(--linea-fuerte); border-radius: 3px;
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
   background: var(--fondo-panel);
 }
 .obra__fecha {
@@ -43,7 +43,7 @@
 }
 .funcion b {
   font-family: var(--serif); font-weight: 400;
-  font-size: 1.45rem; color: var(--acento-claro);
+  font-size: 1.45rem; color: var(--acento-hondo);
   font-variant-numeric: tabular-nums;
 }
 .funcion span { font-size: .86rem; color: var(--texto-suave); }
@@ -78,7 +78,7 @@
 .reloj {
   margin-top: clamp(2.5rem, 5vw, 3.5rem);
   padding: clamp(1.8rem, 4vw, 2.6rem);
-  border: 1px solid var(--linea-fuerte); border-radius: 4px;
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
   background:
     radial-gradient(120% 160% at 15% 0%, rgb(var(--fucsia) / .2), transparent 60%),
     var(--fondo-panel);
@@ -114,7 +114,7 @@
   gap: .8rem; margin-top: clamp(2rem, 4vw, 3rem);
 }
 .evento__foto {
-  padding: 0; border: 1px solid var(--linea); border-radius: 3px;
+  padding: 0; border: 1px solid var(--linea); border-radius: var(--radio); overflow: hidden;
   background: var(--fondo-suave); overflow: hidden; cursor: pointer;
   aspect-ratio: 4 / 3;
   transition: border-color .4s var(--ease), transform .4s var(--ease);
@@ -129,7 +129,7 @@
 }
 .video {
   position: relative; aspect-ratio: 16 / 9;
-  border: 1px solid var(--linea); border-radius: 3px;
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
   overflow: hidden; background: var(--fondo-suave);
 }
 .video img { width: 100%; height: 100%; object-fit: cover; opacity: .75; transition: opacity .4s var(--ease); }
@@ -146,7 +146,7 @@
 }
 .video__play span {
   width: 0; height: 0; margin-left: 4px;
-  border-left: 18px solid rgb(var(--blanco-puro));
+  border-left: 18px solid var(--sobre-foto);
   border-top: 11px solid transparent;
   border-bottom: 11px solid transparent;
 }
@@ -154,8 +154,8 @@
 .video__titulo {
   position: absolute; left: 0; right: 0; bottom: 0;
   padding: 1.4rem 1rem .9rem;
-  font-size: .85rem; color: rgb(var(--blanco-puro));
-  background: linear-gradient(180deg, transparent, rgb(var(--azul-noche) / .9));
+  font-size: .85rem; color: var(--sobre-foto);
+  background: linear-gradient(180deg, transparent, var(--velo-foto-fuerte));
 }
 
 /* --- Eventos anteriores --- */
@@ -176,7 +176,7 @@
 }
 .hecha__anio {
   font-family: var(--serif); font-size: 1.3rem;
-  color: rgb(var(--lavanda-suave)); font-variant-numeric: tabular-nums;
+  color: var(--texto-tenue); font-variant-numeric: tabular-nums;
 }
 .hecha__obra { font-family: var(--serif); font-size: 1.35rem; color: var(--texto-fuerte); }
 .hecha__lugar { font-size: .84rem; color: var(--texto-suave); }

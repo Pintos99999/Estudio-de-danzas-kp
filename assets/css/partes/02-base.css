@@ -12,9 +12,9 @@ body {
   background: var(--fondo);
   color: var(--texto);
   font-family: var(--sans);
-  font-size: clamp(1rem, .96rem + .2vw, 1.075rem);
-  font-weight: 300;
-  line-height: 1.75;
+  font-size: clamp(1rem, .96rem + .2vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.7;
   letter-spacing: .012em;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -27,7 +27,7 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 9;
-  opacity: .16;
+  opacity: .075;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
 }
 
@@ -37,7 +37,7 @@ button { font: inherit; color: inherit; }
 
 h1, h2, h3, h4 {
   font-family: var(--serif);
-  font-weight: 300;
+  font-weight: 400;
   color: var(--texto-fuerte);
   line-height: 1.08;
   letter-spacing: -.01em;
@@ -47,7 +47,7 @@ h1, h2, h3, h4 {
 p { margin: 0 0 1.15em; }
 p:last-child { margin-bottom: 0; }
 
-::selection { background: var(--acento); color: rgb(var(--blanco-puro)); }
+::selection { background: var(--acento-solido); color: var(--sobre-acento); }
 
 :focus-visible {
   outline: 2px solid var(--acento-claro);
@@ -67,7 +67,7 @@ p:last-child { margin-bottom: 0; }
 .saltar {
   position: absolute; left: 50%; top: 0;
   transform: translate(-50%, -140%);
-  z-index: 200; background: var(--acento); color: rgb(var(--blanco-puro));
+  z-index: 200; background: var(--acento-solido); color: var(--sobre-acento);
   padding: .7rem 1.4rem; border-radius: 0 0 6px 6px;
   font-size: .82rem; letter-spacing: .12em; text-transform: uppercase;
   transition: transform .25s var(--ease);
@@ -99,7 +99,7 @@ p:last-child { margin-bottom: 0; }
   display: inline-flex; align-items: center; gap: .7rem;
   font-size: .72rem; font-weight: 400;
   letter-spacing: .34em; text-transform: uppercase;
-  color: var(--acento-claro);
+  color: var(--acento-hondo);
   margin: 0 0 1.5rem;
 }
 .eyebrow::before {
@@ -113,7 +113,7 @@ p:last-child { margin-bottom: 0; }
 }
 .titulo-seccion em {
   font-style: italic;
-  color: rgb(var(--lavanda));
+  color: var(--texto-suave);
 }
 
 .lead {
@@ -132,7 +132,7 @@ p:last-child { margin-bottom: 0; }
   font-weight: 400;
   letter-spacing: .01em;
   line-height: 1;
-  background: linear-gradient(105deg, rgb(var(--blanco-puro)) 8%, var(--texto-destacado) 32%, var(--acento-claro) 62%, rgb(var(--lavanda)) 92%);
+  background: linear-gradient(104deg, var(--acento-hondo) 4%, var(--acento) 38%, var(--realce) 74%, var(--acento-claro) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

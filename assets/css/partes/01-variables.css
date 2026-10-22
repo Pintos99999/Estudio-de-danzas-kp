@@ -12,7 +12,10 @@
 
    Los colores de la paleta se escriben como tres números
    (rojo verde azul) y no con almohadilla, para poder usarlos
-   también translúcidos:  rgb(var(--azul) / .4)  = azul al 40%.
+   también translúcidos:  rgb(var(--rosa) / .4)  = rosa al 40%.
+
+   La página es CLARA: fondos de papel, tinta color ciruela,
+   rosa de la marca para lo importante y dorado para los avisos.
    ============================================================= */
 
 :root {
@@ -21,33 +24,33 @@
      A) LA PALETA
      --------------------------------------------------------- */
 
-  /* Azules: del más oscuro (el fondo de la página) al más claro */
-  --azul-noche:    5 7 15;
-  --azul-nocturno: 9 13 30;
-  --azul-profundo: 13 20 46;
-  --azul:          22 32 74;
-  --azul-claro:    35 48 95;
+  /* Papeles: los fondos, del más claro al más tostado */
+  --marfil:        255 252 250;
+  --crema:         253 246 241;
+  --crema-honda:   247 234 228;
+  --arena:         238 221 213;
 
-  /* Lavandas: los grises violáceos del texto y las líneas */
-  --lavanda:       182 180 230;
-  --lavanda-suave: 142 140 196;
-  --lavanda-luz:   228 226 247;
-
-  /* Violetas de atmósfera: los halos y los haces de luz del fondo */
-  --violeta:       116 112 206;
-  --lavanda-haz:   198 196 255;
-
-  /* Neutros */
-  --blanco:        248 247 252;
-  --blanco-puro:   255 255 255;
-  --gris-claro:    207 206 226;
-  --gris:          153 151 181;
-  --negro:         0 0 0;
+  /* Tintas: el texto. Ciruela oscuro en vez de negro, más cálido */
+  --tinta:         45 20 42;
+  --tinta-media:   88 54 82;
+  --tinta-suave:   124 94 118;
+  --tinta-tenue:   148 120 143;
 
   /* Rosas: el color de la marca, el que lleva la atención */
-  --rosa:          244 92 156;
-  --rosa-claro:    255 140 188;
-  --fucsia:        195 48 138;
+  --rosa:          230 70 136;
+  --rosa-hondo:    206 46 116;   /* el rosa que lleva texto blanco encima */
+  --rosa-claro:    247 125 177;
+  --rosa-velo:     253 232 241;
+  --fucsia:        178 36 122;
+
+  /* Dorados: el segundo acento. Avisos, funciones y entradas */
+  --oro:           198 142 56;
+  --oro-claro:     238 194 118;
+  --oro-velo:      253 243 227;
+
+  /* Neutros */
+  --blanco-puro:   255 255 255;
+  --negro:         0 0 0;
 
   /* Los colores de cada disciplina, tomados de la gráfica oficial.
      Cada tarjeta de disciplina usa el suyo. */
@@ -64,9 +67,9 @@
   --azul-facebook: 66 103 178;
 
   /* Verdes: sólo para WhatsApp, que tiene su color propio */
-  --verde:         37 211 102;
-  --verde-oscuro:  18 140 126;
-  --verde-claro:   155 240 191;
+  --verde:         31 170  85;
+  --verde-oscuro:  13 112 101;
+  --verde-claro:   225 248 234;
   --verde-brillo:  91 227 141;
 
 
@@ -74,58 +77,94 @@
      B) LOS USOS  (todo sale de la paleta de arriba)
      --------------------------------------------------------- */
 
-  /* Fondos */
-  --fondo:         rgb(var(--azul-noche));
-  --fondo-suave:   rgb(var(--azul-nocturno));
+  /* Fondos de la página */
+  --fondo:         rgb(var(--marfil));
+  --fondo-suave:   rgb(var(--crema));
+  --fondo-tostado: rgb(var(--crema-honda));
+
+  /* Superficies: las tarjetas y los recuadros que se apoyan encima */
+  --superficie:    rgb(var(--blanco-puro));
+  --superficie-2:  rgb(var(--crema));
   --fondo-panel:   linear-gradient(155deg,
-                     rgb(var(--azul-claro) / .3),
-                     rgb(var(--azul-nocturno) / .5));
-  --fondo-vidrio:  rgb(var(--azul) / .55);
+                     rgb(var(--blanco-puro)),
+                     rgb(var(--crema)) 100%);
+  --fondo-vidrio:  rgb(var(--blanco-puro) / .82);
+  --velo-tinta:    rgb(var(--tinta) / .04);
+  --velo-tinta-2:  rgb(var(--tinta) / .07);
 
   /* Textos */
-  --texto:         rgb(var(--gris-claro));
-  --texto-suave:   rgb(var(--gris));
-  --texto-fuerte:  rgb(var(--blanco));
-  --texto-destacado: rgb(var(--lavanda-luz));
+  --texto:         rgb(var(--tinta-media));
+  --texto-suave:   rgb(var(--tinta-suave));
+  --texto-tenue:   rgb(var(--tinta-tenue));
+  --texto-fuerte:  rgb(var(--tinta));
+  --texto-destacado: rgb(var(--tinta) / .84);
 
   /* Líneas y bordes */
-  --linea:         rgb(var(--lavanda) / .16);
-  --linea-fuerte:  rgb(var(--lavanda) / .32);
+  --linea:         rgb(var(--tinta) / .1);
+  --linea-fuerte:  rgb(var(--tinta) / .2);
 
   /* Acento (la marca) */
   --acento:        rgb(var(--rosa));
   --acento-claro:  rgb(var(--rosa-claro));
   --acento-hondo:  rgb(var(--fucsia));
-  --acento-velo:   rgb(var(--rosa) / .1);
-  --acento-borde:  rgb(var(--rosa) / .4);
+  --acento-velo:   rgb(var(--rosa-velo));
+  --acento-borde:  rgb(var(--rosa) / .34);
+  --sobre-acento:  rgb(var(--blanco-puro));
+  --acento-solido: rgb(var(--rosa-hondo));
   --degradado-acento: linear-gradient(120deg,
                         rgb(var(--fucsia)),
-                        rgb(var(--rosa)) 55%,
-                        rgb(var(--rosa-claro)));
+                        rgb(var(--rosa-hondo)) 100%);
+
+  /* Segundo acento: avisos, fechas y entradas */
+  --realce:        rgb(var(--oro));
+  --realce-claro:  rgb(var(--oro-claro));
+  --realce-velo:   rgb(var(--oro-velo));
+  --realce-borde:  rgb(var(--oro) / .4);
 
   /* WhatsApp */
   --wa:            rgb(var(--verde));
-  --wa-texto:      rgb(var(--verde-claro));
-  --wa-borde:      rgb(var(--verde) / .45);
-  --wa-velo:       rgb(var(--verde) / .1);
+  --wa-texto:      rgb(var(--verde-oscuro));
+  --wa-borde:      rgb(var(--verde) / .4);
+  --wa-velo:       rgb(var(--verde-claro));
   --wa-degradado:  linear-gradient(140deg,
                      rgb(var(--verde)), rgb(var(--verde-oscuro)));
 
-  /* Sombras */
-  --sombra-acento: 0 10px 34px -14px rgb(var(--rosa) / .85);
-  --sombra-honda:  0 24px 60px -24px rgb(var(--negro));
+  /* Sombras: en una página clara tienen que ser suaves y cálidas */
+  --sombra-suave:  0 1px 2px rgb(var(--tinta) / .04),
+                   0 6px 16px -10px rgb(var(--tinta) / .14);
+  --sombra-media:  0 2px 4px rgb(var(--tinta) / .04),
+                   0 14px 32px -16px rgb(var(--tinta) / .2);
+  --sombra-honda:  0 4px 8px rgb(var(--tinta) / .05),
+                   0 30px 70px -30px rgb(var(--tinta) / .3);
+  --sombra-acento: 0 10px 28px -12px rgb(var(--rosa) / .6);
 
-  /* Sobre la foto de portada: el velo que deja leer el texto */
+  /* Atmósfera: los halos de color del fondo de las secciones */
+  --atmosfera-1:   rgb(var(--rosa) / .1);
+  --atmosfera-2:   rgb(var(--oro) / .11);
+
+  /* Velos para poner texto ENCIMA DE UNA FOTO.
+     Son oscuros a propósito, en cualquier tema: una foto necesita
+     que la tapemos un poco para que se lea lo que va arriba. */
+  --velo-foto-fuerte: rgb(var(--tinta) / .74);
+  --velo-foto-medio:  rgb(var(--tinta) / .46);
+  --velo-foto-leve:   rgb(var(--tinta) / .2);
+  --sobre-foto:       rgb(var(--blanco-puro));
+
+  /* El fondo oscuro de la galería a pantalla completa */
+  --fondo-visor:   rgb(var(--tinta) / .96);
+
+  /* Sobre la foto de portada: el velo claro que deja leer el texto.
+     La portada es clara, así que el velo aclara en vez de oscurecer. */
   --velo-portada:
     linear-gradient(100deg,
-      rgb(var(--azul-noche) / .9) 0%,
-      rgb(var(--azul-noche) / .68) 36%,
-      rgb(var(--azul-noche) / .22) 64%,
-      rgb(var(--azul-noche) / .44) 100%),
+      rgb(var(--marfil) / .96) 0%,
+      rgb(var(--marfil) / .88) 34%,
+      rgb(var(--marfil) / .42) 62%,
+      rgb(var(--crema-honda) / .5) 100%),
     linear-gradient(180deg,
-      rgb(var(--azul-noche) / .7) 0%,
-      transparent 28%, transparent 64%,
-      rgb(var(--azul-noche) / .94) 100%);
+      rgb(var(--marfil) / .72) 0%,
+      transparent 30%, transparent 62%,
+      rgb(var(--marfil) / .92) 100%);
 
 
   /* ---------------------------------------------------------
@@ -137,8 +176,13 @@
 
   --ancho:     1240px;
   --gutter:    clamp(1.25rem, 4vw, 3.5rem);
-  --seccion-y: clamp(5rem, 11vw, 9.5rem);
+  --seccion-y: clamp(4.5rem, 10vw, 8.5rem);
   --nav-h:     76px;
+
+  /* Esquinas: una sola medida para todo, así nada queda disparejo */
+  --radio:       14px;
+  --radio-peq:   9px;
+  --radio-grande: 22px;
 
   --ease:  cubic-bezier(.22, .61, .36, 1);
   --lento: .9s;

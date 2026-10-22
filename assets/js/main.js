@@ -19,6 +19,7 @@
       window.Navbar(),
       '<main id="contenido">',
         window.Hero(),
+        window.AvisosSection(),
         window.AboutSection(),
         window.ClassesSection(),
         window.EventosSection(),
@@ -29,7 +30,8 @@
         window.ContactSection(),
       '</main>',
       window.Footer(),
-      window.WhatsappFab()
+      window.WhatsappFab(),
+      window.ChatAsistente()
     ].join('');
 
     enlazar();

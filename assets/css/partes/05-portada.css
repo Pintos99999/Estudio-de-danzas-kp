@@ -10,37 +10,37 @@
 
 .hero__fondo { position: absolute; inset: 0; z-index: -3; background: var(--fondo); }
 
-/* Atmósfera: penumbra azul + halos lavanda/rosa */
+/* Atmósfera: la luz cálida de sala, con halos rosa y dorado */
 .hero__fondo::before {
   content: ''; position: absolute; inset: -20%;
   background:
-    radial-gradient(58% 50% at 48% 18%, rgb(var(--violeta) / .26), transparent 72%),
-    radial-gradient(40% 40% at 84% 74%, rgb(var(--rosa) / .13), transparent 74%),
-    radial-gradient(70% 60% at 12% 70%, rgb(var(--azul) / .85), transparent 78%),
-    linear-gradient(180deg, rgb(var(--azul-noche)) 0%, rgb(var(--azul-nocturno)) 34%, rgb(var(--azul-profundo)) 58%, rgb(var(--azul-noche)) 100%);
+    radial-gradient(58% 50% at 46% 12%, var(--atmosfera-1), transparent 70%),
+    radial-gradient(44% 44% at 86% 72%, var(--atmosfera-2), transparent 72%),
+    radial-gradient(70% 60% at 10% 76%, rgb(var(--crema-honda) / .9), transparent 76%),
+    linear-gradient(180deg, var(--fondo) 0%, var(--fondo-suave) 40%, var(--fondo-tostado) 72%, var(--fondo-suave) 100%);
 }
 /* Piso del escenario */
 .hero__fondo::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 34%;
-  background: linear-gradient(180deg, transparent, rgb(var(--azul-noche) / .92) 62%, var(--fondo));
+  background: linear-gradient(180deg, transparent, rgb(var(--crema-honda) / .72) 58%, var(--fondo));
 }
 
 /* Rayos de luz atravesando el humo */
 .haz {
   position: absolute; top: -18%; z-index: -2;
   width: 46vw; height: 130%;
-  background: linear-gradient(180deg, rgb(var(--lavanda-haz) / .2), rgb(var(--lavanda-haz) / .04) 45%, transparent 78%);
+  background: linear-gradient(180deg, rgb(var(--rosa-claro) / .3), rgb(var(--rosa-claro) / .07) 45%, transparent 78%);
   filter: blur(34px);
   transform-origin: top center;
-  mix-blend-mode: screen;
+  mix-blend-mode: multiply;
   pointer-events: none;
 }
 .haz--1 { left: 4%;  transform: rotate(13deg);  animation: respira 13s var(--ease) infinite; }
 .haz--2 { left: 34%; width: 30vw; transform: rotate(-5deg);
-  background: linear-gradient(180deg, rgb(var(--blanco-puro) / .22), rgb(var(--lavanda) / .05) 50%, transparent 80%);
+  background: linear-gradient(180deg, rgb(var(--oro-claro) / .3), rgb(var(--oro-claro) / .06) 50%, transparent 80%);
   animation: respira 17s var(--ease) infinite reverse; }
 .haz--3 { right: 2%; transform: rotate(-16deg);
-  background: linear-gradient(180deg, rgb(var(--rosa) / .12), rgb(var(--rosa) / .02) 50%, transparent 80%);
+  background: linear-gradient(180deg, rgb(var(--rosa) / .18), rgb(var(--rosa) / .03) 50%, transparent 80%);
   animation: respira 15s var(--ease) infinite 2s; }
 
 @keyframes respira {
@@ -53,8 +53,8 @@
   position: absolute; inset: -8% 0; z-index: -2;
   width: 100%; height: 116%;
   object-fit: cover; object-position: 50% 42%;
-  opacity: .82;
-  filter: saturate(.92) contrast(1.02) brightness(.92);
+  opacity: .9;
+  filter: saturate(.96) contrast(1.02) brightness(1.04);
   will-change: transform;
 }
 /* Velo para que el texto del hero siempre se lea sobre la foto */
@@ -63,8 +63,8 @@
   position: absolute; inset: 0; z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(100deg, rgb(var(--azul-noche) / .9) 0%, rgb(var(--azul-noche) / .68) 36%, rgb(var(--azul-noche) / .22) 64%, rgb(var(--azul-noche) / .44) 100%),
-    linear-gradient(180deg, rgb(var(--azul-noche) / .7) 0%, transparent 28%, transparent 64%, rgb(var(--azul-noche) / .94) 100%);
+    linear-gradient(100deg, rgb(var(--marfil) / .96) 0%, rgb(var(--marfil) / .88) 34%, rgb(var(--marfil) / .4) 62%, rgb(var(--crema-honda) / .48) 100%),
+    linear-gradient(180deg, rgb(var(--marfil) / .74) 0%, transparent 30%, transparent 60%, rgb(var(--marfil) / .94) 100%);
 }
 
 
@@ -73,7 +73,7 @@
   position: absolute; z-index: -1;
   width: 4px; height: 4px; border-radius: 50%;
   background: var(--acento-claro);
-  box-shadow: 0 0 14px 3px rgb(var(--rosa) / .55);
+  box-shadow: 0 0 10px 2px rgb(var(--rosa) / .4);
   opacity: 0;
   animation: flotar 12s linear infinite;
 }
@@ -89,7 +89,7 @@
 .hero__estudio {
   font-size: clamp(.62rem, 1.6vw, .76rem);
   letter-spacing: .44em; text-transform: uppercase;
-  color: rgb(var(--lavanda));
+  color: var(--texto-suave);
   margin: 0 0 clamp(1.2rem, 3vw, 2rem);
   opacity: 0; animation: aparecer 1.2s var(--ease) .2s forwards;
 }
@@ -102,7 +102,7 @@
   border-radius: 999px;
   background: rgb(var(--rosa) / .09);
   font-size: .63rem; letter-spacing: .26em; text-transform: uppercase;
-  color: var(--acento-claro);
+  color: var(--acento-hondo);
   margin-bottom: 1.4rem;
   opacity: 0; animation: aparecer 1.2s var(--ease) .45s forwards;
 }
@@ -158,7 +158,7 @@
   opacity: 0; animation: aparecer 1.4s var(--ease) 1.8s forwards;
   transition: color .35s var(--ease);
 }
-.scroll-hint:hover { color: rgb(var(--lavanda)); }
+.scroll-hint:hover { color: var(--texto-suave); }
 .scroll-hint__linea {
   width: 1px; height: 58px;
   background: linear-gradient(180deg, var(--linea-fuerte), transparent);
@@ -182,7 +182,7 @@
 /* ---------- Portada ---------- */
 .hero__lugar {
   font-size: .68rem; letter-spacing: .32em; text-transform: uppercase;
-  color: rgb(var(--lavanda)); margin: 0 0 1.6rem;
+  color: var(--texto-suave); margin: 0 0 1.6rem;
 }
 .hero__previo {
   font-size: .78rem; letter-spacing: .42em; text-transform: uppercase;
@@ -236,7 +236,7 @@
   border-color: var(--acento); background: rgb(var(--rosa) / .17);
   transform: translateY(-2px);
 }
-.aviso .ico { color: var(--acento-claro); transition: transform .4s var(--ease); }
+.aviso .ico { color: var(--acento-hondo); transition: transform .4s var(--ease); }
 .aviso:hover .ico { transform: translateX(3px); }
 .aviso__punto {
   width: 7px; height: 7px; border-radius: 50%;
@@ -251,22 +251,22 @@
 }
 .aviso__obra { font-family: var(--serif); font-size: .95rem; letter-spacing: .04em; text-transform: none; }
 .aviso__sep { width: 1px; height: 13px; background: var(--linea-fuerte); }
-.aviso__falta { color: var(--acento-claro); }
+.aviso__falta { color: var(--acento-hondo); }
 
 
 /* ---------- Cuenta regresiva ---------- */
 .reloj {
   margin-bottom: clamp(3rem, 6vw, 4.5rem);
   padding: clamp(1.8rem, 4vw, 2.6rem);
-  border: 1px solid var(--linea-fuerte); border-radius: 4px;
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
   background:
     radial-gradient(120% 160% at 15% 0%, rgb(var(--fucsia) / .2), transparent 60%),
-    linear-gradient(150deg, rgb(var(--azul-claro) / .34), rgb(var(--azul-nocturno) / .5));
+    linear-gradient(150deg, rgb(var(--crema-honda) / .34), rgb(var(--crema-honda) / .5));
 }
 .reloj__titulo {
   display: flex; align-items: center; gap: .6rem;
   font-size: .68rem; letter-spacing: .28em; text-transform: uppercase;
-  color: rgb(var(--lavanda)); margin: 0 0 1.6rem;
+  color: var(--texto-suave); margin: 0 0 1.6rem;
 }
 .reloj__titulo .ico { color: var(--acento); }
 
@@ -292,7 +292,7 @@
 .reloj__sep {
   font-family: var(--serif);
   font-size: clamp(1.8rem, 5vw, 3.2rem);
-  color: rgb(var(--lavanda-suave)); opacity: .5;
+  color: var(--texto-tenue); opacity: .5;
   line-height: 1.2;
   align-self: flex-start;
 }

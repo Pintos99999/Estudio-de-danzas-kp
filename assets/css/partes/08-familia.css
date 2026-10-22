@@ -17,9 +17,9 @@
      página no pegue un salto (Google penaliza ese salto). */
   aspect-ratio: 1400 / 933;
   object-fit: cover;
-  border-radius: 3px;
+  border-radius: var(--radio);
   border: 1px solid var(--linea);
-  background: rgb(var(--azul-nocturno));
+  background: var(--fondo-suave);
 }
 .familia__foto figcaption {
   margin-top: .9rem;

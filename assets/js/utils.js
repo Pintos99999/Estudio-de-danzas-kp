@@ -1,5 +1,18 @@
 /* Utilidades compartidas por los componentes. */
 (function () {
+
+  /* VISTA PREVIA DEL PANEL
+     Si se entra con ?previa=1 y el panel dejó datos de ensayo guardados
+     en este navegador, el sitio los muestra en lugar de los publicados.
+     No cambia nada en la página real: es sólo para mirar antes de
+     publicar, y se borra al cerrar la vista previa. */
+  try {
+    if (/[?&]previa=1/.test(location.search)) {
+      var ensayo = localStorage.getItem('kp-vista-previa');
+      if (ensayo) window.SITE_DATA = JSON.parse(ensayo);
+    }
+  } catch (e) { /* si algo falla, se ve el sitio publicado */ }
+
   var D = window.SITE_DATA;
 
   /* ---------- IDIOMA ----------
@@ -155,6 +168,30 @@
 
     email: function () { return (D.contacto.email || '').trim(); },
 
+
+    /* --- Avisos --- */
+    /* Devuelve sólo los avisos publicados y dentro de su ventana de
+       fechas. "desde" y "hasta" son opcionales: vacío = sin límite. */
+    avisosVigentes: function () {
+      if (!U.activo('avisos')) return [];
+      var hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+
+      return (D.listaAvisos || []).filter(function (a) {
+        if (a.publicado === false) return false;
+        if (!U.t(a.titulo)) return false;
+
+        if ((a.desde || '').trim()) {
+          var d = new Date(a.desde + 'T00:00:00');
+          if (!isNaN(d) && hoy < d) return false;
+        }
+        if ((a.hasta || '').trim()) {
+          var h = new Date(a.hasta + 'T23:59:59');
+          if (!isNaN(h) && hoy > h) return false;
+        }
+        return true;
+      });
+    },
     /* --- Cuenta regresiva --- */
     cuenta: function (iso) {
       var destino = new Date(iso).getTime();

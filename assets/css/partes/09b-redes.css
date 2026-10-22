@@ -10,11 +10,11 @@
 }
 
 .red {
-  --color-red: var(--lavanda);
+  --color-red: var(--tinta-suave);
   display: flex; flex-direction: column;
   padding: clamp(1.5rem, 3vw, 2rem);
-  border: 1px solid var(--linea); border-radius: 3px;
-  background: linear-gradient(165deg, rgb(var(--azul) / .45), var(--fondo-suave) 75%);
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
+  background: linear-gradient(165deg, var(--superficie), var(--superficie-2) 75%);
   transition: transform .45s var(--ease), border-color .45s var(--ease), box-shadow .45s var(--ease);
 }
 .red:hover {
@@ -24,9 +24,9 @@
 }
 
 /* Cada red con su color propio */
-.red--instagram { --color-red: var(--rosa); }
+.red--instagram { --color-red: var(--rosa-hondo); }
 .red--facebook  { --color-red: var(--azul-facebook); }
-.red--email     { --color-red: var(--lavanda); }
+.red--email     { --color-red: var(--tinta-suave); }
 
 .red__ico {
   display: inline-flex; align-items: center; justify-content: center;

@@ -148,6 +148,29 @@ window.SITE_DATA = {
       mapsBusqueda: '25 de Agosto 3595, Young, Río Negro, Uruguay'
     }
   ],
+  /* -----------------------------------------------------------
+     AVISOS Y NOVEDADES
+     Son los carteles cortos que aparecen arriba de todo: que se
+     abrieron las inscripciones, que cambia un horario, un feriado.
+     Se cargan desde el panel. Si no hay ninguno publicado, la
+     franja entera no aparece.
+
+       tipo -> 'novedad'       (rosa, lo habitual)
+               'inscripciones' (dorado, para lo que urge)
+               'importante'    (marcado, para cambios y suspensiones)
+
+       desde / hasta -> opcionales. Si se completan, el aviso
+                        aparece y desaparece solo en esas fechas.
+     ----------------------------------------------------------- */
+  avisos: {
+    activo: true,
+    etiqueta: { es: 'Avisos', en: 'Announcements' },
+    titulo: { es: 'Novedades', en: 'What is new' },
+    verMas: { es: 'Ver más', en: 'Read more' }
+  },
+
+  listaAvisos: [],
+
 
   /* ---------------------------------------------------------
      4. EVENTOS
@@ -306,6 +329,7 @@ window.SITE_DATA = {
     {
       nombre: { es: 'Danza árabe', en: 'Arabic dance' },
       color: 'arabe',
+      textoOscuro: true,
       descripcion: {
         es: 'El movimiento del tronco, las caderas y los brazos, con velos y la elegancia de una danza con siglos encima.',
         en: 'Movement of the torso, hips and arms, with veils and the elegance of a dance that is centuries old.'
@@ -399,6 +423,40 @@ window.SITE_DATA = {
        soloSi: 'escenario' -> el ítem aparece sólo si esa
                sección está activa
      --------------------------------------------------------- */
+  /* -----------------------------------------------------------
+     ASISTENTE (GEMINI)
+     El chat que contesta preguntas en el sitio y ayuda a redactar
+     dentro del panel.
+
+     url -> la dirección del ayudante que guarda la clave de Google.
+            Mientras esté vacía, el chat NO aparece en el sitio y el
+            panel avisa que todavía falta configurarlo.
+            Cómo crearlo: está explicado en asistente/LEEME-ASISTENTE.md
+     ----------------------------------------------------------- */
+  ia: {
+    activo: false,
+    url: '',
+    titulo: { es: 'Consultas', en: 'Questions' },
+    saludo: {
+      es: '¡Hola! Soy el asistente del estudio. Puedo contarte sobre las clases, las sedes, los horarios de las funciones y las entradas. ¿Qué querés saber?',
+      en: 'Hi! I am the studio assistant. I can tell you about classes, our two locations, show times and tickets. What would you like to know?'
+    },
+    sugerencias: {
+      es: ['¿Qué disciplinas dan?', '¿Dónde quedan las sedes?', '¿Cuándo es la próxima función?', '¿Cómo me inscribo?'],
+      en: ['What disciplines do you teach?', 'Where are you located?', 'When is the next show?', 'How do I enrol?']
+    },
+    escribiendo: { es: 'Escribiendo…', en: 'Typing…' },
+    marcador: { es: 'Escribí tu consulta…', en: 'Type your question…' },
+    aviso: {
+      es: 'Respuestas automáticas. Para inscribirte o reservar entradas, escribinos por WhatsApp.',
+      en: 'Automated answers. To enrol or book tickets, message us on WhatsApp.'
+    },
+    sinServicio: {
+      es: 'El asistente no está disponible en este momento. Escribinos por WhatsApp y te respondemos.',
+      en: 'The assistant is unavailable right now. Message us on WhatsApp and we will reply.'
+    }
+  },
+
   navegacion: [
     { etiqueta: { es: 'Inicio', en: 'Home' }, href: '#inicio' },
     { etiqueta: { es: 'Estudio', en: 'Studio' }, href: '#estudio' },

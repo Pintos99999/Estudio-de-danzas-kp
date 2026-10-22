@@ -15,7 +15,7 @@
   padding: clamp(1.4rem, 3vw, 2rem);
   transition: background-color .5s var(--ease);
 }
-.pilar:hover { background: rgb(var(--azul-profundo)); }
+.pilar:hover { background: var(--fondo-tostado); }
 .pilar__n {
   font-size: .62rem; letter-spacing: .24em; color: var(--acento); display: block; margin-bottom: .9rem;
 }
@@ -28,20 +28,20 @@
   max-width: 440px;
   aspect-ratio: 4 / 5;
   border: 1px solid var(--linea);
-  border-radius: 3px;
+  border-radius: var(--radio);
   overflow: hidden;
-  background: linear-gradient(160deg, var(--azul) 0%, var(--fondo-suave) 60%, rgb(var(--negro)) 100%);
+  background: linear-gradient(160deg, var(--superficie) 0%, var(--fondo-suave) 55%, var(--fondo-tostado) 100%);
 }
 .retrato::after {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(55% 45% at 50% 30%, rgb(var(--lavanda) / .22), transparent 70%);
+  background: radial-gradient(55% 45% at 50% 30%, var(--atmosfera-1), transparent 70%);
 }
 .retrato img { width: 100%; height: 100%; object-fit: cover; }
 .retrato__vacio {
   position: absolute; inset: 0; z-index: 1;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: .9rem; text-align: center; padding: 2rem;
-  color: rgb(var(--lavanda-suave));
+  color: var(--texto-tenue);
 }
 .retrato__vacio::before { content: ''; position: absolute; inset: 16px; border: 1px solid var(--linea); }
 .retrato__vacio small {
@@ -50,7 +50,7 @@
 .retrato__marca {
   position: absolute; left: 1.4rem; bottom: 1.3rem; z-index: 2;
   font-size: .64rem; letter-spacing: .26em; text-transform: uppercase;
-  color: rgb(var(--lavanda));
+  color: var(--texto-suave);
 }
 
 /* ---------- 10. DISCIPLINAS ---------- */
@@ -66,12 +66,12 @@
    real, para que lo lea Google. Cada tarjeta trae su color en
    --color-disc y el tono del "+" en --color-mas. */
 .tarjeta {
-  --color-disc: var(--lavanda);
-  --color-mas: var(--lavanda-suave);
+  --color-disc: var(--tinta-suave);
+  --color-mas: var(--tinta-tenue);
   display: flex; flex-direction: column;
-  border: 1px solid var(--linea); border-radius: 3px;
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
   overflow: hidden;
-  background: linear-gradient(170deg, rgb(var(--azul) / .45), var(--fondo-suave) 70%);
+  background: linear-gradient(170deg, var(--superficie), var(--superficie-2) 72%);
   transition: transform .5s var(--ease), border-color .5s var(--ease), box-shadow .5s var(--ease);
 }
 .tarjeta:hover {
@@ -98,7 +98,7 @@
 .tarjeta__mas::before, .tarjeta__mas::after {
   content: ''; position: absolute; inset: 0; margin: auto;
   background: rgb(var(--color-mas));
-  border-radius: 3px;
+  border-radius: var(--radio);
 }
 .tarjeta__mas::before { width: 100%; height: 26%; }
 .tarjeta__mas::after  { width: 26%; height: 100%; }
@@ -131,7 +131,7 @@
 }
 .nota {
   margin-top: 2rem; padding: 1.1rem 1.4rem;
-  border: 1px dashed var(--linea-fuerte); border-radius: 3px;
+  border: 1px dashed var(--linea-fuerte); border-radius: var(--radio);
   font-size: .85rem; color: var(--texto-suave);
   display: flex; gap: .9rem; align-items: center;
 }

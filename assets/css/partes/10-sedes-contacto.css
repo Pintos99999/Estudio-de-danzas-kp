@@ -7,8 +7,8 @@
 .sede {
   position: relative;
   padding: clamp(1.6rem, 3vw, 2.2rem);
-  border: 1px solid var(--linea); border-radius: 3px;
-  background: linear-gradient(155deg, rgb(var(--azul-claro) / .3), rgb(var(--azul-nocturno) / .5));
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
+  background: linear-gradient(155deg, rgb(var(--crema-honda) / .3), rgb(var(--crema-honda) / .5));
   transition: border-color .5s var(--ease), transform .5s var(--ease);
 }
 .sede:hover { border-color: rgb(var(--rosa) / .4); transform: translateY(-4px); }
@@ -17,7 +17,7 @@
   color: var(--texto-fuerte); line-height: 1; margin: 0 0 1rem;
 }
 .sede__dir { color: var(--texto-fuerte); font-size: 1.05rem; margin: 0 0 .25rem; }
-.sede__ref { color: rgb(var(--lavanda)); font-size: .9rem; margin: 0 0 .25rem; }
+.sede__ref { color: var(--texto-suave); font-size: .9rem; margin: 0 0 .25rem; }
 .sede__loc {
   font-size: .68rem; letter-spacing: .24em; text-transform: uppercase;
   color: var(--texto-suave); margin: 0 0 1.2rem;
@@ -26,16 +26,16 @@
 .sede__tels li { display: flex; align-items: center; gap: .7rem; font-size: .98rem; }
 .sede__tels .ico { color: var(--acento); }
 .sede__tels a { border-bottom: 1px solid var(--linea-fuerte); transition: color .3s var(--ease), border-color .3s var(--ease); }
-.sede__tels a:hover { color: var(--acento-claro); border-color: var(--acento); }
+.sede__tels a:hover { color: var(--acento-hondo); border-color: var(--acento); }
 .sede__acciones { display: flex; flex-wrap: wrap; gap: .7rem; }
 
 /* Botón verde de WhatsApp */
 .btn--wa {
   border-color: rgb(var(--verde) / .45);
   background: rgb(var(--verde) / .1);
-  color: rgb(var(--verde-claro));
+  color: var(--wa-texto);
 }
-.btn--wa:hover { border-color: rgb(var(--verde)); background: rgb(var(--verde) / .2); color: rgb(var(--verde-claro)); }
+.btn--wa:hover { border-color: rgb(var(--verde)); background: var(--wa-velo); color: var(--wa-texto); }
 
 /* Pestañas del mapa */
 .mapa__tabs { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.2rem; }
@@ -47,29 +47,29 @@
   cursor: pointer;
   transition: color .35s var(--ease), border-color .35s var(--ease), background-color .35s var(--ease);
 }
-.mapa__tab:hover { border-color: rgb(var(--lavanda)); color: var(--texto-fuerte); }
+.mapa__tab:hover { border-color: var(--texto-suave); color: var(--texto-fuerte); }
 .mapa__tab.is-active {
-  border-color: transparent; color: rgb(var(--blanco-puro));
-  background: linear-gradient(120deg, var(--acento-hondo), var(--acento));
+  border-color: transparent; color: var(--sobre-acento);
+  background: var(--degradado-acento);
 }
 .mapa-bloque { margin-top: 0; }
 
 .mapa {
   position: relative;
   aspect-ratio: 16/9;
-  border: 1px solid var(--linea); border-radius: 3px;
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
   overflow: hidden;
   background: var(--fondo-suave);
-  box-shadow: 0 30px 80px -50px rgb(var(--negro));
+  box-shadow: var(--sombra-media);
 }
 .mapa iframe { width: 100%; height: 100%; border: 0; filter: grayscale(.4) invert(.92) hue-rotate(185deg) contrast(.92) brightness(.95); }
 .mapa::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  box-shadow: inset 0 0 90px 20px rgb(var(--azul-noche) / .75);
+  box-shadow: inset 0 0 0 1px var(--linea);
 }
 
 /* ---------- 15. CONTACTO ---------- */
-.contacto { background: linear-gradient(180deg, var(--fondo), rgb(var(--azul-profundo)) 120%); }
+.contacto { background: linear-gradient(180deg, var(--fondo), var(--fondo-tostado) 120%); }
 .contacto__grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: clamp(2.5rem, 6vw, 5rem);
@@ -78,12 +78,12 @@
 .canal {
   display: flex; flex-direction: column; gap: .7rem;
   padding: 1.4rem;
-  border: 1px solid var(--linea); border-radius: 3px;
-  background: rgb(var(--blanco-puro) / .02);
+  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
+  background: var(--superficie);
   transition: transform .5s var(--ease), border-color .5s var(--ease), background-color .5s var(--ease);
 }
 .canal:hover { transform: translateY(-4px); border-color: rgb(var(--rosa) / .45); background: rgb(var(--rosa) / .06); }
-.canal .ico { color: var(--acento-claro); }
+.canal .ico { color: var(--acento-hondo); }
 .canal__t { font-size: .62rem; letter-spacing: .24em; text-transform: uppercase; color: var(--texto-suave); }
 .canal__v { color: var(--texto-fuerte); font-size: .95rem; word-break: break-word; }
 
@@ -96,15 +96,15 @@
 .campo input, .campo textarea, .campo select {
   width: 100%;
   padding: .95rem 1.1rem;
-  background: rgb(var(--blanco-puro) / .03);
+  background: var(--superficie);
   border: 1px solid var(--linea);
-  border-radius: 3px;
+  border-radius: var(--radio);
   color: var(--texto-fuerte);
   font-family: var(--sans); font-size: .98rem; font-weight: 300;
   transition: border-color .35s var(--ease), background-color .35s var(--ease);
 }
 .campo textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
-.campo input::placeholder, .campo textarea::placeholder { color: rgb(var(--gris) / .6); }
+.campo input::placeholder, .campo textarea::placeholder { color: var(--texto-tenue); }
 .campo input:focus, .campo textarea:focus, .campo select:focus {
   outline: none; border-color: var(--acento); background: rgb(var(--rosa) / .05);
 }
@@ -114,7 +114,7 @@
   background-repeat: no-repeat; background-position: right 1.1rem center;
   padding-right: 2.8rem;
 }
-.campo select option { background: rgb(var(--azul-profundo)); color: var(--texto-fuerte); }
+.campo select option { background: var(--fondo-tostado); color: var(--texto-fuerte); }
 
 /* Canal de WhatsApp destacado en verde */
 .canal--wa .ico { color: rgb(var(--verde-brillo)); }
@@ -132,16 +132,16 @@
   transition: transform .4s var(--ease), box-shadow .4s var(--ease);
 }
 .wa-fab:hover { transform: scale(1.06); box-shadow: 0 16px 40px -10px rgb(var(--verde-oscuro) / 1); }
-.wa-fab.is-open { background: linear-gradient(140deg, rgb(var(--azul-claro)), rgb(var(--azul))); }
+.wa-fab.is-open { background: linear-gradient(140deg, var(--texto-suave), var(--texto-fuerte)); }
 
 .wa-menu {
   position: absolute; right: 0; bottom: 72px;
   min-width: 232px;
   padding: 1rem;
-  border: 1px solid var(--linea-fuerte); border-radius: 10px;
-  background: rgb(var(--azul-noche) / .95);
+  border: 1px solid var(--linea-fuerte); border-radius: var(--radio-grande);
+  background: var(--superficie);
   backdrop-filter: blur(16px);
-  box-shadow: 0 24px 60px -24px rgb(var(--negro));
+  box-shadow: var(--sombra-honda);
   animation: subir .35s var(--ease);
 }
 .wa-menu[hidden] { display: none; }
@@ -151,7 +151,7 @@
 }
 .wa-menu__item {
   display: flex; flex-direction: column; gap: .15rem;
-  padding: .7rem .9rem; border-radius: 6px;
+  padding: .7rem .9rem; border-radius: var(--radio-peq);
   border: 1px solid transparent;
   transition: background-color .3s var(--ease), border-color .3s var(--ease);
 }
@@ -161,9 +161,9 @@
 .form .btn { justify-content: center; }
 .form__aviso {
   font-size: .84rem; line-height: 1.6;
-  padding: .95rem 1.1rem; border-radius: 3px;
+  padding: .95rem 1.1rem; border-radius: var(--radio);
   border: 1px solid var(--linea-fuerte);
-  background: rgb(var(--lavanda) / .07);
+  background: rgb(var(--tinta) / .07);
   color: var(--texto-destacado);
 }
 .form__aviso[hidden] { display: none; }

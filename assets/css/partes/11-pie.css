@@ -11,19 +11,19 @@
 }
 .footer__sede + .footer__sede { margin-top: 1.4rem; }
 .footer__sede strong {
-  color: rgb(var(--lavanda)); font-weight: 400;
+  color: var(--texto-suave); font-weight: 400;
   font-size: .64rem; letter-spacing: .22em; text-transform: uppercase;
 }
 .footer__marca .marca__nombre { font-size: 1.5rem; }
 .footer__lema { margin-top: 1rem; color: var(--texto-suave); font-size: .9rem; max-width: 32ch; }
 .footer__t {
   font-size: .62rem; letter-spacing: .26em; text-transform: uppercase;
-  color: var(--acento-claro); margin-bottom: 1rem;
+  color: var(--acento-hondo); margin-bottom: 1rem;
 }
 .footer__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
 .footer__lista a, .footer__lista span { font-size: .9rem; color: var(--texto); }
 .footer__lista a { transition: color .3s var(--ease); }
-.footer__lista a:hover { color: var(--acento-claro); }
+.footer__lista a:hover { color: var(--acento-hondo); }
 .footer__base {
   margin-top: clamp(2.5rem, 6vw, 4rem); padding-top: 1.6rem;
   border-top: 1px solid var(--linea);
@@ -35,14 +35,14 @@
   letter-spacing: .18em; text-transform: uppercase; font-size: .68rem;
   transition: color .3s var(--ease);
 }
-.footer__arriba:hover { color: var(--acento-claro); }
+.footer__arriba:hover { color: var(--acento-hondo); }
 .footer__arriba .ico { transform: rotate(-90deg); }
 
 
 /* Logo del estudio en el pie */
 .footer__logo {
   width: 56px; height: 56px;
-  border-radius: 6px;
+  border-radius: var(--radio-peq);
   margin-bottom: 1rem;
   opacity: .9;
 }

@@ -77,6 +77,6 @@
 /* ---------- 20. IMPRESIÓN ---------- */
 @media print {
   .nav, .menu-movil, .scroll-hint, .lightbox, .haz, .destello { display: none !important; }
-  body { background: rgb(var(--blanco-puro)); color: rgb(var(--azul-noche)); }
+  body { background: rgb(var(--blanco-puro)); color: var(--texto-fuerte); }
 }
 

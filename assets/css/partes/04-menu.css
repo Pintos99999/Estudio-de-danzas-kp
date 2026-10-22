@@ -12,9 +12,9 @@
   opacity: 0; transition: opacity .5s var(--ease);
 }
 .nav.is-scrolled {
-  background: rgb(var(--azul-noche) / .82);
+  background: var(--fondo-vidrio);
   backdrop-filter: blur(18px) saturate(140%);
-  box-shadow: 0 12px 40px -22px rgb(var(--negro));
+  box-shadow: var(--sombra-suave);
 }
 .nav.is-scrolled::after { opacity: 1; }
 
@@ -27,14 +27,14 @@
 .marca { display: flex; flex-direction: column; line-height: 1; }
 .marca__sup {
   font-size: .56rem; letter-spacing: .38em; text-transform: uppercase;
-  color: rgb(var(--lavanda-suave)); margin-bottom: .34rem;
+  color: var(--texto-suave); margin-bottom: .34rem;
 }
 .marca__nombre {
   font-family: var(--serif); font-size: 1.28rem;
   letter-spacing: .22em; text-transform: uppercase; color: var(--texto-fuerte);
   transition: color .35s var(--ease);
 }
-.marca:hover .marca__nombre { color: var(--acento-claro); }
+.marca:hover .marca__nombre { color: var(--acento-hondo); }
 
 .nav__menu { display: flex; align-items: center; gap: clamp(.9rem, 1.7vw, 1.8rem); }
 .nav__link {
@@ -59,18 +59,18 @@
   display: none;
   width: 46px; height: 46px;
   align-items: center; justify-content: center;
-  background: rgb(var(--blanco-puro) / .04); border: 1px solid var(--linea);
+  background: var(--superficie); border: 1px solid var(--linea);
   border-radius: 50%; cursor: pointer;
   transition: border-color .35s var(--ease), background-color .35s var(--ease);
 }
-.nav__burger:hover { border-color: rgb(var(--lavanda)); }
+.nav__burger:hover { border-color: var(--texto-suave); }
 
 /* Panel móvil */
 .menu-movil {
   position: fixed; inset: 0; z-index: 99;
   display: flex; flex-direction: column; justify-content: center;
   padding: calc(var(--nav-h) + 2rem) var(--gutter) 3rem;
-  background: linear-gradient(180deg, var(--fondo) 0%, rgb(var(--azul-profundo)) 100%);
+  background: linear-gradient(180deg, var(--fondo) 0%, var(--fondo-tostado) 100%);
   opacity: 0; visibility: hidden;
   transition: opacity .45s var(--ease), visibility .45s;
 }
@@ -85,7 +85,7 @@
   transition: color .3s var(--ease);
 }
 .menu-movil.is-open .menu-movil__link { animation: subir .6s var(--ease) forwards; }
-.menu-movil__link:hover { color: var(--acento-claro); }
+.menu-movil__link:hover { color: var(--acento-hondo); }
 .menu-movil__num {
   font-family: var(--sans); font-size: .62rem;
   letter-spacing: .2em; color: var(--acento); opacity: .8;
@@ -109,7 +109,7 @@
   font-size: .64rem; letter-spacing: .14em; font-weight: 400;
   transition: border-color .35s var(--ease), background-color .35s var(--ease);
 }
-.idioma:hover { border-color: var(--linea-fuerte); background: rgb(var(--lavanda) / .07); }
+.idioma:hover { border-color: var(--linea-fuerte); background: rgb(var(--tinta) / .07); }
 .idioma__actual { color: var(--texto-fuerte); }
 .idioma__otro { color: var(--texto-suave); }
 .idioma__actual::after {

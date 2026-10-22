@@ -129,17 +129,36 @@
   /* ---------------------------------------------------------
      Secciones del panel
      --------------------------------------------------------- */
+  /* Dibujitos del menú. Son SVG escritos acá nomás para no depender
+     de ninguna librería ni de internet. */
+  var ICONOS = {
+    inicio:   '<path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M9 21v-7h6v7"/>',
+    avisos:   '<path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1Z"/><path d="M16 9a4 4 0 0 1 0 6"/>',
+    eventos:  '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/>',
+    entradas: '<path d="M3 9a2 2 0 0 0 0 6v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a2 2 0 0 1 0-6V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2Z"/><path d="M14 5v14"/>',
+    fotos:    '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m21 16-5-5L5 19"/>',
+    pagina:   '<path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/>',
+    sedes:    '<path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>',
+    asistente:'<path d="m12 3 1.9 4.8L19 9.5l-4.3 2.9L15.5 18 12 15.3 8.5 18l.8-5.6L5 9.5l5.1-1.7Z"/>'
+  };
+
+  function icono(nombre) {
+    return '<svg class="pestana__icono" viewBox="0 0 24 24" fill="none" aria-hidden="true" ' +
+      'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+      (ICONOS[nombre] || '') + '</svg>';
+  }
+
   var SECCIONES = [
-    { id: 'eventos',     nombre: 'Eventos',     pinta: pintarEventos },
-    { id: 'portada',     nombre: 'Portada',     pinta: pintarPortada },
-    { id: 'estudio',     nombre: 'El estudio',  pinta: pintarEstudio },
-    { id: 'disciplinas', nombre: 'Disciplinas', pinta: pintarDisciplinas },
-    { id: 'galeria',     nombre: 'Galería',     pinta: pintarGaleria },
-    { id: 'sedes',       nombre: 'Sedes',       pinta: pintarSedes },
-    { id: 'redes',       nombre: 'Redes',       pinta: pintarRedes }
+    { id: 'inicio',    icono: 'inicio',    nombre: 'Inicio',             pinta: pintarInicio },
+    { id: 'avisos',    icono: 'avisos',    nombre: 'Avisos',             pinta: pintarAvisos },
+    { id: 'eventos',   icono: 'eventos',   nombre: 'Eventos y funciones', pinta: pintarEventos },
+    { id: 'galeria',   icono: 'fotos',     nombre: 'Fotos del estudio',  pinta: pintarGaleria },
+    { id: 'pagina',    icono: 'pagina',    nombre: 'Textos de la página', pinta: pintarPagina },
+    { id: 'sedes',     icono: 'sedes',     nombre: 'Sedes y contacto',   pinta: pintarSedesYRedes },
+    { id: 'asistente', icono: 'asistente', nombre: 'Asistente',          pinta: pintarAsistente }
   ];
 
-  var seccionActual = 'eventos';
+  var seccionActual = 'inicio';
 
   /* ---------- EVENTOS ---------- */
   function pintarEventos() {
@@ -266,11 +285,12 @@
         pista2: '-32.3206073,-58.0729974'
       }) +
 
-      '<h3 class="bloque__titulo" style="font-size:.95rem;margin-top:1.6rem">Horarios</h3>' +
+      '<h3 class="bloque__titulo" data-ancla="funciones" style="font-size:.95rem;margin-top:1.6rem">Horarios de las funciones</h3>' +
+      '<p class="bloque__ayuda">Agregá uno por cada función del día.</p>' +
       funciones +
       '<button class="boton boton--peq" type="button" data-accion="nueva-funcion" data-evento="' + i + '">+ Agregar horario</button>' +
 
-      '<h3 class="bloque__titulo" style="font-size:.95rem;margin-top:1.6rem">Entradas</h3>' +
+      '<h3 class="bloque__titulo" data-ancla="entradas" style="font-size:.95rem;margin-top:1.6rem">Entradas</h3>' +
       '<div class="campo">' +
         '<label for="e-' + i + '">Cómo se consiguen</label>' +
         '<select id="e-' + i + '" data-ruta="' + base + '.entradas.modo">' + opcionesEntradas + '</select>' +
@@ -491,13 +511,280 @@
     '</div>';
   }
 
+  /* ---------- INICIO (el tablero) ---------- */
+  function pintarInicio() {
+    var ev = proximoEvento();
+    var avisos = avisosVigentes();
+    var hayEventos = !!(D.eventos && D.eventos.activo);
+
+    function ficha(titulo, valor, detalle, estado) {
+      return '<div class="ficha' + (estado ? ' ficha--' + estado : '') + '">' +
+        '<div class="ficha__t">' + esc(titulo) + '</div>' +
+        '<div class="ficha__v">' + esc(valor) + '</div>' +
+        (detalle ? '<div class="ficha__d">' + esc(detalle) + '</div>' : '') +
+      '</div>';
+    }
+
+    function atajo(seccion, luego, clase, dibujo, titulo, detalle) {
+      return '<button type="button" class="atajo' + (clase ? ' ' + clase : '') + '"' +
+        ' data-atajo="' + seccion + '"' + (luego ? ' data-luego="' + luego + '"' : '') + '>' +
+        '<span class="atajo__icono">' +
+          '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" ' +
+          'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          (ICONOS[dibujo] || '') + '</svg>' +
+        '</span>' +
+        '<span class="atajo__t">' + esc(titulo) + '</span>' +
+        '<span class="atajo__d">' + esc(detalle) + '</span>' +
+      '</button>';
+    }
+
+    return '' +
+    '<h2 class="hola">Hola</h2>' +
+    '<p>Elegí qué querés hacer. Nada se publica hasta que toques <strong>Publicar cambios</strong>.</p>' +
+
+    '<div class="atajos">' +
+      atajo('avisos', 'nuevo-aviso', '', 'avisos', 'Crear un aviso',
+        'Para contar algo corto: que abrieron las inscripciones, que cambia un horario.') +
+      atajo('eventos', 'nuevo-evento', '', 'eventos', 'Publicar un evento',
+        'Una función o un espectáculo, con su cuenta regresiva.') +
+      atajo('eventos', 'ir-funciones', '', 'entradas', 'Cargar una función',
+        'Agregar un horario a un evento que ya existe.') +
+      atajo('eventos', 'ir-entradas', 'atajo--oro', 'entradas', 'Gestionar entradas',
+        'Decir dónde se consiguen, el precio y si hay venta online.') +
+    '</div>' +
+
+    '<div class="bloque">' +
+      '<h2 class="bloque__titulo">Cómo está la página ahora</h2>' +
+      '<p class="bloque__ayuda">Esto es lo que ve hoy quien entra al sitio.</p>' +
+      '<div class="estados">' +
+        ficha('Avisos a la vista', String(avisos.length),
+          avisos.length ? 'Se están mostrando en la página' : 'La franja de avisos no aparece',
+          avisos.length ? 'si' : 'no') +
+        ficha('Sección de eventos', hayEventos ? 'Encendida' : 'Apagada',
+          hayEventos ? 'El sitio habla de eventos' : 'El sitio no menciona ningún evento',
+          hayEventos ? 'si' : 'no') +
+        ficha('Próximo evento', ev ? (par(ev.titulo).es || 'Sin título') : 'Ninguno',
+          ev ? (par(ev.fechaLegible).es || '') : 'No hay fechas futuras cargadas',
+          ev ? 'si' : 'no') +
+        ficha('Fotos en la galería', String((D.galeria || []).length),
+          'Las que se ven en la página') +
+      '</div>' +
+    '</div>' +
+
+    '<div class="bloque">' +
+      '<h2 class="bloque__titulo">Guardar una copia</h2>' +
+      '<p class="bloque__ayuda">' +
+        'Si estás en una computadora prestada y preferís no guardar la clave, ' +
+        'bajá el archivo y pasáselo a quien publique. También sirve de respaldo.' +
+      '</p>' +
+      '<button class="boton" type="button" id="btn-descargar">Descargar archivo</button>' +
+    '</div>';
+  }
+
+  /* ---------- AVISOS ---------- */
+  var TIPOS_AVISO = [
+    { v: 'novedad',       t: 'Novedad',       d: 'Lo habitual. Se muestra en rosa.' },
+    { v: 'inscripciones', t: 'Inscripciones', d: 'Para lo que urge. Se muestra en dorado.' },
+    { v: 'importante',    t: 'Importante',    d: 'Cambios o suspensiones. Va mas marcado.' }
+  ];
+
+  function pintarAvisos() {
+    var lista = D.listaAvisos || [];
+
+    var h = '<div class="bloque">' +
+      '<h2 class="bloque__titulo">La franja de avisos</h2>' +
+      '<p class="bloque__ayuda">' +
+        'Son los carteles cortos que aparecen cerca de arriba. ' +
+        'Si apagás esto, o si no hay ninguno a la vista, la franja entera ' +
+        'desaparece del sitio.' +
+      '</p>' +
+      interruptor('Mostrar los avisos en la página', 'avisos.activo') +
+    '</div>';
+
+    if (!lista.length) {
+      return h + '<div class="bloque">' +
+        '<div class="vacio">' +
+          '<strong>Todavía no hay ningún aviso.</strong>' +
+          'Cuando crees uno va a aparecer acá.' +
+        '</div>' +
+        '<div style="margin-top:1rem">' +
+          '<button class="boton boton--fuerte" type="button" data-accion="nuevo-aviso">' +
+            'Crear el primer aviso</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    lista.forEach(function (a, i) {
+      var publicado = a.publicado !== false;
+      var tipo = a.tipo || 'novedad';
+
+      h += '<div class="bloque">' +
+        '<div class="item__cabecera">' +
+          '<h2 class="item__nombre">' +
+            esc(par(a.titulo).es || 'Aviso sin título') +
+            '<span class="marbete marbete--' + (publicado ? 'si' : 'no') + '">' +
+              (publicado ? 'A la vista' : 'Guardado, no se ve') +
+            '</span>' +
+          '</h2>' +
+          '<div class="item__acciones">' +
+            '<button class="boton boton--peq" type="button" data-accion="alternar-aviso" ' +
+              'data-indice="' + i + '">' + (publicado ? 'Ocultar' : 'Mostrar') + '</button>' +
+            '<button class="boton boton--peq boton--riesgo" type="button" ' +
+              'data-accion="borrar-aviso" data-indice="' + i + '">Eliminar</button>' +
+          '</div>' +
+        '</div>' +
+
+        campoDoble('Título del aviso', 'listaAvisos.' + i + '.titulo',
+          { pista: 'Corto y directo. Por ejemplo: "Abrieron las inscripciones".' }) +
+        campoDoble('Texto', 'listaAvisos.' + i + '.texto',
+          { area: true, pista: 'Con una o dos oraciones alcanza.' }) +
+
+        '<div class="campo"><span class="campo__t">De qué tipo es</span><div class="modos">' +
+          TIPOS_AVISO.map(function (t) {
+            return '<label class="modo' + (tipo === t.v ? ' elegido' : '') + '">' +
+              '<input type="radio" name="tipo-aviso-' + i + '" value="' + t.v + '" ' +
+                'data-tipo="modo" data-ruta="listaAvisos.' + i + '.tipo"' +
+                (tipo === t.v ? ' checked' : '') + '>' +
+              '<span class="modo__t">' + t.t + '</span>' +
+              '<span class="modo__d">' + t.d + '</span>' +
+            '</label>';
+          }).join('') +
+        '</div></div>' +
+
+        '<div class="doble">' +
+          campoTexto('Empezar a mostrarlo', 'listaAvisos.' + i + '.desde',
+            { tipo: 'date', pista: 'Dejalo vacío para que se vea desde ya.' }) +
+          campoTexto('Dejar de mostrarlo', 'listaAvisos.' + i + '.hasta',
+            { tipo: 'date', pista: 'Dejalo vacío y se ve hasta que vos lo saques.' }) +
+        '</div>' +
+
+        campoDoble('Texto del botón (si querés uno)', 'listaAvisos.' + i + '.enlace.texto') +
+        campoTexto('A dónde lleva ese botón', 'listaAvisos.' + i + '.enlace.url',
+          { pista: 'Escribí #contacto para llevar al formulario, o pegá una dirección completa.' }) +
+      '</div>';
+    });
+
+    return h + '<button class="boton boton--fuerte" type="button" data-accion="nuevo-aviso">' +
+      'Agregar otro aviso</button>';
+  }
+
+  function avisoVacio() {
+    return {
+      id: 'aviso-' + Date.now(),
+      tipo: 'novedad',
+      publicado: true,
+      titulo: { es: '', en: '' },
+      texto: { es: '', en: '' },
+      desde: '',
+      hasta: '',
+      enlace: { texto: { es: '', en: '' }, url: '' }
+    };
+  }
+
+  /* Los mismos criterios que usa el sitio, para que el tablero no mienta */
+  function avisosVigentes() {
+    if (!(D.avisos && D.avisos.activo)) return [];
+    var hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+
+    return (D.listaAvisos || []).filter(function (a) {
+      if (a.publicado === false) return false;
+      if (!par(a.titulo).es) return false;
+      if ((a.desde || '').trim() && new Date(a.desde + 'T00:00:00') > hoy) return false;
+      if ((a.hasta || '').trim() && new Date(a.hasta + 'T23:59:59') < hoy) return false;
+      return true;
+    });
+  }
+
+  function proximoEvento() {
+    return (D.listaEventos || [])
+      .filter(function (e) { return new Date(e.fechaHoraISO) > new Date(); })
+      .sort(function (a, b) { return new Date(a.fechaHoraISO) - new Date(b.fechaHoraISO); })[0] || null;
+  }
+
+  /* ---------- TEXTOS DE LA PÁGINA ---------- */
+  function pintarPagina() {
+    return pintarPortada() + pintarEstudio() + pintarDisciplinas();
+  }
+
+  /* ---------- SEDES Y CONTACTO ---------- */
+  function pintarSedesYRedes() {
+    return pintarSedes() + pintarRedes();
+  }
+
+  /* ---------- ASISTENTE ---------- */
+  var IDEAS_IA = [
+    { tarea: 'aviso',  t: 'Un aviso de que abrieron las inscripciones' },
+    { tarea: 'evento', t: 'La descripción de nuestro próximo espectáculo' },
+    { tarea: 'texto',  t: 'Mejorá el texto de quiénes somos' },
+    { tarea: 'texto',  t: 'Una invitación corta para sumarse a las clases' }
+  ];
+
+  function pintarAsistente() {
+    var cfg = D.ia || {};
+    var listo = !!((cfg.url || '').trim());
+
+    if (!listo) {
+      return '<div class="bloque">' +
+        '<h2 class="bloque__titulo">El asistente todavía no está instalado</h2>' +
+        '<p class="bloque__ayuda">' +
+          'Es un ayudante que escribe por vos: le pedís "un aviso de que abrieron ' +
+          'las inscripciones" y te deja el texto listo, en español y en inglés.' +
+        '</p>' +
+        '<p class="bloque__ayuda">' +
+          'Se instala una sola vez y es gratis. Los pasos están escritos en el ' +
+          'archivo <strong>asistente/LEEME-ASISTENTE.md</strong>. Cuando termines, ' +
+          'pegá acá abajo la dirección que te quedó.' +
+        '</p>' +
+        campoTexto('Dirección del asistente', 'ia.url', {
+          tipo: 'url',
+          pista2: 'https://...workers.dev',
+          pista: 'Mientras esté vacía, el asistente no aparece en ningún lado y el sitio funciona igual.'
+        }) +
+      '</div>';
+    }
+
+    return '<div class="bloque">' +
+      '<h2 class="bloque__titulo">Pedile que escriba</h2>' +
+      '<p class="bloque__ayuda">' +
+        'Te redacta el texto y te lo deja listo para copiar. ' +
+        'No publica ni cambia nada por su cuenta: vos decidís qué usar.' +
+      '</p>' +
+      '<div class="ia-ideas">' +
+        IDEAS_IA.map(function (x) {
+          return '<button type="button" class="ia-idea" data-tarea="' + x.tarea + '">' +
+            esc(x.t) + '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="ia-hilo" id="ia-hilo"></div>' +
+      '<form class="ia-form" id="ia-form">' +
+        '<div class="campo" style="flex:1;margin:0">' +
+          '<label for="ia-campo">Qué necesitás</label>' +
+          '<textarea id="ia-campo" placeholder="Por ejemplo: un aviso de que ballet cambia a los martes"></textarea>' +
+        '</div>' +
+        '<button class="boton boton--fuerte" type="submit">Pedir</button>' +
+      '</form>' +
+    '</div>' +
+
+    '<div class="bloque">' +
+      '<h2 class="bloque__titulo">El chat del sitio</h2>' +
+      '<p class="bloque__ayuda">' +
+        'Si lo encendés, aparece una burbuja abajo a la izquierda donde las visitas ' +
+        'pueden preguntar por las clases, las sedes y las funciones. Contesta sólo ' +
+        'con lo que está cargado en este panel: no inventa precios ni horarios.' +
+      '</p>' +
+      interruptor('Mostrar el chat en el sitio', 'ia.activo') +
+      campoTexto('Dirección del asistente', 'ia.url', { tipo: 'url' }) +
+    '</div>';
+  }
+
   /* ---------------------------------------------------------
      Dibujar
      --------------------------------------------------------- */
   function pintarPestanas() {
     $('#pestanas').innerHTML = SECCIONES.map(function (s) {
       return '<button type="button" class="pestana' + (s.id === seccionActual ? ' activa' : '') +
-        '" data-seccion="' + s.id + '">' + s.nombre + '</button>';
+        '" data-seccion="' + s.id + '">' + icono(s.icono) +
+        '<span>' + s.nombre + '</span></button>';
     }).join('');
   }
 
@@ -576,6 +863,37 @@
     var pes = ev.target.closest('[data-seccion]');
     if (pes) { seccionActual = pes.dataset.seccion; pintar(); return; }
 
+    /* Los botones grandes de Inicio: llevan a la sección y, si hace
+       falta, dejan ya creada la cosa nueva para empezar a completar. */
+    var at = ev.target.closest('[data-atajo]');
+    if (at) {
+      seccionActual = at.dataset.atajo;
+      var luego = at.dataset.luego;
+
+      if (luego === 'nuevo-aviso') {
+        D.listaAvisos = D.listaAvisos || [];
+        D.listaAvisos.push(avisoVacio());
+        guardarBorrador();
+      } else if (luego === 'nuevo-evento') {
+        D.listaEventos = D.listaEventos || [];
+        D.listaEventos.push(eventoVacio());
+        if (D.eventos) D.eventos.activo = true;
+        guardarBorrador();
+      } else if (luego === 'ir-funciones' || luego === 'ir-entradas') {
+        if (!(D.listaEventos || []).length) {
+          avisar('Primero creá un evento: es el paso de antes.', 'trabajando');
+        }
+      }
+
+      pintar();
+      if (luego === 'ir-entradas' || luego === 'ir-funciones') {
+        var ancla = document.querySelector(
+          luego === 'ir-entradas' ? '[data-ancla="entradas"]' : '[data-ancla="funciones"]');
+        if (ancla) ancla.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
     var btn = ev.target.closest('[data-accion]');
     if (!btn) return;
 
@@ -584,6 +902,22 @@
     var e = parseInt(a.evento, 10);
 
     switch (a.accion) {
+      case 'nuevo-aviso':
+        D.listaAvisos = D.listaAvisos || [];
+        D.listaAvisos.push(avisoVacio());
+        avisar('Aviso creado. Completalo y después publicá.', 'ok');
+        break;
+      case 'borrar-aviso':
+        if (!confirm('¿Eliminar este aviso?\n\nSi sólo querés que deje de verse en la página, usá "Ocultar" en vez de eliminarlo.')) return;
+        D.listaAvisos.splice(i, 1);
+        avisar('Aviso eliminado.', 'ok');
+        break;
+      case 'alternar-aviso':
+        D.listaAvisos[i].publicado = (D.listaAvisos[i].publicado === false);
+        avisar(D.listaAvisos[i].publicado
+          ? 'Ahora se va a ver en la página (falta publicar).'
+          : 'Ya no se va a ver en la página (falta publicar).', 'ok');
+        break;
       case 'nuevo-evento':
         D.listaEventos = D.listaEventos || [];
         D.listaEventos.push(eventoVacio());
@@ -862,7 +1196,9 @@
 
   $('#btn-publicar').addEventListener('click', publicar);
 
-  $('#btn-descargar').addEventListener('click', function () {
+  /* Está dentro de Inicio, que se redibuja: por eso va delegado. */
+  document.addEventListener('click', function (ev) {
+    if (!ev.target.closest('#btn-descargar')) return;
     var blob = new Blob([generarArchivo()], { type: 'text/javascript;charset=utf-8' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -877,6 +1213,173 @@
     quitarBorrador();
     location.reload();
   });
+  /* ---------------------------------------------------------
+     VISTA PREVIA
+     -------------------------------------------------------------
+     Guarda lo editado en una gaveta del navegador y abre el sitio
+     real dentro de un marco, pidiéndole que lea de ahí. No se
+     publica nada: es el mismo sitio leyendo datos de prueba.
+     --------------------------------------------------------- */
+  var LLAVE_PREVIA = 'kp-vista-previa';
+
+  function abrirPrevia() {
+    try {
+      localStorage.setItem(LLAVE_PREVIA, JSON.stringify(D));
+    } catch (e) {
+      avisar('No hay lugar en este navegador para la vista previa.', 'error');
+      return;
+    }
+    $('#previa-marco').src = 'index.html?previa=1&t=' + Date.now();
+    $('#previa').hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarPrevia() {
+    $('#previa').hidden = true;
+    $('#previa-marco').src = 'about:blank';
+    document.body.style.overflow = '';
+    try { localStorage.removeItem(LLAVE_PREVIA); } catch (e) {}
+  }
+
+  $('#btn-previa').addEventListener('click', abrirPrevia);
+  $('#btn-cerrar-previa').addEventListener('click', cerrarPrevia);
+  $('#btn-publicar-previa').addEventListener('click', function () {
+    cerrarPrevia();
+    publicar();
+  });
+
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-previa-ancho]');
+    if (!b) return;
+    var marco = $('#previa-marco');
+    marco.style.width = b.dataset.previaAncho;
+    marco.style.margin = b.dataset.previaAncho === '100%' ? '0' : '0 auto';
+    marco.style.borderLeft = marco.style.borderRight =
+      b.dataset.previaAncho === '100%' ? '0' : '1px solid var(--p-linea)';
+  });
+
+  /* ---------------------------------------------------------
+     ASISTENTE DEL PANEL
+     -------------------------------------------------------------
+     Sólo redacta. Nunca escribe en los datos ni publica: deja el
+     texto a la vista con un botón de "Copiar", y la persona decide.
+     --------------------------------------------------------- */
+  var LLAVE_IA = 'kp-panel-ia';
+  var pidiendoIA = false;
+  var alGuardarIA = null;
+
+  function claveIA() {
+    try { return localStorage.getItem(LLAVE_IA) || ''; } catch (e) { return ''; }
+  }
+
+  function pedirClaveIA(despues) {
+    alGuardarIA = despues || null;
+    $('#modal-ia').hidden = false;
+    $('#campo-ia').focus();
+  }
+
+  $('#btn-cancelar-ia').addEventListener('click', function () {
+    $('#modal-ia').hidden = true;
+    alGuardarIA = null;
+  });
+
+  $('#btn-guardar-ia').addEventListener('click', function () {
+    var c = $('#campo-ia').value.trim();
+    if (!c) return;
+    try { localStorage.setItem(LLAVE_IA, c); } catch (e) {}
+    $('#modal-ia').hidden = true;
+    $('#campo-ia').value = '';
+    var seguir = alGuardarIA; alGuardarIA = null;
+    if (seguir) seguir();
+  });
+
+  function burbujaIA(texto, quien, extra) {
+    var hilo = $('#ia-hilo');
+    if (!hilo) return null;
+    var d = document.createElement('div');
+    d.className = 'ia-msj ia-msj--' + quien + (extra ? ' ' + extra : '');
+    d.textContent = texto;
+    hilo.appendChild(d);
+    hilo.scrollTop = hilo.scrollHeight;
+    return d;
+  }
+
+  async function pedirAlAsistente(pedido, tarea) {
+    if (pidiendoIA || !pedido.trim()) return;
+
+    var url = ((D.ia && D.ia.url) || '').trim();
+    if (!url) { avisar('Falta cargar la dirección del asistente.', 'error'); return; }
+
+    var clave = claveIA();
+    if (!clave) { pedirClaveIA(function () { pedirAlAsistente(pedido, tarea); }); return; }
+
+    pidiendoIA = true;
+    burbujaIA(pedido, 'yo');
+    var pensando = burbujaIA('Pensando…', 'bot');
+
+    try {
+      var r = await fetch(url.replace(/\/$/, '') + '/redactar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Panel-Clave': clave },
+        body: JSON.stringify({ pedido: pedido, tarea: tarea || 'texto' })
+      });
+
+      var j = await r.json().catch(function () { return {}; });
+
+      if (r.status === 401) {
+        try { localStorage.removeItem(LLAVE_IA); } catch (e) {}
+        throw new Error('La contraseña del asistente no es correcta. Probá de nuevo.');
+      }
+      if (!r.ok || !j.respuesta) throw new Error(j.error || 'No pude obtener una respuesta.');
+
+      pensando.textContent = j.respuesta;
+
+      /* Un botón para copiarlo, nada más. Lo pega ella donde quiera. */
+      var acciones = document.createElement('div');
+      acciones.className = 'ia-msj__acciones';
+      var copiar = document.createElement('button');
+      copiar.type = 'button';
+      copiar.className = 'boton boton--peq';
+      copiar.textContent = 'Copiar el texto';
+      copiar.addEventListener('click', function () {
+        navigator.clipboard.writeText(j.respuesta).then(function () {
+          copiar.textContent = 'Copiado';
+          setTimeout(function () { copiar.textContent = 'Copiar el texto'; }, 1800);
+        });
+      });
+      acciones.appendChild(copiar);
+      pensando.appendChild(acciones);
+    } catch (err) {
+      pensando.classList.add('ia-msj--falla');
+      pensando.textContent = err.message;
+    }
+
+    pidiendoIA = false;
+    $('#ia-hilo').scrollTop = $('#ia-hilo').scrollHeight;
+  }
+
+  document.addEventListener('click', function (ev) {
+    var idea = ev.target.closest('.ia-idea');
+    if (!idea) return;
+    pedirAlAsistente(idea.textContent, idea.dataset.tarea);
+  });
+
+  document.addEventListener('submit', function (ev) {
+    if (!ev.target.matches('#ia-form')) return;
+    ev.preventDefault();
+    var campo = $('#ia-campo');
+    var t = campo.value;
+    campo.value = '';
+    pedirAlAsistente(t, 'texto');
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Escape') return;
+    if (!$('#previa').hidden) cerrarPrevia();
+    $('#modal-ia').hidden = true;
+    $('#modal-token').hidden = true;
+  });
+
 
   /* ---------------------------------------------------------
      Arranque
