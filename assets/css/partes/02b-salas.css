@@ -1,0 +1,67 @@
+/* ---------- 2b. LAS SALAS ----------
+   Qué secciones van de día y cuáles de noche.
+
+   La regla es por contenido, no por decoración:
+   van de noche las partes donde lo que manda es el COLOR o la
+   FOTOGRAFÍA — las disciplinas (que tienen sus colores fuertes),
+   los eventos (que son el teatro) y la galería. Sobre el ciruela
+   esas cosas se ven; sobre papel claro se apagan.
+
+   Va de día todo lo que es TEXTO para leer: quiénes somos, la
+   familia, las sedes y el contacto.
+
+   La clase .noche está definida en 01-variables.css y lo único
+   que hace es cambiar el significado de los colores adentro. */
+
+#disciplinas,
+#eventos,
+#galeria {
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+/* El borde entre una sala y la otra. En vez de una línea seca,
+   una transición corta: el papel se oscurece hacia el telón. */
+.sala-borde {
+  height: clamp(2.5rem, 6vw, 4.5rem);
+  margin: 0;
+  border: 0;
+}
+.sala-borde--entra {
+  background: linear-gradient(180deg, rgb(var(--lino)), rgb(var(--ciruela)));
+}
+.sala-borde--sale {
+  background: linear-gradient(180deg, rgb(var(--ciruela)), rgb(var(--lino)));
+}
+
+/* Dos secciones de noche seguidas no llevan borde en el medio:
+   es una sola sala larga. */
+.noche + .noche { border-top: 1px solid rgb(var(--lino) / .08); }
+
+/* La línea fina de arriba de cada sección sólo tiene sentido
+   entre secciones del mismo mundo. */
+.noche.seccion--linea::before { opacity: .5; }
+
+/* ---------- LA ETIQUETA DE SECCIÓN ----------
+   Antes era mayúsculas muy espaciadas, que es el recurso más
+   trillado que hay. Ahora es parte de la voz tipográfica:
+   la misma Bodoni de los títulos, en bastardilla y en carmín,
+   colgando a la izquierda del título. */
+.eyebrow {
+  display: inline-flex; align-items: baseline; gap: .55rem;
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--acento-hondo);
+  margin: 0 0 .5rem;
+}
+.eyebrow::before {
+  content: '';
+  width: 1.6rem; height: 1px;
+  background: currentColor;
+  opacity: .5;
+  transform: translateY(-.35em);
+}

@@ -12,7 +12,7 @@ window.Gallery = function () {
   }).join('');
 
   return '' +
-  '<section class="seccion seccion--linea" id="galeria" aria-labelledby="galeria-titulo">' +
+  '<section class="seccion noche" id="galeria" aria-labelledby="galeria-titulo">' +
     '<div class="contenedor">' +
       '<div class="reveal">' +
         '<p class="eyebrow">' + U.ui('imagenes') + '</p>' +

@@ -416,8 +416,24 @@ Online: https://pintos99999.github.io/Estudio-de-danzas-kp/panel.html
 | **Sedes y contacto** | Direcciones, teléfonos, WhatsApp, mapas, redes y formulario |
 | **Asistente** | El ayudante que redacta textos, y el chat del sitio |
 
-Todo lo que se escribe tiene su casilla en **español y en inglés**. Si el
-no queda ninguno a la vista, la franja entera desaparece del sitio.
+### El inglés se resuelve solo
+
+**Se escribe sólo en español.** Debajo de cada campo hay una línea chiquita
+con el inglés. Al salir del campo, el asistente lo traduce y lo completa
+sin que nadie se lo pida.
+
+Tres reglas, para que nunca pise trabajo hecho a mano:
+
+- sólo traduce lo que está **vacío** en inglés;
+- si alguien escribió el inglés a mano, **no se toca nunca**;
+- *Rehacer* es la única forma de reemplazar una traducción, y pide confirmar.
+
+En **Inicio** hay un contador de cuántos textos quedan sin traducir y un
+botón para hacerlos todos juntos en un solo pedido.
+
+Si el asistente todavía no está instalado, el inglés se escribe a mano con
+*Escribirlo yo*. Y mientras falte, el sitio muestra el español en lugar de
+dejar un hueco.
 
 ### Inicio: el tablero
 

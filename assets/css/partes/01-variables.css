@@ -5,17 +5,30 @@
    Todo lo demás los hereda de acá. Si cambiás un color en este
    archivo, cambia en toda la página de una sola vez.
 
-   Está en dos capas:
+   Está en tres capas:
      A) LA PALETA  -> los colores de la marca, con nombre.
      B) LOS USOS   -> para qué se usa cada uno (fondo, texto,
                       líneas, botones...). Salen de la paleta.
+     C) LA SALA DE NOCHE -> los mismos usos, pero en oscuro.
 
    Los colores de la paleta se escriben como tres números
    (rojo verde azul) y no con almohadilla, para poder usarlos
-   también translúcidos:  rgb(var(--rosa) / .4)  = rosa al 40%.
+   también translúcidos:  rgb(var(--carmin) / .4)  = carmín al 40%.
 
-   La página es CLARA: fondos de papel, tinta color ciruela,
-   rosa de la marca para lo importante y dorado para los avisos.
+   -------------------------------------------------------------
+   LA IDEA
+   El estudio tiene dos mundos y la página los alterna:
+
+     LA SALA DE DÍA   lino cálido, luz de ventana, tinta ciruela.
+                      Es donde se cuenta quiénes son.
+
+     LA SALA DE NOCHE ciruela profundo, luz de escenario.
+                      Es donde van las disciplinas, los eventos y
+                      las fotos: el color y las fotografías
+                      necesitan oscuridad alrededor para brillar.
+
+   Una sección entra en modo noche poniéndole la clase .noche
+   (ver 02b-salas.css). Adentro, todos los usos cambian solos.
    ============================================================= */
 
 :root {
@@ -24,29 +37,37 @@
      A) LA PALETA
      --------------------------------------------------------- */
 
-  /* Papeles: los fondos, del más claro al más tostado */
-  --marfil:        255 252 250;
-  --crema:         253 246 241;
-  --crema-honda:   247 234 228;
-  --arena:         238 221 213;
+  /* Papeles: la pared del salón, de la luz a la sombra */
+  --lino:          247 239 230;
+  --lino-claro:    252 247 241;
+  --arena:         234 220 205;
+  --arena-honda:   216 196 177;
 
-  /* Tintas: el texto. Ciruela oscuro en vez de negro, más cálido */
-  --tinta:         45 20 42;
-  --tinta-media:   88 54 82;
-  --tinta-suave:   124 94 118;
-  --tinta-tenue:   148 120 143;
+  /* La sala de noche: el ciruela del telón */
+  --ciruela:        42 15 36;
+  --ciruela-media:  62 25 53;
+  --ciruela-clara:  86 40 74;
 
-  /* Rosas: el color de la marca, el que lleva la atención */
-  --rosa:          230 70 136;
-  --rosa-hondo:    206 46 116;   /* el rosa que lleva texto blanco encima */
-  --rosa-claro:    247 125 177;
-  --rosa-velo:     253 232 241;
-  --fucsia:        178 36 122;
+  /* Tintas: el texto sobre papel. Ciruela, no negro */
+  --tinta:         59 20 48;
+  --tinta-media:   94 52 83;
+  --tinta-suave:  116 82 106;
 
-  /* Dorados: el segundo acento. Avisos, funciones y entradas */
-  --oro:           198 142 56;
-  --oro-claro:     238 194 118;
-  --oro-velo:      253 243 227;
+  /* Carmín: el color de la marca.
+     Este tono fue elegido para que sirva en los dos lados:
+     se lee sobre el lino Y aguanta texto blanco encima. */
+  --carmin:        200 32 95;
+  --carmin-hondo:  160 18 76;
+  --carmin-claro:  247 125 177;   /* para la sala de noche */
+  --carmin-velo:   250 228 237;
+
+  /* Ámbar: la luz del escenario. Eventos, funciones y entradas.
+     El ámbar vivo no se lee sobre papel: para texto sobre lino
+     está --ambar-tinta, que es el mismo color más hondo. */
+  --ambar:         232 163  61;
+  --ambar-claro:   247 203 128;
+  --ambar-tinta:   138  88  10;
+  --ambar-velo:    252 240 219;
 
   /* Neutros */
   --blanco-puro:   255 255 255;
@@ -60,8 +81,8 @@
   --disc-urban:         237  74  79;  --disc-urban-mas:     240 126  79;
   --disc-arabe:         255 191   8;  --disc-arabe-mas:     250 213  60;
 
-  /* Texto sobre un bloque claro (ballet) */
-  --disc-texto-oscuro:  150  32  77;
+  /* Texto sobre un bloque claro (ballet, árabe) */
+  --disc-texto-oscuro:  122  22  60;
 
   /* Azul de Facebook */
   --azul-facebook: 66 103 178;
@@ -78,48 +99,49 @@
      --------------------------------------------------------- */
 
   /* Fondos de la página */
-  --fondo:         rgb(var(--marfil));
-  --fondo-suave:   rgb(var(--crema));
-  --fondo-tostado: rgb(var(--crema-honda));
+  --fondo:         rgb(var(--lino));
+  --fondo-suave:   rgb(var(--lino-claro));
+  --fondo-tostado: rgb(var(--arena));
 
   /* Superficies: las tarjetas y los recuadros que se apoyan encima */
-  --superficie:    rgb(var(--blanco-puro));
-  --superficie-2:  rgb(var(--crema));
+  --superficie:    rgb(var(--lino-claro));
+  --superficie-2:  rgb(var(--lino));
   --fondo-panel:   linear-gradient(155deg,
-                     rgb(var(--blanco-puro)),
-                     rgb(var(--crema)) 100%);
-  --fondo-vidrio:  rgb(var(--blanco-puro) / .82);
-  --velo-tinta:    rgb(var(--tinta) / .04);
-  --velo-tinta-2:  rgb(var(--tinta) / .07);
+                     rgb(var(--lino-claro)),
+                     rgb(var(--lino)) 100%);
+  --fondo-vidrio:  rgb(var(--lino) / .9);
+  --velo-tinta:    rgb(var(--tinta) / .05);
+  --velo-tinta-2:  rgb(var(--tinta) / .09);
 
   /* Textos */
   --texto:         rgb(var(--tinta-media));
   --texto-suave:   rgb(var(--tinta-suave));
-  --texto-tenue:   rgb(var(--tinta-tenue));
+  --texto-tenue:   rgb(var(--tinta-suave));
   --texto-fuerte:  rgb(var(--tinta));
-  --texto-destacado: rgb(var(--tinta) / .84);
+  --texto-destacado: rgb(var(--tinta) / .88);
 
   /* Líneas y bordes */
-  --linea:         rgb(var(--tinta) / .1);
-  --linea-fuerte:  rgb(var(--tinta) / .2);
+  --linea:         rgb(var(--tinta) / .13);
+  --linea-fuerte:  rgb(var(--tinta) / .26);
 
   /* Acento (la marca) */
-  --acento:        rgb(var(--rosa));
-  --acento-claro:  rgb(var(--rosa-claro));
-  --acento-hondo:  rgb(var(--fucsia));
-  --acento-velo:   rgb(var(--rosa-velo));
-  --acento-borde:  rgb(var(--rosa) / .34);
+  --acento:        rgb(var(--carmin));
+  --acento-claro:  rgb(var(--carmin-claro));
+  --acento-hondo:  rgb(var(--carmin-hondo));
+  --acento-velo:   rgb(var(--carmin-velo));
+  --acento-borde:  rgb(var(--carmin) / .32);
+  --acento-solido: rgb(var(--carmin));
   --sobre-acento:  rgb(var(--blanco-puro));
-  --acento-solido: rgb(var(--rosa-hondo));
-  --degradado-acento: linear-gradient(120deg,
-                        rgb(var(--fucsia)),
-                        rgb(var(--rosa-hondo)) 100%);
+  --degradado-acento: linear-gradient(118deg,
+                        rgb(var(--carmin-hondo)),
+                        rgb(var(--carmin)) 100%);
 
   /* Segundo acento: avisos, fechas y entradas */
-  --realce:        rgb(var(--oro));
-  --realce-claro:  rgb(var(--oro-claro));
-  --realce-velo:   rgb(var(--oro-velo));
-  --realce-borde:  rgb(var(--oro) / .4);
+  --realce:        rgb(var(--ambar-tinta));
+  --realce-vivo:   rgb(var(--ambar));
+  --realce-claro:  rgb(var(--ambar-claro));
+  --realce-velo:   rgb(var(--ambar-velo));
+  --realce-borde:  rgb(var(--ambar) / .55);
 
   /* WhatsApp */
   --wa:            rgb(var(--verde));
@@ -129,62 +151,125 @@
   --wa-degradado:  linear-gradient(140deg,
                      rgb(var(--verde)), rgb(var(--verde-oscuro)));
 
-  /* Sombras: en una página clara tienen que ser suaves y cálidas */
-  --sombra-suave:  0 1px 2px rgb(var(--tinta) / .04),
-                   0 6px 16px -10px rgb(var(--tinta) / .14);
-  --sombra-media:  0 2px 4px rgb(var(--tinta) / .04),
-                   0 14px 32px -16px rgb(var(--tinta) / .2);
-  --sombra-honda:  0 4px 8px rgb(var(--tinta) / .05),
-                   0 30px 70px -30px rgb(var(--tinta) / .3);
-  --sombra-acento: 0 10px 28px -12px rgb(var(--rosa) / .6);
+  /* Sombras.
+     NO se le ponen a todo: una página donde cada tarjeta flota
+     igual que la de al lado queda plana. Se usan sólo donde algo
+     de verdad se levanta: lo que se abre, lo que se agranda. */
+  --sombra-suave:  0 1px 2px rgb(var(--tinta) / .05),
+                   0 8px 20px -12px rgb(var(--tinta) / .2);
+  --sombra-media:  0 2px 6px rgb(var(--tinta) / .06),
+                   0 18px 40px -20px rgb(var(--tinta) / .3);
+  --sombra-honda:  0 4px 10px rgb(var(--tinta) / .08),
+                   0 36px 80px -34px rgb(var(--tinta) / .45);
+  --sombra-acento: 0 10px 26px -12px rgb(var(--carmin) / .55);
 
   /* Atmósfera: los halos de color del fondo de las secciones */
-  --atmosfera-1:   rgb(var(--rosa) / .1);
-  --atmosfera-2:   rgb(var(--oro) / .11);
+  --atmosfera-1:   rgb(var(--carmin) / .11);
+  --atmosfera-2:   rgb(var(--ambar) / .16);
 
   /* Velos para poner texto ENCIMA DE UNA FOTO.
-     Son oscuros a propósito, en cualquier tema: una foto necesita
+     Son oscuros a propósito, en cualquier sala: una foto necesita
      que la tapemos un poco para que se lea lo que va arriba. */
-  --velo-foto-fuerte: rgb(var(--tinta) / .74);
-  --velo-foto-medio:  rgb(var(--tinta) / .46);
-  --velo-foto-leve:   rgb(var(--tinta) / .2);
+  --velo-foto-fuerte: rgb(var(--ciruela) / .8);
+  --velo-foto-medio:  rgb(var(--ciruela) / .5);
+  --velo-foto-leve:   rgb(var(--ciruela) / .22);
   --sobre-foto:       rgb(var(--blanco-puro));
 
-  /* El fondo oscuro de la galería a pantalla completa */
-  --fondo-visor:   rgb(var(--tinta) / .96);
+  /* El fondo de la galería a pantalla completa */
+  --fondo-visor:   rgb(var(--ciruela) / .97);
 
-  /* Sobre la foto de portada: el velo claro que deja leer el texto.
-     La portada es clara, así que el velo aclara en vez de oscurecer. */
+  /* Sobre la foto de portada: el velo que deja leer el texto.
+     La portada es de día, así que el velo aclara. */
   --velo-portada:
     linear-gradient(100deg,
-      rgb(var(--marfil) / .96) 0%,
-      rgb(var(--marfil) / .88) 34%,
-      rgb(var(--marfil) / .42) 62%,
-      rgb(var(--crema-honda) / .5) 100%),
+      rgb(var(--lino) / .97) 0%,
+      rgb(var(--lino) / .9) 32%,
+      rgb(var(--lino) / .42) 60%,
+      rgb(var(--arena) / .55) 100%),
     linear-gradient(180deg,
-      rgb(var(--marfil) / .72) 0%,
-      transparent 30%, transparent 62%,
-      rgb(var(--marfil) / .92) 100%);
+      rgb(var(--lino) / .76) 0%,
+      transparent 30%, transparent 60%,
+      rgb(var(--lino) / .95) 100%);
 
 
   /* ---------------------------------------------------------
      C) TIPOGRAFÍAS, MEDIDAS Y MOVIMIENTO
      --------------------------------------------------------- */
-  --serif:  'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+
+  /* Bodoni es la letra de los programas de teatro y de los
+     carteles de ballet: tiene mucho contraste entre el trazo
+     grueso y el fino, así que se planta incluso en claro. */
+  --serif:  'Bodoni Moda', 'Didot', 'Times New Roman', serif;
   --sans:   'Jost', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --script: 'Pinyon Script', 'Cormorant Garamond', cursive;
+  --script: 'Pinyon Script', 'Bodoni Moda', cursive;
 
   --ancho:     1240px;
   --gutter:    clamp(1.25rem, 4vw, 3.5rem);
   --seccion-y: clamp(4.5rem, 10vw, 8.5rem);
   --nav-h:     76px;
 
-  /* Esquinas: una sola medida para todo, así nada queda disparejo */
-  --radio:       14px;
-  --radio-peq:   9px;
-  --radio-grande: 22px;
+  /* Esquinas. Tres medidas con sentido distinto, no una sola
+     para todo: lo que es una foto, lo que es un recuadro y lo
+     que es una pastilla no deberían redondear igual. */
+  --radio:        10px;
+  --radio-peq:    6px;
+  --radio-grande: 20px;
 
   --ease:  cubic-bezier(.22, .61, .36, 1);
   --lento: .9s;
   --medio: .55s;
+}
+
+
+/* =============================================================
+   LA SALA DE NOCHE
+   -------------------------------------------------------------
+   Cualquier sección con la clase .noche cambia de mundo. No hay
+   que reescribir ni un estilo: como todo hereda de los usos, con
+   redefinirlos acá adentro alcanza.
+   ============================================================= */
+.noche {
+  --fondo:         rgb(var(--ciruela));
+  --fondo-suave:   rgb(var(--ciruela-media));
+  --fondo-tostado: rgb(var(--ciruela-media));
+
+  --superficie:    rgb(var(--ciruela-media));
+  --superficie-2:  rgb(var(--ciruela-clara));
+  --fondo-panel:   linear-gradient(155deg,
+                     rgb(var(--ciruela-media)),
+                     rgb(var(--ciruela)) 100%);
+  --fondo-vidrio:  rgb(var(--ciruela) / .88);
+  --velo-tinta:    rgb(var(--lino) / .06);
+  --velo-tinta-2:  rgb(var(--lino) / .1);
+
+  --texto:         rgb(var(--lino) / .82);
+  --texto-suave:   rgb(var(--lino) / .66);
+  --texto-tenue:   rgb(var(--lino) / .55);
+  --texto-fuerte:  rgb(var(--lino));
+  --texto-destacado: rgb(var(--lino) / .92);
+
+  --linea:         rgb(var(--lino) / .14);
+  --linea-fuerte:  rgb(var(--lino) / .3);
+
+  /* De noche el carmín oscuro no se ve: manda el claro */
+  --acento:        rgb(var(--carmin-claro));
+  --acento-hondo:  rgb(var(--carmin-claro));
+  --acento-claro:  rgb(var(--carmin-claro));
+  --acento-velo:   rgb(var(--carmin) / .2);
+  --acento-borde:  rgb(var(--carmin-claro) / .45);
+
+  --realce:        rgb(var(--ambar));
+  --realce-claro:  rgb(var(--ambar-claro));
+  --realce-velo:   rgb(var(--ambar) / .15);
+  --realce-borde:  rgb(var(--ambar) / .5);
+
+  --wa-texto:      rgb(var(--verde-brillo));
+  --wa-velo:       rgb(var(--verde) / .14);
+
+  --atmosfera-1:   rgb(var(--carmin) / .22);
+  --atmosfera-2:   rgb(var(--ambar) / .14);
+
+  --sombra-suave:  0 2px 10px -4px rgb(var(--negro) / .5);
+  --sombra-media:  0 18px 44px -22px rgb(var(--negro) / .7);
+  --sombra-honda:  0 36px 90px -36px rgb(var(--negro) / .85);
 }

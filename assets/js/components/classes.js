@@ -23,7 +23,7 @@ window.ClassesSection = function () {
   }).join('');
 
   return '' +
-  '<section class="seccion disciplinas" id="disciplinas" aria-labelledby="disciplinas-titulo">' +
+  '<section class="seccion disciplinas noche" id="disciplinas" aria-labelledby="disciplinas-titulo">' +
     '<div class="contenedor">' +
       '<div class="reveal">' +
         '<p class="eyebrow">' + U.ui('formacion') + '</p>' +

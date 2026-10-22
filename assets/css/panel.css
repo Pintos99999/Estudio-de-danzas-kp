@@ -504,3 +504,72 @@ a { color: var(--p-acento-2); }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* =============================================================
+   LA LÍNEA DE INGLÉS
+   -------------------------------------------------------------
+   Debajo de cada campo en español. Es chiquita a propósito: el
+   inglés se resuelve solo, así que no tiene que competir por la
+   atención con lo que de verdad hay que escribir.
+   ============================================================= */
+.ingles {
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+  margin-top: .45rem;
+  font-size: .8rem;
+  color: var(--p-suave);
+}
+.ingles__bandera {
+  flex: 0 0 auto;
+  font-size: .62rem; font-weight: 600; letter-spacing: .06em;
+  padding: .12rem .4rem; border-radius: 4px;
+  background: var(--p-panel-2); border: 1px solid var(--p-linea);
+  color: var(--p-suave);
+}
+.ingles__txt {
+  flex: 1 1 12rem; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--p-medio);
+}
+.ingles__txt--falta { color: var(--p-oro); font-style: italic; }
+.ingles__txt--espera { color: var(--p-suave); font-style: italic; }
+.ingles__accion {
+  flex: 0 0 auto;
+  background: none; border: 0; padding: .1rem .2rem; cursor: pointer;
+  font: inherit; font-size: .78rem;
+  color: var(--p-acento-2); text-decoration: underline;
+}
+.ingles__accion:hover { color: var(--p-acento); }
+.ingles__campo {
+  flex: 1 1 12rem; min-width: 0;
+  font: inherit; font-size: .83rem;
+  padding: .35rem .55rem;
+  background: var(--p-fondo); color: var(--p-texto);
+  border: 1px solid var(--p-linea-2); border-radius: 6px;
+}
+.ingles__campo:focus { outline: none; border-color: var(--p-acento); }
+
+/* =============================================================
+   BLOQUES QUE SE ABREN Y SE CIERRAN
+   -------------------------------------------------------------
+   Las secciones largas arrancan cerradas. Se ve el índice de lo
+   que hay y se abre sólo lo que se va a tocar.
+   ============================================================= */
+.plegable { padding: 0; }
+.plegable > summary {
+  list-style: none; cursor: pointer;
+  padding: 1.1rem clamp(1.2rem, 2.5vw, 1.7rem);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  font-size: 1.08rem; font-weight: 500; color: var(--p-texto);
+  border-radius: var(--p-radio);
+}
+.plegable > summary::-webkit-details-marker { display: none; }
+.plegable > summary:hover { background: var(--p-panel-2); }
+.plegable > summary::after {
+  content: 'Abrir';
+  flex: 0 0 auto;
+  font-size: .78rem; font-weight: 400; color: var(--p-acento-2);
+}
+.plegable[open] > summary::after { content: 'Cerrar'; }
+.plegable[open] > summary { border-bottom: 1px solid var(--p-linea); border-radius: var(--p-radio) var(--p-radio) 0 0; }
+.plegable__cuerpo { padding: 1.3rem clamp(1.2rem, 2.5vw, 1.7rem) clamp(1.2rem, 2.5vw, 1.7rem); }
+.plegable__cuerpo > .campo:last-child { margin-bottom: 0; }

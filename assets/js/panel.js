@@ -95,26 +95,66 @@
     '</div>';
   }
 
-  /* Campo traducible: español e inglés lado a lado */
+  /* Campo de texto que además existe en inglés.
+     Se escribe SÓLO en español. El inglés aparece abajo en chiquito
+     y se traduce solo; si alguien quiere, puede escribirlo a mano. */
   function campoDoble(etiqueta, ruta, opciones) {
     var o = opciones || {};
     var v = par(leer(ruta));
-    var base = 'c-' + ruta.replace(/\W/g, '-');
+    var id = 'c-' + ruta.replace(/\W/g, '-');
 
-    function lado(idioma, texto) {
-      var id = base + '-' + idioma;
-      var control = o.area
-        ? '<textarea id="' + id + '" data-ruta="' + ruta + '" data-idioma="' + idioma + '">' + esc(texto) + '</textarea>'
-        : '<input id="' + id + '" type="text" data-ruta="' + ruta + '" data-idioma="' + idioma + '" value="' + esc(texto) + '">';
-      return '<div><span class="doble__idioma">' +
-        (idioma === 'es' ? 'Español' : 'Inglés') + '</span>' + control + '</div>';
-    }
+    var control = o.area
+      ? '<textarea id="' + id + '" data-ruta="' + ruta + '" data-idioma="es" data-traducible="1"' +
+        (o.pista2 ? ' placeholder="' + esc(o.pista2) + '"' : '') + '>' + esc(v.es) + '</textarea>'
+      : '<input id="' + id + '" type="text" data-ruta="' + ruta + '" data-idioma="es" data-traducible="1"' +
+        (o.pista2 ? ' placeholder="' + esc(o.pista2) + '"' : '') + ' value="' + esc(v.es) + '">';
 
     return '<div class="campo">' +
-      '<span class="campo__t">' + esc(etiqueta) + '</span>' +
-      '<div class="doble">' + lado('es', v.es) + lado('en', v.en) + '</div>' +
+      '<label for="' + id + '">' + esc(etiqueta) + '</label>' + control +
       (o.pista ? '<p class="campo__pista">' + esc(o.pista) + '</p>' : '') +
+      '<div class="ingles" data-ingles="' + ruta + '">' + lineaIngles(ruta) + '</div>' +
     '</div>';
+  }
+
+  /* La línea chiquita de abajo que muestra cómo quedó en inglés */
+  function lineaIngles(ruta) {
+    var v = par(leer(ruta));
+    var hayEs = !!(v.es || '').trim();
+    var hayEn = !!(v.en || '').trim();
+
+    if (!hayEs) {
+      return '<span class="ingles__bandera">EN</span>' +
+        '<span class="ingles__txt ingles__txt--espera">se traduce cuando escribas arriba</span>';
+    }
+
+    return '<span class="ingles__bandera">EN</span>' +
+      (hayEn
+        ? '<span class="ingles__txt">' + esc(v.en) + '</span>'
+        : '<span class="ingles__txt ingles__txt--falta">todavía sin traducir</span>') +
+      '<button type="button" class="ingles__accion" data-accion="traducir-campo" ' +
+        'data-ruta="' + ruta + '">' + (hayEn ? 'Rehacer' : 'Traducir') + '</button>' +
+      '<button type="button" class="ingles__accion" data-accion="editar-ingles" ' +
+        'data-ruta="' + ruta + '">Escribirlo yo</button>';
+  }
+
+  /* Vuelve a dibujar sólo esa línea, sin redibujar el formulario
+     entero: si no, se pierde dónde estaba el cursor. */
+  function refrescarIngles(ruta) {
+    var caja = document.querySelector('[data-ingles="' + CSS.escape(ruta) + '"]');
+    if (caja) caja.innerHTML = lineaIngles(ruta);
+  }
+
+  /* Un bloque que se abre y se cierra. Las pantallas con muchos
+     campos arrancan cerradas: se ve el índice y se abre lo que se
+     va a tocar, en vez de un muro de casillas. */
+  function plegable(titulo, ayuda, contenido, abierto) {
+    return '<details class="bloque plegable"' + (abierto ? ' open' : '') + '>' +
+      '<summary>' + esc(titulo) + '</summary>' +
+      '<div class="plegable__cuerpo">' +
+        (ayuda ? '<p class="bloque__ayuda">' + esc(ayuda) + '</p>' : '') +
+        contenido +
+      '</div>' +
+    '</details>';
   }
 
   function interruptor(etiqueta, ruta) {
@@ -516,6 +556,7 @@
     var ev = proximoEvento();
     var avisos = avisosVigentes();
     var hayEventos = !!(D.eventos && D.eventos.activo);
+    var sinTraducir = rutasSinTraducir();
 
     function ficha(titulo, valor, detalle, estado) {
       return '<div class="ficha' + (estado ? ' ficha--' + estado : '') + '">' +
@@ -569,6 +610,23 @@
         ficha('Fotos en la galería', String((D.galeria || []).length),
           'Las que se ven en la página') +
       '</div>' +
+    '</div>' +
+
+    '<div class="bloque">' +
+      '<h2 class="bloque__titulo">El inglés' +
+        '<span class="marbete marbete--' + (sinTraducir.length ? 'no' : 'si') + '">' +
+          (sinTraducir.length ? sinTraducir.length + ' sin traducir' : 'todo traducido') +
+        '</span>' +
+      '</h2>' +
+      '<p class="bloque__ayuda">' +
+        (asistenteListo()
+          ? 'Vos escribís en español y el inglés se completa solo al salir de cada campo. Si quedó algo pendiente, lo podés hacer todo junto acá.'
+          : 'La página también está en inglés. Hoy hay que escribirlo a mano debajo de cada campo; si instalás el asistente se traduce solo.') +
+      '</p>' +
+      (asistenteListo()
+        ? '<button class="boton boton--fuerte" type="button" id="btn-traducir-todo"' +
+          (sinTraducir.length ? '' : ' disabled') + '>Traducir lo que falte</button>'
+        : '<button class="boton" type="button" data-atajo="asistente">Ver cómo se instala</button>') +
     '</div>' +
 
     '<div class="bloque">' +
@@ -703,12 +761,29 @@
 
   /* ---------- TEXTOS DE LA PÁGINA ---------- */
   function pintarPagina() {
-    return pintarPortada() + pintarEstudio() + pintarDisciplinas();
+    return '<p class="bloque__ayuda" style="margin-bottom:1rem">' +
+        'Son los textos fijos del sitio. Abrí el que quieras cambiar: ' +
+        'lo que no abras queda como está.' +
+      '</p>' +
+      plegable('Lo que se lee al entrar',
+        'El lema y la bajada de la portada, y los tres datos de abajo.',
+        pintarPortada(), true) +
+      plegable('Quiénes somos',
+        'El texto largo del estudio y los pilares.',
+        pintarEstudio(), false) +
+      plegable('Las disciplinas',
+        'Agregar, sacar o cambiar las disciplinas que se dictan.',
+        pintarDisciplinas(), false);
   }
 
   /* ---------- SEDES Y CONTACTO ---------- */
   function pintarSedesYRedes() {
-    return pintarSedes() + pintarRedes();
+    return plegable('Las sedes',
+      'Direcciones, teléfonos y WhatsApp de Paysandú y de Young.',
+      pintarSedes(), true) +
+      plegable('Redes y formulario',
+        'Instagram, Facebook, el correo y los textos de la parte de contacto.',
+        pintarRedes(), false);
   }
 
   /* ---------- ASISTENTE ---------- */
@@ -1378,6 +1453,171 @@
     if (!$('#previa').hidden) cerrarPrevia();
     $('#modal-ia').hidden = true;
     $('#modal-token').hidden = true;
+  });
+
+  /* ---------------------------------------------------------
+     TRADUCCIÓN AUTOMÁTICA AL INGLÉS
+     -------------------------------------------------------------
+     Se escribe en español y el inglés se completa solo.
+
+     Reglas, para que nunca pise trabajo de una persona:
+       · sólo traduce lo que está VACÍO en inglés;
+       · si alguien escribió el inglés a mano, no se toca nunca;
+       · "Rehacer" es la única forma de reemplazar una traducción.
+     --------------------------------------------------------- */
+  var enCola = [];
+  var relojCola = null;
+  var traduciendo = false;
+
+  function asistenteListo() {
+    return !!(((D.ia && D.ia.url) || '').trim());
+  }
+
+  /* Recorre todos los datos y junta las rutas que tienen español
+     pero no tienen inglés. */
+  function rutasSinTraducir() {
+    var faltan = [];
+
+    (function mirar(nodo, camino) {
+      if (nodo == null || typeof nodo !== 'object') return;
+
+      /* ¿Es un par { es, en }? */
+      if (typeof nodo.es === 'string' || typeof nodo.en === 'string') {
+        if ((nodo.es || '').trim() && !(nodo.en || '').trim()) faltan.push(camino);
+        return;
+      }
+      Object.keys(nodo).forEach(function (k) {
+        mirar(nodo[k], camino ? camino + '.' + k : k);
+      });
+    })(D, '');
+
+    return faltan;
+  }
+
+  function encolar(ruta) {
+    if (!asistenteListo()) return;
+    if (enCola.indexOf(ruta) === -1) enCola.push(ruta);
+
+    clearTimeout(relojCola);
+    relojCola = setTimeout(function () {
+      var lote = enCola.slice();
+      enCola = [];
+      /* Sólo las que siguen sin inglés cuando llega el momento */
+      lote = lote.filter(function (r) {
+        var v = par(leer(r));
+        return (v.es || '').trim() && !(v.en || '').trim();
+      });
+      if (lote.length) traducirRutas(lote, true);
+    }, 1400);
+  }
+
+  async function traducirRutas(rutas, silencioso) {
+    if (traduciendo || !rutas.length) return;
+
+    if (!asistenteListo()) {
+      avisar('Para traducir solo hay que instalar el asistente (pestaña Asistente).', 'error');
+      return;
+    }
+
+    var clave = claveIA();
+    if (!clave) {
+      if (silencioso) return;          /* no interrumpir mientras escribe */
+      pedirClaveIA(function () { traducirRutas(rutas, false); });
+      return;
+    }
+
+    traduciendo = true;
+    rutas.forEach(function (r) { marcarTraduciendo(r); });
+    if (!silencioso) avisar('Traduciendo al inglés…', 'trabajando');
+
+    try {
+      var textos = rutas.map(function (r) { return par(leer(r)).es || ''; });
+
+      var res = await fetch(((D.ia.url) || '').replace(/\/$/, '') + '/traducir', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Panel-Clave': clave },
+        body: JSON.stringify({ textos: textos })
+      });
+
+      var j = await res.json().catch(function () { return {}; });
+
+      if (res.status === 401) {
+        try { localStorage.removeItem(LLAVE_IA); } catch (e) {}
+        throw new Error('la contraseña del asistente no es correcta');
+      }
+      if (!res.ok || !Array.isArray(j.textos)) throw new Error(j.error || 'no se pudo traducir');
+
+      rutas.forEach(function (r, i) {
+        var v = par(leer(r));
+        v.en = j.textos[i] || '';
+        escribir(r, v);
+      });
+
+      guardarBorrador();
+      rutas.forEach(refrescarIngles);
+      /* El tablero muestra cuántos textos faltan: hay que rehacerlo */
+      if (seccionActual === 'inicio') pintar();
+      avisar(rutas.length === 1
+        ? 'Traducido.'
+        : 'Traducidos ' + rutas.length + ' textos al inglés.', 'ok');
+    } catch (err) {
+      rutas.forEach(refrescarIngles);
+      avisar('No se pudo traducir: ' + err.message, 'error');
+    }
+
+    traduciendo = false;
+  }
+
+  function marcarTraduciendo(ruta) {
+    var caja = document.querySelector('[data-ingles="' + CSS.escape(ruta) + '"]');
+    if (caja) {
+      caja.innerHTML = '<span class="ingles__bandera">EN</span>' +
+        '<span class="ingles__txt ingles__txt--espera">traduciendo…</span>';
+    }
+  }
+
+  /* Al salir de un campo en español, si el inglés está vacío,
+     se manda a traducir sin que nadie tenga que pedirlo. */
+  document.addEventListener('focusout', function (ev) {
+    var el = ev.target;
+    if (!el.dataset || !el.dataset.traducible) return;
+    if (!(el.value || '').trim()) return;
+    var v = par(leer(el.dataset.ruta));
+    if ((v.en || '').trim()) return;
+    encolar(el.dataset.ruta);
+  });
+
+  /* Botones de la línea de inglés */
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-accion="traducir-campo"], [data-accion="editar-ingles"], #btn-traducir-todo');
+    if (!b) return;
+
+    if (b.id === 'btn-traducir-todo') {
+      var faltan = rutasSinTraducir();
+      if (!faltan.length) { avisar('Ya está todo traducido.', 'ok'); return; }
+      traducirRutas(faltan.slice(0, 60), false);
+      return;
+    }
+
+    var ruta = b.dataset.ruta;
+
+    if (b.dataset.accion === 'traducir-campo') {
+      var v = par(leer(ruta));
+      if ((v.en || '').trim() &&
+          !confirm('Ya hay un texto en inglés.\n\n¿Reemplazarlo por una traducción nueva?')) return;
+      traducirRutas([ruta], false);
+      return;
+    }
+
+    /* Escribirlo a mano */
+    var caja = document.querySelector('[data-ingles="' + CSS.escape(ruta) + '"]');
+    var actual = par(leer(ruta)).en || '';
+    caja.innerHTML = '<span class="ingles__bandera">EN</span>' +
+      '<input class="ingles__campo" type="text" data-ruta="' + ruta + '" data-idioma="en" ' +
+      'value="' + esc(actual) + '" placeholder="escribí acá la versión en inglés">' +
+      '<button type="button" class="ingles__accion" data-accion="traducir-campo" ' +
+      'data-ruta="' + ruta + '">Que lo traduzca</button>';
+    caja.querySelector('input').focus();
   });
 
 

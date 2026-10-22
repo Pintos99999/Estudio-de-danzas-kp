@@ -16,20 +16,20 @@
   background:
     radial-gradient(58% 50% at 46% 12%, var(--atmosfera-1), transparent 70%),
     radial-gradient(44% 44% at 86% 72%, var(--atmosfera-2), transparent 72%),
-    radial-gradient(70% 60% at 10% 76%, rgb(var(--crema-honda) / .9), transparent 76%),
+    radial-gradient(70% 60% at 10% 76%, rgb(var(--arena) / .9), transparent 76%),
     linear-gradient(180deg, var(--fondo) 0%, var(--fondo-suave) 40%, var(--fondo-tostado) 72%, var(--fondo-suave) 100%);
 }
 /* Piso del escenario */
 .hero__fondo::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 34%;
-  background: linear-gradient(180deg, transparent, rgb(var(--crema-honda) / .72) 58%, var(--fondo));
+  background: linear-gradient(180deg, transparent, rgb(var(--arena) / .72) 58%, var(--fondo));
 }
 
 /* Rayos de luz atravesando el humo */
 .haz {
   position: absolute; top: -18%; z-index: -2;
   width: 46vw; height: 130%;
-  background: linear-gradient(180deg, rgb(var(--rosa-claro) / .3), rgb(var(--rosa-claro) / .07) 45%, transparent 78%);
+  background: linear-gradient(180deg, rgb(var(--carmin-claro) / .3), rgb(var(--carmin-claro) / .07) 45%, transparent 78%);
   filter: blur(34px);
   transform-origin: top center;
   mix-blend-mode: multiply;
@@ -37,10 +37,10 @@
 }
 .haz--1 { left: 4%;  transform: rotate(13deg);  animation: respira 13s var(--ease) infinite; }
 .haz--2 { left: 34%; width: 30vw; transform: rotate(-5deg);
-  background: linear-gradient(180deg, rgb(var(--oro-claro) / .3), rgb(var(--oro-claro) / .06) 50%, transparent 80%);
+  background: linear-gradient(180deg, rgb(var(--ambar-claro) / .3), rgb(var(--ambar-claro) / .06) 50%, transparent 80%);
   animation: respira 17s var(--ease) infinite reverse; }
 .haz--3 { right: 2%; transform: rotate(-16deg);
-  background: linear-gradient(180deg, rgb(var(--rosa) / .18), rgb(var(--rosa) / .03) 50%, transparent 80%);
+  background: linear-gradient(180deg, rgb(var(--carmin) / .18), rgb(var(--carmin) / .03) 50%, transparent 80%);
   animation: respira 15s var(--ease) infinite 2s; }
 
 @keyframes respira {
@@ -63,8 +63,8 @@
   position: absolute; inset: 0; z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(100deg, rgb(var(--marfil) / .96) 0%, rgb(var(--marfil) / .88) 34%, rgb(var(--marfil) / .4) 62%, rgb(var(--crema-honda) / .48) 100%),
-    linear-gradient(180deg, rgb(var(--marfil) / .74) 0%, transparent 30%, transparent 60%, rgb(var(--marfil) / .94) 100%);
+    linear-gradient(100deg, rgb(var(--lino) / .96) 0%, rgb(var(--lino) / .88) 34%, rgb(var(--lino) / .4) 62%, rgb(var(--arena) / .48) 100%),
+    linear-gradient(180deg, rgb(var(--lino) / .74) 0%, transparent 30%, transparent 60%, rgb(var(--lino) / .94) 100%);
 }
 
 
@@ -73,7 +73,7 @@
   position: absolute; z-index: -1;
   width: 4px; height: 4px; border-radius: 50%;
   background: var(--acento-claro);
-  box-shadow: 0 0 10px 2px rgb(var(--rosa) / .4);
+  box-shadow: 0 0 10px 2px rgb(var(--carmin) / .4);
   opacity: 0;
   animation: flotar 12s linear infinite;
 }
@@ -98,9 +98,9 @@
 .hero__etiqueta {
   display: inline-flex; align-items: center; gap: .6rem;
   padding: .42rem 1rem;
-  border: 1px solid rgb(var(--rosa) / .4);
+  border: 1px solid rgb(var(--carmin) / .4);
   border-radius: 999px;
-  background: rgb(var(--rosa) / .09);
+  background: rgb(var(--carmin) / .09);
   font-size: .63rem; letter-spacing: .26em; text-transform: uppercase;
   color: var(--acento-hondo);
   margin-bottom: 1.4rem;
@@ -225,15 +225,15 @@
   display: inline-flex; align-items: center; gap: .7rem;
   padding: .5rem 1.1rem .5rem .9rem;
   margin-bottom: 2rem;
-  border: 1px solid rgb(var(--rosa) / .4); border-radius: 999px;
-  background: rgb(var(--rosa) / .09);
+  border: 1px solid rgb(var(--carmin) / .4); border-radius: 999px;
+  background: rgb(var(--carmin) / .09);
   backdrop-filter: blur(8px);
   font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
   color: var(--texto-fuerte);
   transition: border-color .4s var(--ease), background-color .4s var(--ease), transform .4s var(--ease);
 }
 .aviso:hover {
-  border-color: var(--acento); background: rgb(var(--rosa) / .17);
+  border-color: var(--acento); background: rgb(var(--carmin) / .17);
   transform: translateY(-2px);
 }
 .aviso .ico { color: var(--acento-hondo); transition: transform .4s var(--ease); }
@@ -241,13 +241,13 @@
 .aviso__punto {
   width: 7px; height: 7px; border-radius: 50%;
   background: var(--acento);
-  box-shadow: 0 0 0 0 rgb(var(--rosa) / .7);
+  box-shadow: 0 0 0 0 rgb(var(--carmin) / .7);
   animation: latido 2.4s infinite;
 }
 @keyframes latido {
-  0%   { box-shadow: 0 0 0 0 rgb(var(--rosa) / .7); }
-  70%  { box-shadow: 0 0 0 9px rgb(var(--rosa) / 0); }
-  100% { box-shadow: 0 0 0 0 rgb(var(--rosa) / 0); }
+  0%   { box-shadow: 0 0 0 0 rgb(var(--carmin) / .7); }
+  70%  { box-shadow: 0 0 0 9px rgb(var(--carmin) / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(var(--carmin) / 0); }
 }
 .aviso__obra { font-family: var(--serif); font-size: .95rem; letter-spacing: .04em; text-transform: none; }
 .aviso__sep { width: 1px; height: 13px; background: var(--linea-fuerte); }
@@ -258,10 +258,10 @@
 .reloj {
   margin-bottom: clamp(3rem, 6vw, 4.5rem);
   padding: clamp(1.8rem, 4vw, 2.6rem);
-  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
+  border: 1px solid var(--linea); border-radius: var(--radio);
   background:
-    radial-gradient(120% 160% at 15% 0%, rgb(var(--fucsia) / .2), transparent 60%),
-    linear-gradient(150deg, rgb(var(--crema-honda) / .34), rgb(var(--crema-honda) / .5));
+    radial-gradient(120% 160% at 15% 0%, rgb(var(--carmin-hondo) / .2), transparent 60%),
+    linear-gradient(150deg, rgb(var(--arena) / .34), rgb(var(--arena) / .5));
 }
 .reloj__titulo {
   display: flex; align-items: center; gap: .6rem;

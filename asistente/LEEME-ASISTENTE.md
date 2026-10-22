@@ -124,3 +124,19 @@ Listo.
 - **Gemini**: el plan gratis alcanza para el uso de una página así.
 
 Ninguno de los dos pide tarjeta para el plan gratuito.
+
+---
+
+## Las tres puertas del ayudante
+
+| Puerta | Quién la usa | Qué hace |
+|---|---|---|
+| `/preguntar` | El chat del sitio. Pública. | Responde consultas con la información real del sitio |
+| `/redactar` | El panel. Pide contraseña. | Redacta avisos y descripciones |
+| `/traducir` | El panel. Pide contraseña. | Pasa al inglés los textos escritos en español |
+
+`/traducir` manda todos los textos pendientes en **un solo pedido**, aunque
+sean veinte: así tarda menos y consume menos del plan gratuito.
+
+Ninguna de las tres escribe nada en el sitio. Publicar lo sigue haciendo
+una persona, con el botón de siempre.

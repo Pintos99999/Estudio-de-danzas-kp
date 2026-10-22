@@ -154,7 +154,7 @@ window.EventosSection = function () {
   }
 
   return '' +
-  '<section class="seccion seccion--linea escenario" id="eventos" aria-labelledby="eventos-titulo">' +
+  '<section class="seccion escenario noche" id="eventos" aria-labelledby="eventos-titulo">' +
     '<div class="contenedor">' +
       '<div class="escenario__intro">' +
         '<p class="eyebrow">' + U.te(t.etiqueta) + '</p>' +

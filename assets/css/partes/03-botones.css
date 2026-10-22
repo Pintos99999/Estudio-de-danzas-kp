@@ -21,7 +21,7 @@
 .btn:hover .ico { transform: translateX(3px); }
 
 /* Fantasma / secundario */
-.btn--ghost { background: var(--superficie); box-shadow: var(--sombra-suave); }
+.btn--ghost { background: var(--superficie); }
 .btn--ghost:hover {
   border-color: var(--texto-suave);
   background: rgb(var(--tinta) / .1);
@@ -32,7 +32,7 @@
   border-color: transparent;
   background: var(--degradado-acento);
   color: var(--sobre-acento);
-  box-shadow: 0 10px 34px -14px rgb(var(--rosa) / .85);
+  box-shadow: 0 10px 34px -14px rgb(var(--carmin) / .85);
 }
 .btn--primario::after {
   content: '';
@@ -41,7 +41,7 @@
   transform: translateX(-110%);
   transition: transform .9s var(--ease);
 }
-.btn--primario:hover { box-shadow: 0 16px 44px -12px rgb(var(--rosa) / .95); }
+.btn--primario:hover { box-shadow: 0 16px 44px -12px rgb(var(--carmin) / .95); }
 .btn--primario:hover::after { transform: translateX(110%); }
 
 /* Texto con línea */

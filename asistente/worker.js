@@ -54,6 +54,7 @@ export default {
     try {
       if (url.pathname.endsWith('/preguntar')) return await preguntar(peticion, entorno, origen);
       if (url.pathname.endsWith('/redactar'))  return await redactar(peticion, entorno, origen);
+      if (url.pathname.endsWith('/traducir'))  return await traducir(peticion, entorno, origen);
       return responder({ error: 'Dirección desconocida' }, 404, origen);
     } catch (e) {
       return responder({ error: 'El asistente tuvo un problema: ' + e.message }, 500, origen);
@@ -168,6 +169,69 @@ ${resumir(datos, 'es')}`;
   return responder({ respuesta: texto }, 200, origen);
 }
 
+
+/* -------------------------------------------------------------
+   TRADUCIR AL INGLÉS (con contraseña)
+   -------------------------------------------------------------
+   El panel manda varios textos de una sola vez y recibe los
+   mismos de vuelta, traducidos y en el mismo orden. Se hace en
+   un solo pedido aunque sean veinte textos: así es más rápido y
+   gasta menos.
+   ------------------------------------------------------------- */
+async function traducir(peticion, entorno, origen) {
+  const clave = peticion.headers.get('X-Panel-Clave') || '';
+  if (!entorno.ADMIN_CLAVE || clave !== entorno.ADMIN_CLAVE) {
+    return responder({ error: 'La contraseña del asistente no es correcta.' }, 401, origen);
+  }
+
+  const cuerpo = await peticion.json().catch(() => ({}));
+  const textos = Array.isArray(cuerpo.textos) ? cuerpo.textos : [];
+
+  if (!textos.length) return responder({ error: 'No vino ningún texto.' }, 400, origen);
+  if (textos.length > 60) return responder({ error: 'Demasiados textos de una vez.' }, 400, origen);
+
+  const limpios = textos.map(t => String(t == null ? '' : t).slice(0, 1500));
+  if (limpios.join('').length > 12000) {
+    return responder({ error: 'Los textos juntos son demasiado largos.' }, 400, origen);
+  }
+
+  const instruccion =
+`Traducís del español al inglés para la web de un estudio de danzas de Uruguay.
+
+Te llega un JSON que es una lista de textos.
+Devolvés SOLO un JSON con la lista traducida, en el MISMO orden y con la
+MISMA cantidad de elementos. Nada de explicaciones, nada de markdown.
+
+Reglas:
+- Inglés natural y cálido, no literal. Es una página para leer, no un manual.
+- Si un texto está vacío, devolvé vacío en esa posición.
+- NO traduzcas los nombres propios: Karen Pintos, Paysandú, Young,
+  Teatro Florencio Sánchez, Giselle, los nombres de las obras.
+- Las direcciones de calles se dejan como están.
+- Respetá el largo: si en español es un título de tres palabras, en inglés
+  también tiene que ser corto.
+- Mantené los saltos de línea que haya.`;
+
+  const texto = await gemini(entorno.GEMINI_API_KEY, instruccion,
+    [{ role: 'user', parts: [{ text: JSON.stringify(limpios) }] }],
+    Math.min(4000, 400 + limpios.join('').length));
+
+  /* Gemini a veces envuelve el JSON en ```json ... ```: lo sacamos */
+  const crudo = texto.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '').trim();
+
+  let salida;
+  try {
+    salida = JSON.parse(crudo);
+  } catch (e) {
+    throw new Error('la traducción no vino en el formato esperado');
+  }
+
+  if (!Array.isArray(salida) || salida.length !== limpios.length) {
+    throw new Error('la traducción vino incompleta');
+  }
+
+  return responder({ textos: salida.map(s => String(s == null ? '' : s)) }, 200, origen);
+}
 /* -------------------------------------------------------------
    Llamada a Google
    ------------------------------------------------------------- */

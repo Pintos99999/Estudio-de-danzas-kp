@@ -67,9 +67,9 @@
    --color-disc y el tono del "+" en --color-mas. */
 .tarjeta {
   --color-disc: var(--tinta-suave);
-  --color-mas: var(--tinta-tenue);
+  --color-mas: var(--tinta-suave);
   display: flex; flex-direction: column;
-  border: 1px solid var(--linea); border-radius: var(--radio); box-shadow: var(--sombra-suave);
+  border: 1px solid var(--linea); border-radius: var(--radio);
   overflow: hidden;
   background: linear-gradient(170deg, var(--superficie), var(--superficie-2) 72%);
   transition: transform .5s var(--ease), border-color .5s var(--ease), box-shadow .5s var(--ease);
@@ -125,7 +125,7 @@
   font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
   /* El color de la disciplina, aclarado para que se lea sobre el fondo oscuro */
   color: var(--texto-destacado);
-  color: color-mix(in srgb, rgb(var(--color-disc)) 55%, white);
+  color: color-mix(in srgb, rgb(var(--color-disc)) 42%, rgb(var(--lino)));
   padding-top: .8rem; border-top: 1px solid var(--linea);
   width: 100%;
 }
